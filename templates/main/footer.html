@@ -1,0 +1,111 @@
+{% load static %}
+<footer class="main-footer background-white2">
+    <div class="main-footer__top">
+        <div class="container">
+            <div class="row gutter-y-30">
+                <div class="col-md-12 col-xl-3 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                    <div class="footer-widget footer-widget--about">
+                        <a href="index.html" class="footer-widget__logo">
+                            <img src="{% static 'images/khidmat-logo.png' %}" width="140" alt="" />
+                        </a>
+                        <p class="footer-widget__about-text">
+                            {{ footer_data.about_text|linebreaksbr }}
+                        </p>
+                    </div>
+                    <a href="donate.html" class="cleenhearts-btn">
+                        <div class="cleenhearts-btn__icon-box">
+                            <div class="cleenhearts-btn__icon-box__inner">
+                                <span class="icon-donate"></span>
+                            </div>
+                        </div>
+                        <span class="cleenhearts-btn__text">donate now</span>
+                    </a>
+                </div>
+                <div class="col-xl-4 col-md-5 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                    <div class="footer-widget footer-widget--contact">
+                        <h2 class="footer-widget__title">Get in touch!</h2>
+                        <ul class="list-unstyled footer-widget__info">
+                            <li>
+                                <span class="icon-location"></span>
+                                <address>
+                                    {{ footer_data.address|linebreaksbr }}
+                                </address>
+                            </li>
+                            <li>
+                                <span class="icon-phone"></span>
+                                <a style="margin-left: 10px" href="tel:{{ footer_data.phone }}">{{ footer_data.phone }}</a>
+                            </li>
+                            <li>
+                                <span class="icon-envelope"></span>
+                                <div class="email">
+                                    <a href="mailto:{{ footer_data.email }}">{{ footer_data.email }}</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="400ms">
+                    <div class="footer-widget footer-widget--links">
+                        <h2 class="footer-widget__title">Quick Links</h2>
+                        <ul class="list-unstyled footer-widget__links">
+                            <li><a href="{% url 'about' %}">About Us</a></li>
+                            <li><a href="{% url 'activity' %}">Activities</a></li>
+                            <li><a href="{% url 'benefits' %}">Benefits</a></li>
+                            <li><a href="{% url 'career' %}">Careers</a></li>
+                            <li><a href="{% url 'contact' %}">Contacts</a></li>
+                        </ul>
+                        <h2 class="footer-widget__title mb-2">Follow Us</h2>
+                        <div class="foot_socail">
+                            <div class="social-link topbar-one__social">
+                                <a href="{{ footer_data.facebook_url }}" target="_blank">
+                                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                                    <span class="sr-only">Facebook</span>
+                                </a>
+                                <a href="{{ footer_data.instagram_url }}" target="_blank">
+                                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                                    <span class="sr-only">Instagram</span>
+                                </a>
+                                <a href="{{ footer_data.twitter_url }}" target="_blank">
+                                    <img src="{% static 'images/X_logo 1.svg' %}" alt="X Logo" class="x-logo" />
+                                    <span class="sr-only">Twitter</span>
+                                </a>
+                                <a href="{{ footer_data.youtube_url }}" target="_blank">
+                                    <i class="fab fa-youtube"></i>
+                                    <span class="sr-only">Youtube</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-xl-3 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="600ms">
+                    <h2 class="footer-widget__title">Office Timings</h2>
+                    <ul class="list-unstyled footer-widget__links">
+                        <p>
+                            {{ footer_data.office_timings|linebreaksbr }}
+                        </p>
+                    </ul>
+                    <h2 class="footer-widget__title mb-2">Patients Schedule</h2>
+                    <p>
+                        {{ footer_data.patients_schedule|linebreaksbr }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="main-footer__top__shape-box">
+            <img src="{% static 'images/shapes/footer-shape-hand-1-1.png' %}" alt="hand" class="main-footer__top__shape-one" />
+            <img src="{% static 'images/shapes/footer-shape-hand-1-2.png' %}" alt="hand" class="main-footer__top__shape-two" />
+        </div>
+    </div>
+    <div class="main-footer__bottom">
+        <div class="main-footer__bottom__bg" style="background: url('{% static 'images/backgrounds/footer-bottom-bg-1-2.png' %}');"></div>
+        <div class="container">
+            <div class="main-footer__bottom__inner">
+                <a href="https://pyzon.in/" target="_blank">
+                    <p class="main-footer__copyright">
+                        <span></span> © 2025 PYZON ALL RIGHTS RESERVED.
+                    </p>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>

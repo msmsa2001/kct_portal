@@ -1,0 +1,287 @@
+{% extends 'main/base.html' %}
+
+{%load static%}
+
+{% block content %}
+
+<body class="custom-cursor">
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+    <div class="page-wrapper">
+        <!-- <div class="topbar-one">
+            <div class="container-fluid">
+                <div class="topbar-one__inner">
+                    <ul class="list-unstyled topbar-one__info">
+                        <li class="topbar-one__info__item">
+                            <span class="topbar-one__info__icon icon-paper-plane"></span>
+                            <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a>
+                        </li>
+                    </ul>
+                    <div class="topbar-one__right">
+                        <div class="social-link topbar-one__social">
+                            <a href="https://www.facebook.com/people/Khidmat-Charitable-Trust/100081203701961/?mibextid=ZbWKwL">
+                <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                <span class="sr-only">Facebook</span>
+              </a>
+                            <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D">
+                <i class="fab fa-instagram" aria-hidden="true"></i>
+                <span class="sr-only">Instagram</span>
+              </a>
+                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
+                <img src="images/X_logo 1.svg" alt="X Logo" class="x-logo" />
+                <span class="sr-only">Twitter</span>
+              </a>
+                            <a href="https://www.youtube.com/@khidmattrust" aria-hidden="true">
+                <i class="fab fa-youtube"></i>
+                <span class="sr-only">Youtube</span>
+              </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+       
+        <section class="page-header @@extraClassName">
+            <div class="page-header__bg"></div>
+            <div class="container">
+                <h2 class="page-header__title">Contact Us</h2>
+                <ul class="cleenhearts-breadcrumb list-unstyled">
+                    <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
+                    <li><span>Contact Us</span></li>
+                </ul>
+            </div>
+        </section>
+        <section class="contact-one section-space @@extraClassName">
+            <div class="container">
+                <div class="row gutter-y-30">
+                    <div class="col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                        <div class="contact-one__map">
+                            <div class="google-map contact-one__google__map map-contact">
+                                <iframe title="template google map"
+                                src="https://maps.google.com/maps?t=m&amp;output=embed&amp;iwloc=near&amp;z=17&amp;q=68%2C+Mirza+Galib+Rd%2C+Police+Colony%2C+Ashadham+Colony%2C+Madanpura%2C+Mumbai%2C+india"
+                                class="map__contact-one__google__map" allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="contact-one__info">
+                                <div class="contact-one__info__item">
+                                    <div class="contact-one__info__icon">
+                                        <span class="icon-location"></span>
+                                    </div>
+                                    <div class="contact-one__info__content">
+                                        <h4 class="contact-one__info__title">Office Address</h4>
+                                        <address class="contact-one__info__text">{{ footer.address }}</address>
+                                    </div>
+                                </div>
+                                <div class="contact-one__info__item">
+                                    <div class="contact-one__info__icon">
+                                        <span class="icon-phone"></span>
+                                    </div>
+                                    <div class="contact-one__info__content">
+                                        <h4 class="contact-one__info__title">Quick Contact</h4>
+                                        <a href="tel:{{ footer.phone_number }}"
+                                            class="contact-one__info__text contact-one__info__text--link">{{ footer.phone_number }}</a>
+                                    </div>
+                                </div>
+                                <div class="contact-one__info__item">
+                                    <div class="contact-one__info__icon">
+                                        <span class="icon-envelope"></span>
+                                    </div>
+                                    <div class="contact-one__info__content">
+                                        <h4 class="contact-one__info__title">Support Email</h4>
+                                        <a href="mailto:{{ footer.email }}"
+                                            class="contact-one__info__text contact-one__info__text--link">{{ footer.email }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
+                        <div class="contact-one__form">
+                            <div class="contact-one__form__bg"
+                                style="background-image: url('images/backgrounds/contact-bg-1-1.png');"></div>
+                            <h2 class="contact-one__title">Enquire Now </h2>
+                            <form class="contact-one__form__inner contact-form-validated form-one wow fadeInUp"
+                                data-wow-duration="1500ms" action="{% url 'contact' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row gutter-y-20">
+                                    <div class="col-12">
+                                        <div class="form-one__control">
+                                            <input type="text" name="name" id="name" placeholder="enter your name"
+                                                class="form-one__control__input">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-one__control">
+                                            <input type="text" name="email" id="email" placeholder="your email"
+                                                class="form-one__control__input">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-one__control">
+                                            <input type="tel" name="phone" id="phone" placeholder="phone number"
+                                                class="form-one__control__input">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-one__control">
+                                            <textarea name="message" id="message" cols="30" rows="10"
+                                                placeholder="write message . . ."
+                                                class="form-one__control__input form-one__control__message"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="contact-one__btn-box form-one__control">
+                                            <button type="submit" class="cleenhearts-btn @@extraClassNameBtn">
+                                                <span class="cleenhearts-btn__icon-box">
+                                                    <span class="cleenhearts-btn__icon-box__inner"><span
+                                                            class="icon-duble-arrow"></span></span>
+                                                </span>
+                                                <span class="cleenhearts-btn__text mrbtn">send message</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+
+        <section class="subscribe">
+            <div class="subscribe__bg"></div>
+            <div class="container">
+                <div class="row1">
+                    <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="subscribe__content">
+                            <h2 class="subscribe__title">"Khidmat Charitable Trust – A small step for us, <br> a big
+                                change for many. <br>
+                                Together, we make a difference."</h2>
+                            <!-- <span class="subscribe__title-image icon-email"></span> -->
+                            <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-7 wow fadeInUp">
+                        <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
+                            <input type="email" name="EMAIL" id="subscribe" placeholder="enter your email" class="subscribe__form__input" />
+                            <button type="submit" class="subscribe__form__btn">
+                           <span class="subscribe__form__btn__text">Subscribe now</span>
+                            <span class="subscribe__form__btn__icon icon-paper-plane"></span>
+                           </button>
+                        </form>
+                        <div class="mc-form__response"></div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="subscribe__shape">
+                <div class="subscribe__shape__one"></div>
+                <div class="subscribe__shape__two"></div>
+            </div>
+        </section>
+       
+    </div>
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+            <div class="logo-box">
+                <a href="{% url 'home' %}" aria-label="logo image"><img src="images/logo-light.png" width="155" alt="" /></a>
+            </div>
+            <div class="mobile-nav__container"></div>
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a> <br>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:+91 86579 70797 ">+91 86579 70797 </a>
+                </li>
+            </ul>
+            <div class="mobile-nav__social">
+                <a href="https://facebook.com">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
+                    <img src="images/X_logo white.svg" alt="X Logo" class="x-logo" />
+                    <span class="sr-only">Twitter</span>
+                </a>
+                <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D" aria-hidden="true">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="https://youtube.com" aria-hidden="true">
+                    <i class="fab fa-youtube"></i>
+                    <span class="sr-only">Youtube</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="search-popup @@extraClassName">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form role="search" method="get" class="search-popup__form" action="#">
+                <input type="text" id="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="khidmat-btn">
+                    <span><i class="icon-search"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">back top</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+  
+    <script>
+        let calScrollValue = () => {
+            let scrollProgress = document.getElementById('progressbar');
+            let pos = document.documentElement.scrollTop;
+            let calHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrollValue = Math.round((pos * 100) / calHeight);
+            let progressValue = document.querySelector('.progressValue');
+
+            if (pos > 100) {
+                scrollProgress.style.display = 'grid';
+            } else {
+                scrollProgress.style.display = 'none';
+            }
+
+            // Corrected string interpolation
+            progressValue.textContent = `${scrollValue}%`;
+
+            // Fixing the background style
+            scrollProgress.style.background = `conic-gradient(#194eb9 ${scrollValue}%, #67ccff ${scrollValue}%)`;
+        }
+
+        window.onscroll = calScrollValue;
+        window.onload = calScrollValue;
+
+        document.getElementById('progress').addEventListener('click', () => {
+            // Do nothing on click, just update the percentage text
+        });
+    </script>
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'js/jarallax.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/jquery.appear.min.js' %}"></script>
+    <script src="{% static 'js/jquery.circle-progress.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/wow.js' %}"></script>
+    <script src="{% static 'js/imagesloaded.min.js' %}"></script>
+    <script src="{% static 'js/isotope.js' %}"></script>
+    <script src="{% static 'js/countdown.min.js' %}"></script>
+    <script src="{% static 'js/jquery.circleType.js' %}"></script>
+    <script src="{% static 'js/jquery.lettering.min.js' %}"></script>
+    <script src="{% static 'js/cleenhearts.js' %}"></script>
+</body>
+
+{% endblock content %}

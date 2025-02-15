@@ -1,0 +1,368 @@
+{% extends 'main/base.html' %}
+
+
+
+{% load static %}
+
+{% block content %}
+
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+    <div class="page-wrapper">
+        <!-- <div class="topbar-one">
+            <div class="container-fluid">
+                <div class="topbar-one__inner">
+                    <ul class="list-unstyled topbar-one__info">
+                        <li class="topbar-one__info__item">
+                            <span class="topbar-one__info__icon icon-paper-plane"></span>
+                            <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a
+                >
+              </li>
+            </ul>
+            <div class="topbar-one__right">
+              <div class="social-link topbar-one__social">
+                <a
+                  href="https://www.facebook.com/people/Khidmat-Charitable-Trust/100081203701961/?mibextid=ZbWKwL"
+                >
+                  <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                  <span class="sr-only">Facebook</span>
+                </a>
+                            <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D">
+                  <i class="fab fa-instagram" aria-hidden="true"></i>
+                  <span class="sr-only">Instagram</span>
+                </a>
+                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
+                  <img src="images/X_logo 1.svg" alt="X Logo" class="x-logo" />
+                  <span class="sr-only">Twitter</span>
+                </a>
+                            <a href="https://www.youtube.com/@khidmattrust" aria-hidden="true">
+                  <i class="fab fa-youtube"></i>
+                  <span class="sr-only">Youtube</span>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> -->
+
+        <section class="page-header @@extraClassName">
+            <div class="page-header__bg" style="background-image: url('');"></div>
+            <!-- /.page-header__bg -->
+            <div class="container">
+                <h2 class="page-header__title">Activities</h2>
+                <ul class="cleenhearts-breadcrumb list-unstyled">
+                    <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
+                    <li><span>Activities</span></li>
+                </ul>
+                <!-- /.thm-breadcrumb list-unstyled -->
+            </div>
+            <!-- /.container -->
+        </section>
+        <!-- /.page-header -->
+
+
+        <section class="about-one @@extraClassName section-space">
+            <div class="about-one__bg">
+                <div class="about-one__bg__border"></div>
+                <div class="about-one__bg__inner" style="
+                background-image: url('images/shapes/about-shape-1-1.png');
+              "></div>
+            </div>
+            <div class="container">
+                <div class="row gutter-y-50">
+                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="about-one__left">
+                            <div class="about-one__image">
+                                <img src="{% static 'images/about/activities.jpg' %}" alt="about" class="about-one__image__one" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="about-one__content">
+                            <div class="sec-title">
+                                <h6 class="sec-title__tagline @@extraClassName">Activities</h6>
+
+                                <h3 class="sec-title__title">
+                                    {{activities_page.title}}
+                                    <span class="sec-title__title__inner">ACTIVITIES?</span>
+                                </h3>
+                            </div>
+                            <div class="about-one__text-box wow fadeInUp" data-wow-delay="00ms"
+                                data-wow-duration="1500ms">
+                                <p class="about-one__text">
+                                    {{activities_page.descriptions}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container -->
+
+            <img src="{% static 'images/shapes/about-shape-1-2.png' %}" alt="" class="about-one__hand" />
+        </section>
+        <!-- /.about-one section-space -->
+
+        <section class="gallery-one section-space swiper-container">
+            <div class="container">
+                <h6 class="sec-title__tagline sec-title__tagline--center mb-5">Gallery</h6>
+                <div class="gallery-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-carousel owl-theme swiper-wrapper"
+                    data-owl-options='{
+                        "items": 1,
+                        "margin": 0,
+                        "loop": false,
+                        "smartSpeed": 1,
+                        "nav": false,
+                        "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
+                        "dots": true,
+                        "autoplay": false,
+                        "responsive": {
+                            "0": {"items": 1, "margin": 20},
+                            "768": {"items": 2, "margin": 30},
+                            "992": {"items": 2, "margin": 30},
+                            "1200": {"items": 3, "margin": 30}
+                        }
+                    }'>
+                    {% for image in gallery_items %}
+                        <div class="item swiper-wrapper">
+                            <div class="gallery-one__card swiper-slide">
+                                {% if image.system_img %}
+                                    <img src="{{ image.system_img.url }}" alt="{{ image.system_name }}" />
+                                {% else %}
+                                    <img src="path/to/default/image.jpg" alt="Default Image" />
+                                {% endif %}
+                                <div class="gallery-one__card__hover">
+                                    <a href="{{ image.system_img.url }}" class="img-popup">
+                                        <span class="gallery-one__card__icon"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        
+        <!-- /.gallery-one section-space -->
+
+
+        <section class="subscribe">
+            <div class="subscribe__bg"></div>
+            <div class="container">
+                <div class="row1">
+                    <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="subscribe__content">
+                            <h2 class="subscribe__title">"Khidmat Charitable Trust – A small step for us, <br> a big
+                                change for many. <br>
+                                Together, we make a difference."</h2>
+                            <!-- <span class="subscribe__title-image icon-email"></span> -->
+                            <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-7 wow fadeInUp">
+                    <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
+                        <input type="email" name="EMAIL" id="subscribe" placeholder="enter your email" class="subscribe__form__input" />
+                        <button type="submit" class="subscribe__form__btn">
+                       <span class="subscribe__form__btn__text">Subscribe now</span>
+                        <span class="subscribe__form__btn__icon icon-paper-plane"></span>
+                       </button>
+                    </form>
+                    <div class="mc-form__response"></div>
+                </div> -->
+                </div>
+            </div>
+            <div class="subscribe__shape">
+                <div class="subscribe__shape__one"></div>
+                <div class="subscribe__shape__two"></div>
+            </div>
+        </section>
+
+       
+
+    </div>
+    <!-- /.page-wrapper -->
+
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+            <div class="logo-box">
+                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'images/logo-light.png' %}" width="155" alt="" /></a>
+            </div>
+            <div class="mobile-nav__container"></div>
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a> <br>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:+91 86579 70797 ">+91 86579 70797 </a>
+                </li>
+            </ul>
+            <div class="mobile-nav__social">
+                <a href="https://facebook.com">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
+                    <img src="{% static 'images/X_logo white.svg 1.svg' %}" alt="X Logo" class="x-logo" />
+                    <span class="sr-only">Twitter</span>
+                </a>
+                <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D" aria-hidden="true">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="https://youtube.com" aria-hidden="true">
+                    <i class="fab fa-youtube"></i>
+                    <span class="sr-only">Youtube</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-popup @@extraClassName">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form role="search" method="get" class="search-popup__form" action="#">
+                <input type="text" id="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="khidmat-btn">
+                    <span><i class="icon-search"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">back top</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+   
+    <script>
+        $(document).ready(function () {
+            var galleryCarousel = $('.owl-carousel');
+
+            galleryCarousel.owlCarousel({
+                items: 1,
+                loop: false,
+                margin: 30,
+                nav: false,
+                dots: true,
+                autoplay: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        margin: 20
+                    },
+                    768: {
+                        items: 2,
+                        margin: 30
+                    },
+                    992: {
+                        items: 2,
+                        margin: 30
+                    },
+                    1200: {
+                        items: 3,
+                        margin: 30
+                    }
+                }
+            });
+
+            // Scroll event to navigate next slide on every scroll
+            $(window).on('wheel', function (e) {
+                if (e.originalEvent.deltaY > 0) {  // Scroll Down
+                    galleryCarousel.trigger('next.owl.carousel');
+                } else {  // Scroll Up
+                    galleryCarousel.trigger('prev.owl.carousel');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        let calScrollValue = () => {
+            let scrollProgress = document.getElementById('progressbar');
+            let pos = document.documentElement.scrollTop;
+            let calHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrollValue = Math.round((pos * 100) / calHeight);
+            let progressValue = document.querySelector('.progressValue');
+
+            if (pos > 100) {
+                scrollProgress.style.display = 'grid';
+            } else {
+                scrollProgress.style.display = 'none';
+            }
+
+            // Corrected string interpolation
+            progressValue.textContent = `${scrollValue}%`;
+
+            // Fixing the background style
+            scrollProgress.style.background = `conic-gradient(#194eb9 ${scrollValue}%, #67ccff ${scrollValue}%)`;
+        }
+
+        window.onscroll = calScrollValue;
+        window.onload = calScrollValue;
+
+        document.getElementById('progress').addEventListener('click', () => {
+            // Do nothing on click, just update the percentage text
+        });
+    </script>
+    <script>
+        const gallery = document.querySelector('.gallery-one__carousel');
+
+        gallery.addEventListener('wheel', (event) => {
+            if (event.deltaY > 0) {
+                gallery.scrollBy({ left: 300, behavior: 'smooth' }); // Scroll right
+            } else {
+                gallery.scrollBy({ left: -300, behavior: 'smooth' }); // Scroll left
+            }
+        });
+
+    </script>
+
+
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+    <script src="{% static 'js/jarallax.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.appear.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.circle-progress.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+    <script src="{% static 'js/nouislider.min.js' %}"></script>
+
+    <script src="{% static 'js/tiny-slider.js' %}"></script>
+
+    <script src="{% static 'js/wNumb.min.js' %}"></script>
+
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+    <script src="{% static 'js/wow.js' %}"></script>
+
+    <script src="{% static 'js/imagesloaded.min.js' %}"></script>
+
+    <script src="{% static 'js/cleenhearts.js' %}"></script>
+    <script src="{% static 'https://unpkg.com/swiper/swiper-bundle.min.js' %}"></script>
+</body>
+
+{% endblock content %}

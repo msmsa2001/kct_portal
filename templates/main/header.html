@@ -1,0 +1,135 @@
+{% load static %}
+<!-- header.html -->
+
+<body class="custom-cursor">
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+    <div class="preloader">
+        <div class="preloader__image">
+            <img src="{% static 'sfiles/images/loader.png' %}" alt="">
+        </div>
+    </div>
+    <!-- /.preloader -->
+    <div class="page-wrapper">
+        <header class="main-header sticky-header sticky-header--normal">
+            <div class="container-fluid">
+                <div class="main-header__inner">
+                    <div class="main-header__logo">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'images/khidmat-logo.png' %}" alt="khidmat logo" width="160" />
+                        </a>
+                        <button type="button" class="main-header__sidebar-btn sidebar-btn__toggler">
+                            <span class="icon-grid"></span>
+                        </button>
+                    </div>
+                    <div class="main-header__right">
+                        <nav class="main-header__nav main-menu">
+                            <ul class="main-menu__list">
+                                <li class="megamenu">
+                                    <a href="{% url 'home' %}">Home</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'about' %}">About Us</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'activity' %}">Activities</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'benefits' %}">Benefits</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'career' %}">Careers</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'contact' %}">Contacts</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <a href="{% url 'donate' %}" class="cleenhearts-btn donate-now-btn" id="cleenhearts-btn">
+                            <span class="cleenhearts-btn__text" id="cleenhearts-btn__text">donate now</span>
+                        </a>
+                        <div class="mobile-nav__btn mobile-nav__toggler">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div class="main-header__cart">
+                            <a href="{% url 'donate' %}" class="cleenhearts-btn main-header__btn">
+                                <div class="cleenhearts-btn__icon-box">
+                                    <div class="cleenhearts-btn__icon-box__inner">
+                                        <span class="icon-donate"></span>
+                                    </div>
+                                </div>
+                                <span class="cleenhearts-btn__text">donate now</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <aside class="sidebar-one">
+            <div class="sidebar-one__overlay sidebar-btn__toggler"></div>
+            <div class="sidebar-one__content">
+                <span class="sidebar-one__close sidebar-btn__toggler"><i class="fa fa-times"></i></span>
+                <div class="sidebar-one__logo sidebar-one__item">
+                    <a href="{% url 'home' %}" aria-label="logo image"><img
+                            src="{% static 'images/kct-logo-white-svg.svg' %}" width="155" alt="logo-dark" /></a>
+                </div>
+                <div class="sidebar-one__about sidebar-one__item">
+                    <p class="sidebar-one__about__text">Khidmat Charitable Trust (KCT) is a Non-Government Organization
+                        (NGO) registered under the Government of India’s Public Trust Registration Act of 1950 on 12
+                        December 2001.</p>
+                </div>
+                <div class="sidebar-one__information sidebar-one__item">
+                    <h4 class="sidebar-one__title">Information</h4>
+                    <ul class="sidebar-one__information__list">
+                        <li>
+                            <span class="sidebar-one__information__icon icon-location"></span>
+                            <address class="sidebar-one__information__address">
+                                <p class="sidebar-one__information__text">{{ footer.address }}
+                                </p>
+                            </address>
+                        </li>
+                        <li>
+                            <i class="sidebar-one__information__icon icon-envelope"></i>
+                            <p class="sidebar-one__information__text"><a
+                                    href="mailto:info@khidmattrust.org.com">{{ footer.email }}</a></p>
+                        </li>
+                        <li>
+                            <span class="sidebar-one__information__icon icon-phone"></span>
+                            <p class="sidebar-one__information__text"><a href="tel:91 86579 70797">{{ footer.phone_number }}</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sidebar-one__socila social-link sidebar-one__item">
+                    {% if footer.facebook_link %}
+                    <a href="{{ footer.facebook_link }}">
+                        <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                        <span class="sr-only">Facebook</span>
+                    </a>
+                    {% endif %}
+                    {% if footer.instagram_link %}
+                    <a href="{{ footer.instagram_link }}">
+                        <i class="fab fa-instagram" aria-hidden="true"></i>
+                        <span class="sr-only">Instagram</span>
+                    </a>
+                    {% endif %}
+                    {% if footer.twitter_link %}
+                    <a href="{{ footer.twitter_link }}">
+                        <img src="{% static 'images/X_logo white.svg' %}" alt="Twitter Logo" class="x-logo" />
+                        <span class="sr-only">Twitter</span>
+                    </a>
+                    {% endif %}
+                    {% if footer.youtube_link %}
+                    <a href="{{ footer.youtube_link }}" aria-hidden="true">
+                        <i class="fab fa-youtube"></i>
+                        <span class="sr-only">Youtube</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </aside>
