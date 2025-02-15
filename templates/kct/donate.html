@@ -1,0 +1,407 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+    .donation-form {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+    .required {
+        color: red;
+    }
+
+    .submit-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<body class="custom-cursor">
+
+    <div class="page-wrapper">
+
+        <section class="page-header @@extraClassName">
+            <div class="page-header__bg"></div>
+            <div class="container">
+                <h2 class="page-header__title">Donate Now</h2>
+                <ul class="cleenhearts-breadcrumb list-unstyled">
+                    <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
+                    <li><span>Donate Now</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="donate-page mt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        {% if donate_data %}
+                        <h2 class="subscribe__title donate-quote">
+                            {{ donate_data.system_title|safe }}
+                        </h2>
+
+                        <div class="donate-page__content">
+                            <img src="{{ donate_data.system_img.url }}" alt="Donate Image">
+                            <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank">
+                                <p>UPI ID - {{ donate_data.system_value }}</p>
+                            </a>
+                        </div>
+
+                        <form id="donationForm" action="{% url 'donate' %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="whypay">Select</label>
+                                <select id="whypay" name="whypay" required>
+                                    <option value="zakat" selected>Zakat</option>
+                                    <option value="fi-sabilillah">Fi Sabilillah</option>
+                                    <option value="sadqa">Sadqa</option>
+                                    <option value="interest">Interest</option>
+                                    <option value="others">Others</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="payingfrom">Paying From <span class="required">*</span></label>
+                                <select id="payingfrom" name="payingfrom" required onchange="toggleFormSections()">
+                                    <option value="">Select an Option</option>
+                                    <option value="personal-account">Personal Account</option>
+                                    <option value="official-account">Official Account</option>
+                                </select>
+                            </div>
+
+                            <!-- Personal Account Form -->
+                            <div id="personal-account-form" class="form-section" style="display: none;">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="fullname">Full Name <span class="required">*</span></label>
+                                        <input type="text" id="fullname" name="name" placeholder="Name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Phone Number <span class="required">*</span></label>
+                                        <input type="text" id="phone" name="phone" placeholder="Phone Number" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email Address <span class="required">*</span></label>
+                                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address">Address <span class="required">*</span></label>
+                                    <input type="text" id="address" name="address" placeholder="Address" required>
+                                </div>
+                            </div>
+
+                            <!-- Official Account Form -->
+                            <div id="official-account-form" class="form-section" style="display: none;">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="company">Full Company Name</label>
+                                        <input type="text" id="company" name="company" placeholder="Full company name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone2">Phone No</label>
+                                        <input type="text" id="phone2" name="phone2" placeholder="Phone no">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email2">Email Address</label>
+                                        <input type="email" id="email2" name="email2" placeholder="Email address">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="company-address">Full Company Address</label>
+                                    <input type="text" id="company-address" name="address2-street_address" placeholder="Full company address">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company-pan">Company Pan No</label>
+                                    <input type="text" id="company-pan" name="pan2" placeholder="Company pan no">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="contact-name">Contact Person Name</label>
+                                        <input type="text" id="contact-name" name="name2" placeholder="Contact person name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contact-phone">Contact Person Number</label>
+                                        <input type="text" id="contact-phone" name="phone3" placeholder="Contact person Number">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Donation Amount -->
+                            <div class="form-group">
+                                <label for="donation-amount">Donation Amount <span class="required">*</span></label>
+                                <input type="number" id="donation-amount" name="amount" placeholder="Donation Amount" min="100" max="9000000000" required>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="submit-button">Donate Now</button>
+                            </div>
+                        </form>
+
+                        {% else %}
+                        <p>No donation information available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            // Function to toggle visibility based on 'Paying From' selection
+            function toggleFormSections() {
+                const payingFrom = document.getElementById('payingfrom').value;
+                const personalAccountForm = document.getElementById('personal-account-form');
+                const officialAccountForm = document.getElementById('official-account-form');
+
+                // Hide both forms initially
+                personalAccountForm.style.display = 'none';
+                officialAccountForm.style.display = 'none';
+
+                // Show the selected form
+                if (payingFrom === 'personal-account') {
+                    personalAccountForm.style.display = 'block';
+                } else if (payingFrom === 'official-account') {
+                    officialAccountForm.style.display = 'block';
+                }
+            }
+
+            // Handle form submission
+            document.getElementById('donationForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const amount = document.getElementById('donation-amount').value;
+                const amountInPaise = parseInt(amount) * 100; // Convert to paise
+
+                fetch("{% url 'donate' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: `amount=${amountInPaise}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const options = {
+                        key: 'rzp_test_xiMcTjBlVV2j8h',
+                        amount: data.amount,
+                        currency: 'INR',
+                        order_id: data.id,
+                        name: 'Khidmat Trust',
+                        description: 'Donation',
+                        handler: function (response) {
+                            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+                        },
+                        prefill: {
+                            name: document.getElementById('fullname').value,
+                            email: document.getElementById('email').value,
+                            contact: document.getElementById('phone').value
+                        },
+                        theme: {
+                            color: '#F37254'
+                        }
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        </script>
+        <!-- RAZORPAY INTEGRATION HERE -->
+        <script src="https://checkout.razorpay.com/v1/checkout.js">
+        </script>
+        <section class="subscribe">
+            <div class="subscribe__bg"></div>
+            <div class="container">
+                <div class="row1">
+                    <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        <div class="subscribe__content">
+                            <h2 class="subscribe__title">"Charity is an opportunity to help those who are less
+                                fortunate.
+                                Be a hand chosen by allah to make others smile"</h2>
+                        </div>
+                    </div>
+
+                    <div class="subscribe__shape">
+                        <div class="subscribe__shape__one"></div>
+                        <div class="subscribe__shape__two"></div>
+                    </div>
+        </section>
+
+    </div>
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+            <div class="logo-box">
+                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'images/logo-light.png' %}"
+                        width="155" alt="" /></a>
+            </div>
+            <div class="mobile-nav__container"></div>
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a> <br>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:+91 86579 70797 ">+91 86579 70797 </a>
+                </li>
+            </ul>
+            <div class="mobile-nav__social">
+                <a href="https://facebook.com">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
+                    <img src="{% static 'images/X_logo white.svg' %}" alt="X Logo" class="x-logo" />
+                    <span class="sr-only">Twitter</span>
+                </a>
+                <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D" aria-hidden="true">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="https://youtube.com" aria-hidden="true">
+                    <i class="fab fa-youtube"></i>
+                    <span class="sr-only">Youtube</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-popup @@extraClassName">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form role="search" method="get" class="search-popup__form" action="#">
+                <input type="text" id="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="khidmat-btn">
+                    <span><i class="icon-search"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">back top</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+
+
+    <script>
+        let calScrollValue = () => {
+            let scrollProgress = document.getElementById('progressbar');
+            let pos = document.documentElement.scrollTop;
+            let calHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrollValue = Math.round((pos * 100) / calHeight);
+            let progressValue = document.querySelector('.progressValue');
+
+            if (pos > 100) {
+                scrollProgress.style.display = 'grid';
+            } else {
+                scrollProgress.style.display = 'none';
+            }
+
+            progressValue.textContent = `${scrollValue}%`;
+
+            scrollProgress.style.background = `conic-gradient(#194eb9 ${scrollValue}%, #67ccff ${scrollValue}%)`;
+        }
+
+        window.onscroll = calScrollValue;
+        window.onload = calScrollValue;
+
+        document.getElementById('progress').addEventListener('click', () => {
+        });
+    </script>
+
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+    <script src="{% static 'js/jarallax.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.appear.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.circle-progress.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+    <script src="{% static 'js/nouislider.min.js' %}"></script>
+
+    <script src="{% static 'js/tiny-slider.js' %}"></script>
+
+    <script src="{% static 'js/wNumb.min.js' %}"></script>
+
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+    <script src="{% static 'vendors/wow/wow.js' %}"></script>
+
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.min.js' %}"></script>
+
+    <script src="{% static 'js/isotope.js' %}"></script>
+
+    <script src="{% static 'js/countdown.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.circleType.js' %}"></script>
+
+    <script src="{% static 'js/jquery.lettering.min.js' %}"></script>
+
+    <script src="{% static 'js/cleenhearts.js' %}"></script>
+</body>
+
+{% endblock content %}
