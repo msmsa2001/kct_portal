@@ -51,18 +51,22 @@
         <section class="main-slider-one">
             <div class="main-slider-one__wrapper">
                 <div class="main-slider-one__carousel cleenhearts-owl__carousel owl-carousel" data-owl-options='{
-			"loop": true,
-			"animateOut": "fadeOut",
-			"animateIn": "fadeIn",
-			"items": 1,
-			"autoplay": true,
-			"autoplayTimeout": 7000,
-			"smartSpeed": 1000,
-			"nav": false,
-			"navText": ["<span class=\"icon-left-arrow\"></span>","<span class=\"icon-right-arrow\"></span>"],
-			"dots": true,
-			"margin": 0
-			}'>
+                    "loop": true,
+                    "animateOut": "fadeOut",
+                    "animateIn": "fadeIn",
+                    "items": 1,
+                    "autoplay": true,
+                    "autoplayTimeout": 7000,
+                    "smartSpeed": 1000,
+                    "nav": false,
+                    "dots": true,
+                    "margin": 0,
+                    "responsive": {
+                        "0": { "items": 1 },
+                        "600": { "items": 1 },
+                        "1000": { "items": 1 }
+                    }
+                }'>
                     <div class="item">
                         <div class="main-slider-one__item">
 
@@ -159,22 +163,22 @@
             </h6>
             <div class="container2">
                 {% for category in categories %}
-                <div class="box" data-aos="fade-up" data-aos-duration="{{ forloop.counter|add:1 }}000">
+                <div class="box dd-box" data-aos="fade-up" data-aos-duration="{{ forloop.counter|add:1 }}000">
                     <img src="{{ category.icon.url }}">
                     <div class="box-content">
                         <p class="numbers1" data-val="4597+">{{ category.number }}</p>
                         
                         {% if category.has_dropdown %}
                         <div class="dropdown">
-                            <p class="dropdown-btn">
+                            <p class="dropdown-btn below-number">
                                 {{ category.name }}
-                                <span class="dropdown-arrow">▼</span>
+                                <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
                             </p>
-                            <div class="dropdown-content">
+                            <p class="dropdown-content">
                                 {% for option in category.dropdown_options.all %}
-                                <a href="#">{{ option.name }}</a>
+                                <a>{{ option.name }}</a>
                                 {% endfor %}
-                            </div>
+                            </p>
                         </div>
                         {% else %}
                         <p class="below-number">{{ category.name }}</p>
@@ -221,7 +225,7 @@
                                     <p class="about-one__text">{{ about_section.system_value|linebreaks }}</p>
                                 {% endif %}
                             </div>
-                            <div class="about-one__wrapper">
+                            <div class="about-one__wrapper" id="about-one">
                                 <div class="row gutter-y-40">
                                     <div class="col-lg-4 col-sm-4 col-12 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
                                         <div class="about-one__donate about-one__donate--one">
@@ -261,6 +265,35 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="vismisWrapp mt-5" id="about-two">
+                                <div class="vmcard">
+                                    <div class="icon red">
+                                        <img src="{% static 'images/about/khidmat_2-02.png' %}" />
+                                    </div>
+                                    <h3>Our Aim</h3>
+                                    <p>
+                                        {{ our_aim.system_value }}
+                                    </p>
+                                </div>
+            
+                                <div class="vmcard">
+                                    <div class="icon blue">
+                                        <img src="{% static 'images/about/khidmat_2-03.png' %}" />
+                                    </div>
+                                    <h3>Our Vision</h3>
+                                    <p>
+                                        {{ our_vision.system_value }}
+                                    </p>
+                                </div>
+            
+                                <div class="vmcard">
+                                    <div class="icon green">
+                                        <img src="{% static 'images/about/khidmat_2-04.png' %}" />
+                                    </div>
+                                    <h3>Our Mission</h3>
+                                    <p>{{ our_mission.system_value }}</p>
+                                </div>
+                            </div>
                             <div class="contact-information">
                                 <a href="{% url 'about' %}" class="contact-information__btn cleenhearts-btn">
                                     <div class="cleenhearts-btn__icon-box">
@@ -275,7 +308,7 @@
                                         <span class="icon-phone"></span>
                                     </div>
                                     <div class="contact-information__phone__text">
-                                        <span>call any time</span>
+                                        <span>Contact Us</span>
                                         <h5><a href="tel:+912223082291">+91 86579 70797</a></h5>
                                     </div>
                                 </div>
@@ -465,7 +498,7 @@
                     <div class="item">
                         <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
                             {% if title == 'DIALYSIS CENTRE' %}
-                            <a href="#" class="blog-card__image">
+                            <a href="" class="blog-card__image">
                                     <img src="{% static 'images/events/event-1.jpg' %}" alt="{{ title }}" />
                                     <div class="blog-card__react"><span>2</span> Reactions</div>
                             </a>
@@ -485,7 +518,7 @@
                                     <a href="#">{{ title }}</a>
                                 </h3>
                                 <p>{{ description }}</p>
-                                <a href="#" class="blog-card__link">
+                                <a href="{% url 'dialysis' %}" class="blog-card__link">
                                     <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
                                     <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read More</span>
                                 </a>

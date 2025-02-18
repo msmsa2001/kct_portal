@@ -12,4 +12,5 @@ urlpatterns = [
     path('dialysis', dialysis, name='dialysis'),
     path('ramzan', ramzan, name='ramzan'),
     path('help', help, name='help'),
+    # path('event/<slug:slug>/', views.event_detail, name='event_detail'),
 ]

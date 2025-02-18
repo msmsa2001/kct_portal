@@ -42,7 +42,7 @@
         </div> -->
        
         <section class="page-header @@extraClassName">
-            <div class="page-header__bg"></div>
+            <div class="page-header__bg"style="background-image: url('images/about/topbar.jpeg')"></div>
             <div class="container">
                 <h2 class="page-header__title">Contact Us</h2>
                 <ul class="cleenhearts-breadcrumb list-unstyled">
@@ -69,7 +69,7 @@
                                     </div>
                                     <div class="contact-one__info__content">
                                         <h4 class="contact-one__info__title">Office Address</h4>
-                                        <address class="contact-one__info__text">{{ footer.address }}</address>
+                                        <address class="contact-one__info__text">{{ footer_data.address|linebreaksbr }}</address>
                                     </div>
                                 </div>
                                 <div class="contact-one__info__item">
@@ -78,8 +78,8 @@
                                     </div>
                                     <div class="contact-one__info__content">
                                         <h4 class="contact-one__info__title">Quick Contact</h4>
-                                        <a href="tel:{{ footer.phone_number }}"
-                                            class="contact-one__info__text contact-one__info__text--link">{{ footer.phone_number }}</a>
+                                        <a href="tel:{{ footer_data.phone }}"
+                                            class="contact-one__info__text contact-one__info__text--link">{{ footer_data.phone }}</a>
                                     </div>
                                 </div>
                                 <div class="contact-one__info__item">
@@ -88,8 +88,8 @@
                                     </div>
                                     <div class="contact-one__info__content">
                                         <h4 class="contact-one__info__title">Support Email</h4>
-                                        <a href="mailto:{{ footer.email }}"
-                                            class="contact-one__info__text contact-one__info__text--link">{{ footer.email }}</a>
+                                        <a href="mailto:{{ footer_data.email }}"
+                                            class="contact-one__info__text contact-one__info__text--link">{{ footer_data.email }}</a>
                                     </div>
                                 </div>
                             </div>
