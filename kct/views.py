@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from kct_portal import settings
 from .models import KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
@@ -215,3 +215,7 @@ def help(request):
     }
     return render(request, 'kct/event-why-should-anyone-approach-kct-for-help-and-assistance.html',context)
 
+
+def event_detail(request, slug):
+    event = get_object_or_404(SystemMaster, system_title__icontains=slug)
+    return render(request, 'event_detail.html', {'event': event})

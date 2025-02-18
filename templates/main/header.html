@@ -89,18 +89,18 @@
                         <li>
                             <span class="sidebar-one__information__icon icon-location"></span>
                             <address class="sidebar-one__information__address">
-                                <p class="sidebar-one__information__text">{{ footer.address }}
+                                <p class="sidebar-one__information__text">{{ footer_data.address|linebreaksbr }}
                                 </p>
                             </address>
                         </li>
                         <li>
                             <i class="sidebar-one__information__icon icon-envelope"></i>
                             <p class="sidebar-one__information__text"><a
-                                    href="mailto:info@khidmattrust.org.com">{{ footer.email }}</a></p>
+                                    href="{{ footer_data.email }}">{{ footer_data.email }}</a></p>
                         </li>
                         <li>
                             <span class="sidebar-one__information__icon icon-phone"></span>
-                            <p class="sidebar-one__information__text"><a href="tel:91 86579 70797">{{ footer.phone_number }}</a>
+                            <p class="sidebar-one__information__text"><a href="tel:{{ footer_data.phone }}">{{ footer_data.phone }}</a>
                             </p>
                         </li>
                     </ul>
