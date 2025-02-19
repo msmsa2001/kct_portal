@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from kct_portal import settings
-from .models import KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
+from .models import EventMaster, KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
 from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -19,6 +19,7 @@ def home(request):
     our_vision = SystemMaster.objects.filter(system_name="Our Vision").first()
     our_mission = SystemMaster.objects.filter(system_name="Our Mission").first()
     footer_data = get_footer_data()
+    display_event = EventMaster.objects.filter(is_active=True).order_by('order')
      
 
     context = {
@@ -33,6 +34,7 @@ def home(request):
         'our_vision': our_vision,
         'our_mission': our_mission,
         'footer_data': footer_data,
+        'display_event': display_event
         
     }
     return render(request, 'kct/index.html', context)
@@ -196,6 +198,8 @@ def dialysis(request):
 
 
 
+
+
 def ramzan(request):
     footer_data = get_footer_data()
 
@@ -219,3 +223,17 @@ def help(request):
 def event_detail(request, slug):
     event = get_object_or_404(SystemMaster, system_title__icontains=slug)
     return render(request, 'event_detail.html', {'event': event})
+
+
+def displayParticularEvent(request, eventId):
+    eventDetail = EventMaster.objects.filter(id=eventId, is_active=True).order_by('order')
+    everEvent = EventMaster.objects.exclude(id=eventId)
+    footer_data = get_footer_data()
+
+    context = {
+        'eventDetail': eventDetail,
+        'everEvent': everEvent,
+        'footer_data': footer_data
+        
+        }
+    return render(request, 'kct/event-dialysis-centre.html', context)

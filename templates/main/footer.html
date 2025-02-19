@@ -12,7 +12,7 @@
                             {{ footer_data.about_text|linebreaksbr }}
                         </p>
                     </div>
-                    <a href="donate.html" class="cleenhearts-btn">
+                    <a href="{% url 'donate' %}" class="cleenhearts-btn">
                         <div class="cleenhearts-btn__icon-box">
                             <div class="cleenhearts-btn__icon-box__inner">
                                 <span class="icon-donate"></span>
@@ -97,7 +97,7 @@
         </div>
     </div>
     <div class="main-footer__bottom">
-        <div class="main-footer__bottom__bg" style="background: url('{% static 'images/backgrounds/footer-bottom-bg-1-2.png' %}');"></div>
+        <div class="main-footer__bottom__bg" style="background: url('/static/images/backgrounds/footer-bottom-bg-1-2.png');"></div>
         <div class="container">
             <div class="main-footer__bottom__inner">
                 <a href="https://pyzon.in/" target="_blank">
