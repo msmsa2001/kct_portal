@@ -12,41 +12,6 @@
 
     <div class="page-wrapper">
 
-        <!-- <div class="topbar-one">
-            <div class="container-fluid">
-                <div class="topbar-one__inner">
-                    <ul class="list-unstyled topbar-one__info">
-                        <li class="topbar-one__info__item">
-                            <span class="topbar-one__info__icon icon-paper-plane"></span>
-                            <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a>
-                        </li>
-                    </ul>
-                    <div class="topbar-one__right">
-                        <div class="social-link topbar-one__social">
-                            <a href="https://www.facebook.com/people/Khidmat-Charitable-Trust/100081203701961/?mibextid=ZbWKwL">
-                      <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                      <span class="sr-only">Facebook</span>
-                    </a>
-                            <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D">
-                      <i class="fab fa-instagram" aria-hidden="true"></i>
-                      <span class="sr-only">Instagram</span>
-                    </a>
-                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
-                      <img src="images/X_logo 1.svg" alt="X Logo" class="x-logo" />
-                      <span class="sr-only">Twitter</span>
-                    </a>
-                            <a href="https://www.youtube.com/@khidmattrust" aria-hidden="true">
-                      <i class="fab fa-youtube"></i>
-                      <span class="sr-only">Youtube</span>
-                    </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-       
-
         <section class="page-header @@extraClassName">
             <div class="page-header__bg"></div>
 
@@ -66,15 +31,11 @@
                         <div class="event-details__content">
                             <div class="event-details__image wow fadeInUp" data-wow-duration="1500ms"
                                 data-wow-delay="00ms">
-                                <img src="images/events/event-3.jpg" alt="event-details">
+                                <img src="{% static 'images/events/event-3.jpg' %}" alt="event-details">
                                 <div class="event-details__hall">
                                     <span>2</span>
                                     <span>Reactions</span>
                                 </div>
-                                <!-- <div class="event-details__date">
-                                    <span>17</span>
-                                    <span>July</span>
-                                </div> -->
                             </div>
                             <div class="event-details__time">
                                 <i class="event-details__time__icon fa fa-clock"></i>
@@ -115,7 +76,7 @@
                             <div class="event-details__speaker__info wow fadeInUp" data-wow-duration="1500ms"
                                 data-wow-delay="00ms">
                                 <div class="event-details__speaker__image">
-                                    <img src="images/events/event-1.jpg" alt="">
+                                    <img src="{% static 'images/events/event-1.jpg' %}" alt="">
                                 </div>
                                 <div class="event-details__speaker__content">
                                     <div class="event-details__speaker__content__inner">
@@ -137,7 +98,7 @@
                             <div class="event-details__speaker__info wow fadeInUp" data-wow-duration="1500ms"
                                 data-wow-delay="00ms">
                                 <div class="event-details__speaker__image">
-                                    <img src="images/events/event-4.jpg" alt="">
+                                    <img src="{% static 'images/events/event-4.jpg' %}" alt="">
                                 </div>
                                 <div class="event-details__speaker__content">
                                     <div class="event-details__speaker__content__inner">
@@ -171,9 +132,7 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">Mailing Address</h4>
-                                            <address class="contact-one__info__text">C/O Educational & Welfare
-                                                Foundation, P.T Mane Udyan, Mirza Galib Marg, Opp. Rolex Restaurant,
-                                                Clare Road, Nagpada Junction, Mumbai: 400 008</address>
+                                            <address class="contact-one__info__text">{{ footer_data.address|linebreaksbr }}</address>
                                         </div>
                                     </div>
                                     <div class="contact-one__info__item">
@@ -182,9 +141,8 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">Quick Contact</h4>
-                                            <a href="tel:91 86579 70797"
-                                                class="contact-one__info__text contact-one__info__text--link">+91 86579
-                                                70797</a>
+                                            <a href="tel:{{ footer_data.phone }}"
+                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.phone }}</a>
                                         </div>
                                     </div>
                                     <div class="contact-one__info__item">
@@ -193,13 +151,13 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">support email</h4>
-                                            <a href="mailto:info@khidmattrust.org"
-                                                class="contact-one__info__text contact-one__info__text--link">info@khidmattrust.org</a>
+                                            <a href="mailto:{{ footer_data.email }}"
+                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.email }}</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="sidebar-event__contact__image">
-                                    <img src="images/events/event-1.jpg" alt="events">
+                                    <img src="{% static 'images/events/event-1.jpg' %}" alt="events">
                                 </div>
                             </div>
                             <div class="sidebar-event__map sidebar-event__item wow fadeInUp" data-wow-duration="1500ms"
@@ -227,16 +185,7 @@
                                         <span class="reaction-count">0</span>
                                         <p>Upset</p>
                                     </div>
-                                    <!-- <div class="reaction-box" onclick="increaseCount(this)">
-                                        <i class="reaction-icon">&#10084;</i>
-                                        <span class="reaction-count">0</span>
-                                        <p>Love</p>
-                                    </div>
-                                    <div class="reaction-box" onclick="increaseCount(this)">
-                                        <i class="reaction-icon">&#128518;</i>
-                                        <span class="reaction-count">0</span>
-                                        <p>LOL</p>
-                                    </div> -->
+                                    
                                 </div>
                             </div>
 
@@ -260,16 +209,7 @@
                             <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
                         </div>
                     </div>
-                    <!-- <div class="col-lg-7 wow fadeInUp">
-                        <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
-                            <input type="email" name="EMAIL" id="subscribe" placeholder="enter your email" class="subscribe__form__input" />
-                            <button type="submit" class="subscribe__form__btn">
-                           <span class="subscribe__form__btn__text">Subscribe now</span>
-                            <span class="subscribe__form__btn__icon icon-paper-plane"></span>
-                           </button>
-                        </form>
-                        <div class="mc-form__response"></div>
-                    </div> -->
+                    
                 </div>
             </div>
             <div class="subscribe__shape">
@@ -289,17 +229,17 @@
         <div class="mobile-nav__content">
             <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
             <div class="logo-box">
-                <a href="{% url 'home' %}" aria-label="logo image"><img src="images/logo-light.png" width="155" alt="" /></a>
+                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'images/logo-light.png' %}" width="155" alt="" /></a>
             </div>
             <div class="mobile-nav__container"></div>
             <ul class="mobile-nav__contact list-unstyled">
                 <li>
                     <i class="fa fa-envelope"></i>
-                    <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a> <br>
+                    <a href="mailto:{{ footer_data.email }}">{{ footer_data.email }}</a> <br>
                 </li>
                 <li>
                     <i class="fa fa-phone-alt"></i>
-                    <a href="tel:+91 86579 70797 ">+91 86579 70797 </a>
+                    <a href="tel:{{ footer_data.phone }}">{{ footer_data.phone }} </a>
                 </li>
             </ul>
             <div class="mobile-nav__social">
@@ -308,7 +248,7 @@
                     <span class="sr-only">Facebook</span>
                 </a>
                 <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
-                    <img src="images/X_logo white.svg" alt="X Logo" class="x-logo" />
+                    <img src="{% static 'images/X_logo white.svg' %}" alt="X Logo" class="x-logo" />
                     <span class="sr-only">Twitter</span>
                 </a>
                 <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D" aria-hidden="true">

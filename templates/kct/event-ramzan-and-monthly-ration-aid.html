@@ -156,7 +156,7 @@
                                             day. It is ensured that the medicines strips are cut and the bottles are
                                             unsealed to avoid resale/misuse of medicines.…</p>
 
-                                        <a href="{% url 'help' %}l">
+                                        <a href="{% url 'help' %}">
                                             <button class="btnrd cleenhearts-btn">Read More</button></a>
                                     </div>
                                 </div>
@@ -174,9 +174,7 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">Mailing Address</h4>
-                                            <address class="contact-one__info__text">C/O Educational & Welfare
-                                                Foundation, P.T Mane Udyan, Mirza Galib Marg, Opp. Rolex Restaurant,
-                                                Clare Road, Nagpada Junction, Mumbai: 400 008</address>
+                                            <address class="contact-one__info__text">{{ footer_data.address|linebreaksbr }}</address>
                                         </div>
                                     </div>
                                     <div class="contact-one__info__item">
@@ -185,9 +183,8 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">Quick Contact</h4>
-                                            <a href="tel:91 86579 70797"
-                                                class="contact-one__info__text contact-one__info__text--link">+91 86579
-                                                70797</a>
+                                            <a href="tel:{{ footer_data.phone }}"
+                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.phone }}</a>
                                         </div>
                                     </div>
                                     <div class="contact-one__info__item">
@@ -196,8 +193,8 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">support email</h4>
-                                            <a href="mailto:info@khidmattrust.org"
-                                                class="contact-one__info__text contact-one__info__text--link">info@khidmattrust.org</a>
+                                            <a href="mailto:{{ footer_data.email }}"
+                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.email }}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -297,11 +294,11 @@
             <ul class="mobile-nav__contact list-unstyled">
                 <li>
                     <i class="fa fa-envelope"></i>
-                    <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a> <br>
+                    <a href="mailto:{{ footer_data.email }}">{{ footer_data.email }}</a> <br>
                 </li>
                 <li>
                     <i class="fa fa-phone-alt"></i>
-                    <a href="tel:+91 86579 70797 ">+91 86579 70797 </a>
+                    <a href="tel:{{ footer_data.phone }}">{{ footer_data.phone }}</a>
                 </li>
             </ul>
             <div class="mobile-nav__social">

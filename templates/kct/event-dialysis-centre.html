@@ -56,7 +56,10 @@
                 <h2 class="page-header__title">Events</h2>
                 <ul class="cleenhearts-breadcrumb list-unstyled">
                     <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
-                    <li><span>Dialysis Center</span></li>   
+                    {% for event in eventDetail %}
+
+                    <li><span>{{ event.event_title }}</span></li>  
+                    {% endfor %}
                 </ul>
             </div>
         </section>
@@ -65,12 +68,13 @@
             <div class="container">
                 <div class="row gutter-y-60">
                     <div class="col-lg-8">
+                        {% for event in eventDetail %}
                         <div class="event-details__content">
                             <div class="event-details__image wow fadeInUp" data-wow-duration="1500ms"
                                 data-wow-delay="00ms">
-                                <img src="{% static 'images/events/event-1.jpg' %}" alt="event-details">
+                                <img src="{{ event.event_img.url }}" alt="event-details">
                                 <div class="event-details__hall">
-                                    <span>2</span>
+                                    <span>{{ event.reactions }}</span>
                                     <span>Reactions</span>
                                 </div>
                                 <!-- <div class="event-details__date">
@@ -80,102 +84,44 @@
                             </div>
                             <div class="event-details__time">
                                 <i class="event-details__time__icon fa fa-clock"></i>
-                                <span class="event-details__time__text">10:00 aM - 2.00 PM</span>
+                                <span class="event-details__time__text">{{ event.time }}</span>
                             </div>
-                            <h3 class="event-details__title mb-2">Dialysis Centre</h3>
+                            <h3 class="event-details__title mb-2">{{ event.event_title }}</h3>
                             <div class="event-details__text mt-2">
-                                <p class="">During the course of running our Medical Aid program, KCT Trust members
-                                    would come across numerous cases in need of urgent dialysis treatment. Since
-                                    dialysis treatment is an on-going cost, for the underprivileged, it involved
-                                    a formidable cost that they can ill-afford. In 2016, with the guidance and expert
-                                    advice of doctors, KCT Trustees and mentors decided to set-up a well-equipped
-                                    dialysis centre. The centre at XXXXX, takes an all-inclusive
-                                    approach in which the medicines are also allotted to the enrolled, critically-ill
-                                    patients.</p>
 
-                                <p><b>Reality Check</b></p>
-
-                                <p>Yearly, around 2,20,000 patients in India are diagnosed with end-stage renal disease
-                                    (ESRD). Every year, there is an added chunk of 34 million dialysis sessions added to
-                                    the existing pool of patients. Nearly 70% of this
-                                    target population of patients are not able to afford or continue with the recurring
-                                    treatment due to fiscal limitations or untimely death. Only miniscule 10–20%
-                                    patients in India receive dialysis on time and are able
-                                    to go on with the lengthy treatment.</p>
-
-                                <p><b>KCT Remedy</b></p>
-                                <p>The KCT Trust’s first measure was to spread more awareness in our society about the
-                                    urgent need to increase capacity for dialysis procedure. Since this was not
-                                    available with the government hospitals and private hospitals
-                                    were out of bounds for poor patients, KCT Trustees eventually decided to set-up
-                                    their own centre for provision of regular dialysis sessions. This Centre also
-                                    distributes medicines, gives injections and provides for
-                                    the patients’ ration needs through our different programs. At the centre, we have a
-                                    team that helps them understand how they can avail which government schemes to
-                                    lessen their disease burden with financial aid.</p>
-
-                                <p><b>Tasks & Structure</b></p>
-
-                                <ul class="event-details__inner__list">
-                                    <li>Dialysis centre is occupied with 16 beds with</li>
-                                    <li>Timing of dialysis- 7:00 am to 3:00 pm.</li>
-                                    <li>16 machines. Two shifts. 4:00 hours per dialysis. 32 patients per day capacity
-                                    </li>
-                                    <li>800 Dialysis cycles per month.</li>
-                                    <li>Per Dialysis cost 850</li>
-                                </ul>
+                                {{ event.event_feature|safe }}    
                             </div>
                         </div>
 
+                        {% endfor %}
 
                         <div class="event-details__speaker mt-5">
                             <h3 class="event-details__speaker__title event-details__title">Related Posts</h3>
+                            {% for ever in everEvent %}
                             <div class="event-details__speaker__info wow fadeInUp" data-wow-duration="1500ms"
                                 data-wow-delay="00ms">
                                 <div class="event-details__speaker__image">
-                                    <img src="{% static 'images/events/event-4.jpg' %}" alt="">
+                                    <img src="{{ ever.event_img.url }}" alt="">
                                 </div>
                                 <div class="event-details__speaker__content">
                                     <div class="event-details__speaker__content__inner">
                                         <div class="event-details__speaker__indentity">
                                             <h4 class="event-details__speaker__name">
-                                                RAMZAN AND MONTHLY RATION AID
+                                                {{ ever.event_title }}
                                             </h4>
                                         </div>
                                     </div>
                                     <div class="event-details__speaker__text">
                                         <p>
-                                            During the course of running our Medical Aid program, KCT Trust members
-                                            would come across numerous cases in need of urgent dialysis treatment. Since
-                                            dialysis treatment is an on-going cost, for the underprivileged,…
+                                            {{ ever.event_description|slice:":220" }}{% if ever.event_description|length > 230 %}...{% endif %}
+
                                         </p>
-                                        <a href="{% url 'ramzan' %}"> <button
+                                        <a href="{% url 'displayParticularEvent' ever.id %}"> <button
                                                 class="btnrd cleenhearts-btn">Read More</button></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="event-details__speaker__info wow fadeInUp" data-wow-duration="1500ms"
-                                data-wow-delay="100ms">
-                                <div class="event-details__speaker__image">
-                                    <img src="{% static 'images/events/event-3.jpg' %}" alt="">
-                                </div>
-                                <div class="event-details__speaker__content">
-                                    <div class="event-details__speaker__content__inner">
-                                        <div class="event-details__speaker__indentity">
-                                            <h4 class="event-details__speaker__name">WHY SHOULD ANYONE APPROACH KCT FOR
-                                                HELP AND ASSISTANCE?</h4>
-                                        </div>
-                                    </div>
-                                    <div class="event-details__speaker__text">
-                                        <p>Medicines from the KCT are delivered to the patient’s doorstep the very same
-                                            day. It is ensured that the medicines strips are cut and the bottles are
-                                            unsealed to avoid resale/misuse of medicines.…</p>
-
-                                        <a href="{% url 'help' %}">
-                                            <button class="btnrd cleenhearts-btn">Read More</button></a>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="col-lg-4 mt-0">
@@ -189,9 +135,7 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">Mailing Address</h4>
-                                            <address class="contact-one__info__text">C/O Educational & Welfare
-                                                Foundation, P.T Mane Udyan, Mirza Galib Marg, Opp. Rolex Restaurant,
-                                                Clare Road, Nagpada Junction, Mumbai: 400 008</address>
+                                            <address class="contact-one__info__text">{{ footer_data.address|linebreaksbr }}</address>
                                         </div>
                                     </div>
                                     <div class="contact-one__info__item">
@@ -200,9 +144,8 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">Quick Contact</h4>
-                                            <a href="tel:91 86579 70797"
-                                                class="contact-one__info__text contact-one__info__text--link">+91 86579
-                                                70797</a>
+                                            <a href="tel:{{ footer_data.phone }}"
+                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.phone }}</a>
                                         </div>
                                     </div>
                                     <div class="contact-one__info__item">
@@ -211,8 +154,8 @@
                                         </div>
                                         <div class="contact-one__info__content">
                                             <h4 class="contact-one__info__title">support email</h4>
-                                            <a href="mailto:info@khidmattrust.org"
-                                                class="contact-one__info__text contact-one__info__text--link">info@khidmattrust.org</a>
+                                            <a href="mailto:{{ footer_data.email }}"
+                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.email }}</a>
                                         </div>
                                     </div>
                                 </div>
