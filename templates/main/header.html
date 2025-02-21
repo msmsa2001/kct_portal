@@ -1,6 +1,10 @@
 {% load static %}
 <!-- header.html -->
-
+<style>
+    .active{
+        color:  var(--cleenhearts-secondary, #c62b23) !important;
+    }
+</style>
 <body class="custom-cursor">
     <div class="custom-cursor__cursor"></div>
     <div class="custom-cursor__cursor-two"></div>
@@ -25,26 +29,26 @@
                     <div class="main-header__right">
                         <nav class="main-header__nav main-menu">
                             <ul class="main-menu__list">
-                                <li class="megamenu">
-                                    <a href="{% url 'home' %}">Home</a>
+                                <li>
+                                    <a class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'about' %}">About Us</a>
+                                    <a class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About Us</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'activity' %}">Activities</a>
+                                    <a class="{% if request.resolver_match.url_name == 'activity' %}active{% endif %}" href="{% url 'activity' %}">Activities</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'benefits' %}">Benefits</a>
+                                    <a class="{% if request.resolver_match.url_name == 'benefits' %}active{% endif %}" href="{% url 'benefits' %}">Benefits</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'career' %}">Careers</a>
+                                    <a class="{% if request.resolver_match.url_name == 'career' %}active{% endif %}" href="{% url 'career' %}">Careers</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'contact' %}">Contacts</a>
+                                    <a class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contacts</a>
                                 </li>
                             </ul>
-                        </nav>
+                        </nav>                        
                         <a href="{% url 'donate' %}" class="cleenhearts-btn donate-now-btn" id="cleenhearts-btn">
                             <span class="cleenhearts-btn__text" id="cleenhearts-btn__text">donate now</span>
                         </a>
@@ -95,13 +99,11 @@
                         </li>
                         <li>
                             <i class="sidebar-one__information__icon icon-envelope"></i>
-                            <p class="sidebar-one__information__text"><a href="{{ footer_data.email }}">{{
-                                    footer_data.email }}</a></p>
+                            <p class="sidebar-one__information__text"><a href="{{ footer_data.email }}">{{footer_data.email }}</a></p>
                         </li>
                         <li>
                             <span class="sidebar-one__information__icon icon-phone"></span>
-                            <p class="sidebar-one__information__text"><a href="tel:{{ footer_data.phone }}">{{
-                                    footer_data.phone }}</a>
+                            <p class="sidebar-one__information__text"><a href="tel:{{ footer_data.phone }}">{{footer_data.phone }}</a>
                             </p>
                         </li>
                     </ul>

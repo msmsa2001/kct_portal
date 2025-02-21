@@ -6,6 +6,7 @@ from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import JsonResponse
+import razorpay
 
 def home(request):
     master_items = SystemMaster.objects.all()  
@@ -154,33 +155,72 @@ def contact(request):
 
 
 
+# def donate(request):
+#     donate_data = SystemMaster.objects.get(system_name="Donate Section")
+#     footer_data = get_footer_data()
+#     if request.method == "POST":
+#         amount = request.POST.get('amount')
+
+#         amount_in_paise = int(float(amount))
+
+#         client = razorpay.Client(auth=('rzp_test_xiMcTjBlVV2j8h', 'AREBxhesXkY9EsfTJjAJT5AD'))
+        
+#         order = client.order.create({
+#             'amount': amount_in_paise,  
+#             'currency': 'INR',
+#             'payment_capture': '1'  
+#         })
+
+#         return JsonResponse(order) 
+    
+
+#     context = {
+#         'donate_data':donate_data,
+#         'footer_data': footer_data,
+#     }
+#     return render(request, 'kct/donate.html',context)
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+import razorpay
+from .models import Donation, SystemMaster
+from .forms import DonationForm
+from .utils import get_footer_data  # Assuming you have this function
+
 def donate(request):
     donate_data = SystemMaster.objects.get(system_name="Donate Section")
     footer_data = get_footer_data()
+
     if request.method == "POST":
-        amount = request.POST.get('amount')
-
-        # Convert amount to paise (Razorpay expects amount in the smallest currency unit)
-        amount_in_paise = int(float(amount))
-
-        # Initialize Razorpay client
-        client = razorpay.Client(auth=('rzp_test_xiMcTjBlVV2j8h', 'AREBxhesXkY9EsfTJjAJT5AD'))
+        form = DonationForm(request.POST)
         
-        # Create Razorpay order
-        order = client.order.create({
-            'amount': amount_in_paise,  # Amount in paise
-            'currency': 'INR',
-            'payment_capture': '1'  # Auto-capture payment
-        })
+        if form.is_valid():
+            donation = form.save(commit=False)  # Save the form but don't commit to DB yet
+            
+            amount = form.cleaned_data['amount']
+            amount_in_paise = int(float(amount) * 100)  # Convert INR to paise
 
-        return JsonResponse(order) 
-    
+            client = razorpay.Client(auth=('rzp_test_xiMcTjBlVV2j8h', 'AREBxhesXkY9EsfTJjAJT5AD'))
+
+            order = client.order.create({
+                'amount': amount_in_paise,
+                'currency': 'INR',
+                'payment_capture': '1'
+            })
+
+            donation.save()  # Save donation after order creation
+            
+            return JsonResponse(order)
+
+    else:
+        form = DonationForm()
 
     context = {
-        'donate_data':donate_data,
+        'donate_data': donate_data,
         'footer_data': footer_data,
+        'form': form,
     }
-    return render(request, 'kct/donate.html',context)
+    return render(request, 'kct/donate.html', context)
+
 
 
 
@@ -193,10 +233,6 @@ def dialysis(request):
         'footer_data': footer_data,
     }
     return render(request, 'kct/event-dialysis-centre.html',context)
-
-
-
-
 
 
 
