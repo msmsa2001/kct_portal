@@ -135,3 +135,51 @@ class KCTEnquireMaster(models.Model):
 
     def __str__(self):
         return f"{self.name} {self.email} {self.phone}"
+    
+
+
+
+
+
+
+
+from django.db import models
+
+class Donation(models.Model):
+    PAYMENT_CHOICES = [
+        ('personal-account', 'Personal Account'),
+        ('official-account', 'Official Account'),
+    ]
+    PURPOSE_CHOICES = [
+        ('zakat', 'Zakat'),
+        ('fi-sabilillah', 'Fi Sabilillah'),
+        ('sadqa', 'Sadqa'),
+        ('interest', 'Interest'),
+        ('others', 'Others'),
+    ]
+
+    whypay = models.CharField(max_length=20, choices=PURPOSE_CHOICES)
+    paying_from = models.CharField(max_length=20, choices=PAYMENT_CHOICES)
+    amount = models.DecimalField(max_digits=15, decimal_places=2)
+
+    # Personal Account Fields
+    fullname = models.CharField(max_length=255, blank=True, null=True)
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    email = models.EmailField(blank=True, null=True)
+    pan = models.CharField(max_length=20, blank=True, null=True)
+    aadhar = models.CharField(max_length=20, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+
+    # Official Account Fields
+    company_name = models.CharField(max_length=255, blank=True, null=True)
+    company_phone = models.CharField(max_length=15, blank=True, null=True)
+    company_address = models.TextField(blank=True, null=True)
+    company_email = models.EmailField(blank=True, null=True)
+    company_pan = models.CharField(max_length=20, blank=True, null=True)
+    contact_person_name = models.CharField(max_length=255, blank=True, null=True)
+    contact_person_phone = models.CharField(max_length=15, blank=True, null=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.whypay} - {self.amount}"

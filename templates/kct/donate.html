@@ -66,7 +66,8 @@
     <div class="page-wrapper">
 
         <section class="page-header @@extraClassName">
-            <div class="page-header__bg"></div>
+            <div class="page-header__bg" style="background-image: url('/static/images/backgrounds/donate3-bg.jpg');">
+            </div>
             <div class="container">
                 <h2 class="page-header__title">Donate Now</h2>
                 <ul class="cleenhearts-breadcrumb list-unstyled">
@@ -79,110 +80,115 @@
         <section class="donate-page mt-5">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-lg-8 text-center">
+                    <div class="col-lg-8">
                         {% if donate_data %}
                         <h2 class="subscribe__title donate-quote">
                             {{ donate_data.system_title|safe }}
                         </h2>
-
-                        <div class="donate-page__content">
+        
+                        <div class="donate-page__content text-center">
                             <img src="{{ donate_data.system_img.url }}" alt="Donate Image">
                             <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank">
                                 <p>UPI ID - {{ donate_data.system_value }}</p>
                             </a>
                         </div>
-
+        
                         <form id="donationForm" action="{% url 'donate' %}" method="post">
                             {% csrf_token %}
-                            <div class="form-group">
-                                <label for="whypay">Select</label>
-                                <select id="whypay" name="whypay" required>
-                                    <option value="zakat" selected>Zakat</option>
-                                    <option value="fi-sabilillah">Fi Sabilillah</option>
-                                    <option value="sadqa">Sadqa</option>
-                                    <option value="interest">Interest</option>
-                                    <option value="others">Others</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    {{ form.whypay.label_tag }}
+                                    {{ form.whypay }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form.paying_from.label_tag }}
+                                    {{ form.paying_from }}
+                                </div>
                             </div>
-
-                            <div class="form-group">
-                                <label for="payingfrom">Paying From <span class="required">*</span></label>
-                                <select id="payingfrom" name="payingfrom" required onchange="toggleFormSections()">
-                                    <option value="">Select an Option</option>
-                                    <option value="personal-account">Personal Account</option>
-                                    <option value="official-account">Official Account</option>
-                                </select>
-                            </div>
-
+        
                             <!-- Personal Account Form -->
                             <div id="personal-account-form" class="form-section" style="display: none;">
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="fullname">Full Name <span class="required">*</span></label>
-                                        <input type="text" id="fullname" name="name" placeholder="Name" required>
+                                        {{ form.fullname.label_tag }}
+                                        {{ form.fullname }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        {{ form.phone.label_tag }}
+                                        {{ form.phone }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="phone">Phone Number <span class="required">*</span></label>
-                                        <input type="text" id="phone" name="phone" placeholder="Phone Number" required>
+                                        {{ form.email.label_tag }}
+                                        {{ form.email }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        {{ form.pan.label_tag }}
+                                        {{ form.pan }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">Email Address <span class="required">*</span></label>
-                                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                                        {{ form.aadhar.label_tag }}
+                                        {{ form.aadhar }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="address">Address <span class="required">*</span></label>
-                                    <input type="text" id="address" name="address" placeholder="Address" required>
+                                    {{ form.address.label_tag }}
+                                    {{ form.address }}
                                 </div>
                             </div>
-
+        
                             <!-- Official Account Form -->
                             <div id="official-account-form" class="form-section" style="display: none;">
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="company">Full Company Name</label>
-                                        <input type="text" id="company" name="company" placeholder="Full company name">
+                                        {{ form.company_name.label_tag }}
+                                        {{ form.company_name }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="phone2">Phone No</label>
-                                        <input type="text" id="phone2" name="phone2" placeholder="Phone no">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email2">Email Address</label>
-                                        <input type="email" id="email2" name="email2" placeholder="Email address">
+                                        {{ form.company_phone.label_tag }}
+                                        {{ form.company_phone }}
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="company-address">Full Company Address</label>
-                                    <input type="text" id="company-address" name="address2-street_address" placeholder="Full company address">
-                                </div>
-                                <div class="form-group">
-                                    <label for="company-pan">Company Pan No</label>
-                                    <input type="text" id="company-pan" name="pan2" placeholder="Company pan no">
+                                    {{ form.company_address.label_tag }}
+                                    {{ form.company_address }}
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="contact-name">Contact Person Name</label>
-                                        <input type="text" id="contact-name" name="name2" placeholder="Contact person name">
+                                        {{ form.company_email.label_tag }}
+                                        {{ form.company_email }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="contact-phone">Contact Person Number</label>
-                                        <input type="text" id="contact-phone" name="phone3" placeholder="Contact person Number">
+                                        {{ form.company_pan.label_tag }}
+                                        {{ form.company_pan }}
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        {{ form.contact_person_name.label_tag }}
+                                        {{ form.contact_person_name }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.contact_person_phone.label_tag }}
+                                        {{ form.contact_person_phone }}
                                     </div>
                                 </div>
                             </div>
-
+        
                             <!-- Donation Amount -->
                             <div class="form-group">
-                                <label for="donation-amount">Donation Amount <span class="required">*</span></label>
-                                <input type="number" id="donation-amount" name="amount" placeholder="Donation Amount" min="100" max="9000000000" required>
+                                {{ form.amount.label_tag }}
+                                {{ form.amount }}
                             </div>
-
-                            <div class="form-group">
+        
+                            <div class="form-group text-center">
                                 <button type="submit" class="submit-button">Donate Now</button>
                             </div>
                         </form>
-
+        
                         {% else %}
                         <p>No donation information available.</p>
                         {% endif %}
@@ -190,18 +196,18 @@
                 </div>
             </div>
         </section>
-
+        
         <script>
             // Function to toggle visibility based on 'Paying From' selection
             function toggleFormSections() {
-                const payingFrom = document.getElementById('payingfrom').value;
+                const payingFrom = document.getElementById('id_paying_from').value;
                 const personalAccountForm = document.getElementById('personal-account-form');
                 const officialAccountForm = document.getElementById('official-account-form');
-
+        
                 // Hide both forms initially
                 personalAccountForm.style.display = 'none';
                 officialAccountForm.style.display = 'none';
-
+        
                 // Show the selected form
                 if (payingFrom === 'personal-account') {
                     personalAccountForm.style.display = 'block';
@@ -209,48 +215,52 @@
                     officialAccountForm.style.display = 'block';
                 }
             }
-
+        
             // Handle form submission
             document.getElementById('donationForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                const amount = document.getElementById('donation-amount').value;
-                const amountInPaise = parseInt(amount) * 100; // Convert to paise
-
+                e.preventDefault(); // Prevent default form submission
+        
+                const formData = new FormData(document.getElementById('donationForm')); // Get form data
+        
                 fetch("{% url 'donate' %}", {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRFToken': '{{ csrf_token }}'
+                        'X-CSRFToken': '{{ csrf_token }}', // Include CSRF token
                     },
-                    body: `amount=${amountInPaise}`
+                    body: formData, // Send form data
                 })
-                .then(response => response.json())
-                .then(data => {
-                    const options = {
-                        key: 'rzp_test_xiMcTjBlVV2j8h',
-                        amount: data.amount,
-                        currency: 'INR',
-                        order_id: data.id,
-                        name: 'Khidmat Trust',
-                        description: 'Donation',
-                        handler: function (response) {
-                            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
-                        },
-                        prefill: {
-                            name: document.getElementById('fullname').value,
-                            email: document.getElementById('email').value,
-                            contact: document.getElementById('phone').value
-                        },
-                        theme: {
-                            color: '#F37254'
-                        }
-                    };
-
-                    const rzp = new Razorpay(options);
-                    rzp.open();
-                })
-                .catch(error => console.error('Error:', error));
+                    .then(response => response.json()) // Parse JSON response
+                    .then(data => {
+                        // Open Razorpay payment interface
+                        const options = {
+                            key: 'rzp_test_xiMcTjBlVV2j8h', // Your Razorpay key
+                            amount: data.amount, // Amount in paise
+                            currency: 'INR',
+                            order_id: data.id, // Order ID from the server
+                            name: 'Khidmat Trust',
+                            description: 'Donation',
+                            handler: function (response) {
+                                alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+                                // Optionally, you can redirect the user to a success page here
+                                window.location.href = "{% url 'donate' %}";
+                            },
+                            prefill: {
+                                name: document.getElementById('id_fullname').value,
+                                email: document.getElementById('id_email').value,
+                                contact: document.getElementById('id_phone').value,
+                            },
+                            theme: {
+                                color: '#F37254',
+                            },
+                        };
+        
+                        const rzp = new Razorpay(options);
+                        rzp.open();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                    });
             });
         </script>
         <!-- RAZORPAY INTEGRATION HERE -->
