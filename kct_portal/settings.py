@@ -78,10 +78,15 @@ WSGI_APPLICATION = "kct_portal.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "kct_portal",
+        "USER": "postgres",
+        "PASSWORD": "root",
+        "HOST": "localhost",  # Change if using a remote server
+        "PORT": "5433",
     }
 }
+
 
 
 STATIC_URL = '/static/'
