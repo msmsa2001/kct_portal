@@ -178,6 +178,13 @@ class Donation(models.Model):
     company_pan = models.CharField(max_length=20, blank=True, null=True)
     contact_person_name = models.CharField(max_length=255, blank=True, null=True)
     contact_person_phone = models.CharField(max_length=15, blank=True, null=True)
+    PAYMENT_STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('COMPLETED', 'Completed'),
+        ('FAILED', 'Failed'),
+    ]
+    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
+    razorpay_order_id = models.CharField(max_length=255, blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

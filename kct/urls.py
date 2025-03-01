@@ -9,6 +9,7 @@ urlpatterns = [
     path('career/', career, name='career'),
     path('contacts/', contact, name='contact'),
     path('donate/', donate, name='donate'),
+    path('payment_success/', payment_success, name='payment_success'),
     path('dialysis', dialysis, name='dialysis'),
     path('ramzan', ramzan, name='ramzan'),
     path('help', help, name='help'),
