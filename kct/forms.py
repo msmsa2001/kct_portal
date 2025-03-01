@@ -24,6 +24,6 @@ class DonationForm(forms.ModelForm):
             'amount': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Donation Amount', 'min': 100, 'max': 9000000000}),
         }
         labels = {
-            'whypay': 'Select',  # Customize the label for the whypay field
+            'whypay': 'Select', 
             'paying_from': 'Pay From'
         }

@@ -81,18 +81,17 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
-                        {% if donate_data %}
                         <h2 class="subscribe__title donate-quote">
                             {{ donate_data.system_title|safe }}
                         </h2>
-        
+    
                         <div class="donate-page__content text-center">
                             <img src="{{ donate_data.system_img.url }}" alt="Donate Image">
                             <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank">
                                 <p>UPI ID - {{ donate_data.system_value }}</p>
                             </a>
                         </div>
-        
+    
                         <form id="donationForm" action="{% url 'donate' %}" method="post">
                             {% csrf_token %}
                             <div class="form-row">
@@ -105,7 +104,7 @@
                                     {{ form.paying_from }}
                                 </div>
                             </div>
-        
+    
                             <!-- Personal Account Form -->
                             <div id="personal-account-form" class="form-section" style="display: none;">
                                 <div class="form-row">
@@ -139,7 +138,7 @@
                                     {{ form.address }}
                                 </div>
                             </div>
-        
+    
                             <!-- Official Account Form -->
                             <div id="official-account-form" class="form-section" style="display: none;">
                                 <div class="form-row">
@@ -177,26 +176,23 @@
                                     </div>
                                 </div>
                             </div>
-        
+    
                             <!-- Donation Amount -->
                             <div class="form-group">
                                 {{ form.amount.label_tag }}
                                 {{ form.amount }}
                             </div>
-        
+    
                             <div class="form-group text-center">
                                 <button type="submit" class="submit-button">Donate Now</button>
                             </div>
                         </form>
-        
-                        {% else %}
-                        <p>No donation information available.</p>
-                        {% endif %}
+    
                     </div>
                 </div>
             </div>
         </section>
-        
+    
         <script>
             // Function to toggle visibility based on 'Paying From' selection
             function toggleFormSections() {
@@ -216,6 +212,16 @@
                 }
             }
         
+            // Call the function when the page loads
+            document.addEventListener('DOMContentLoaded', function () {
+                toggleFormSections(); // Initialize form visibility
+            });
+        
+            // Call the function when the 'paying_from' field changes
+            document.getElementById('id_paying_from').addEventListener('change', function () {
+                toggleFormSections();
+            });
+        
             // Handle form submission
             document.getElementById('donationForm').addEventListener('submit', function (e) {
                 e.preventDefault(); // Prevent default form submission
@@ -229,38 +235,83 @@
                     },
                     body: formData, // Send form data
                 })
-                    .then(response => response.json()) // Parse JSON response
-                    .then(data => {
-                        // Open Razorpay payment interface
-                        const options = {
-                            key: 'rzp_test_xiMcTjBlVV2j8h', // Your Razorpay key
-                            amount: data.amount, // Amount in paise
-                            currency: 'INR',
-                            order_id: data.id, // Order ID from the server
-                            name: 'Khidmat Trust',
-                            description: 'Donation',
-                            handler: function (response) {
-                                alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
-                                // Optionally, you can redirect the user to a success page here
-                                window.location.href = "{% url 'donate' %}";
-                            },
-                            prefill: {
-                                name: document.getElementById('id_fullname').value,
-                                email: document.getElementById('id_email').value,
-                                contact: document.getElementById('id_phone').value,
-                            },
-                            theme: {
-                                color: '#F37254',
-                            },
-                        };
+                .then(response => response.json()) // Parse JSON response
+                .then(data => {
+                    // Open Razorpay payment interface
+                    const options = {
+                        key: 'rzp_test_xiMcTjBlVV2j8h', // Your Razorpay key
+                        amount: data.amount, // Amount in paise
+                        currency: 'INR',
+                        order_id: data.id, // Order ID from the server
+                        name: 'Khidmat Trust',
+                        description: 'Donation',
+                        handler: function (response) {
+                            console.log("Payment successful! Response:", response);  // Debugging statement
+                        
+                            // Prepare the data to send to the server
+                            const paymentData = {
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_signature: response.razorpay_signature,
+                            };
+                        
+                            // Send the payment response to the server
+                            fetch("{% url 'payment_success' %}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRFToken': '{{ csrf_token }}',
+                                },
+                                body: JSON.stringify(paymentData),  // Send payment response as JSON
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.status === 'success') {
+                                    alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
+                                    window.location.href = "{% url 'donate' %}";  // Redirect to home or success page
+                                } else {
+                                    alert('Payment verification failed. Please contact support.');
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('An error occurred. Please try again.');
+                            });
+                        },
+                        prefill: {
+                            name: document.getElementById('id_fullname').value,
+                            email: document.getElementById('id_email').value,
+                            contact: document.getElementById('id_phone').value,
+                        },
+                        theme: {
+                            color: '#F37254',
+                        },
+                    };
         
-                        const rzp = new Razorpay(options);
-                        rzp.open();
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred. Please try again.');
+                    const rzp = new Razorpay(options);
+        
+                    // Handle payment failure
+                    rzp.on('payment.failed', function (response) {
+                        fetch("", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}',
+                            },
+                            body: JSON.stringify(response), // Send payment response
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert('Payment failed. Please try again.');
+                        });
                     });
+        
+                    rzp.open(); // Open the Razorpay payment interface
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                });
             });
         </script>
         <!-- RAZORPAY INTEGRATION HERE -->
