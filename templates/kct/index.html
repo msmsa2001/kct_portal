@@ -33,93 +33,25 @@
                         "1000": { "items": 1 }
                     }
                 }'>
+                    {% for item in slider_items %}
                     <div class="item">
                         <div class="main-slider-one__item">
-
-                            <div class="main-slider-one__bg" style="
-                    background-image: url(static/images/main-slider/banner1.jpg);
-                  "></div>
-                            <div class="main-slider-one__shape-one" style="
-                    background-image: url(static/images/shapes/slider-1-shape-1.png);
-                  "></div>
-                            <div class="main-slider-one__shape-two" style="
-                    background-image: url(static/images/shapes/slider-1-shape-2.png);
-                  "></div>
-
-
+                            <div class="main-slider-one__bg" style="background-image: url('{{ item.system_img.url }}');"></div>
+                            <div class="main-slider-one__shape-one" style="background-image: url(static/images/shapes/slider-1-shape-1.png);"></div>
+                            <div class="main-slider-one__shape-two" style="background-image: url(static/images/shapes/slider-1-shape-2.png);"></div>
                             <div class="main-slider-one__content">
                                 <h2 class="main-slider-one__title">
-                                    <span class="main-slider-one__title__text">Distribute your wealth amongst the
-                                        <br />poor, destitute
-                                        and the needy, help others<br />
-                                        to the best of your ability and be kind and <br />simpatic
-                                        to human beings </span><br />
+                                    <span class="main-slider-one__title__text" style="white-space: pre-line;">{{ item.system_title }}</span><br />
                                 </h2>
                                 <div class="main-slider-one__btn">
                                     <h2 class="sliderTxt">
-                                        <span class="cleenhearts-btn__text" style="color: #fff; font-size: 32px;">Imam
-                                            Ali</span>
+                                        <span class="cleenhearts-btn__text" style="color: #fff; font-size: 32px;">{{ item.system_value }}</span>
                                     </h2>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="item">
-                        <div class="main-slider-one__item">
-                            <div class="main-slider-one__bg" style="
-                    background-image: url(static/images/main-slider/banner2.jpg);
-                  "></div>
-                            <div class="main-slider-one__shape-one" style="
-                    background-image: url(static/images/shapes/slider-1-shape-1.png);
-                  "></div>
-                            <div class="main-slider-one__shape-two" style="
-                    background-image: url(static/images/shapes/slider-1-shape-2.png);
-                  "></div>
-                            <div class="main-slider-one__content">
-                                <h2 class="main-slider-one__title">
-                                    <span class="main-slider-one__title__text">Distribute your wealth amongst the
-                                        <br />poor, destitute
-                                        and the needy, help others<br />
-                                        to the best of your ability and be kind and <br />simpatic
-                                        to human beings </span><br />
-                                </h2>
-                                <div class="main-slider-one__btn">
-                                    <h2 class="sliderTxt">
-                                        <span class="cleenhearts-btn__text" style="color: #fff; font-size: 32px;">Imam
-                                            Ali</span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="main-slider-one__item">
-                            <div class="main-slider-one__bg" style="
-                    background-image: url(static/images/main-slider/banner3.jpg);
-                  "></div>
-                            <div class="main-slider-one__shape-one" style="
-                    background-image: url(static/images/shapes/slider-1-shape-1.png);
-                  "></div>
-                            <div class="main-slider-one__shape-two" style="
-                    background-image: url(static/images/shapes/slider-1-shape-2.png);
-                  "></div>
-                            <div class="main-slider-one__content">
-                                <h2 class="main-slider-one__title">
-                                    <span class="main-slider-one__title__text">Distribute your wealth amongst the
-                                        <br />poor, destitute
-                                        and the needy, help others<br />
-                                        to the best of your ability and be kind and <br />simpatic
-                                        to human beings </span><br />
-                                </h2>
-                                <div class="main-slider-one__btn">
-                                    <h2 class="sliderTxt">
-                                        <span class="cleenhearts-btn__text" style="color: #fff; font-size: 32px;">Imam
-                                            Ali</span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -132,7 +64,7 @@
                 <div class="box dd-box" data-aos="fade-up" data-aos-duration="{{ forloop.counter|add:1 }}000">
                     <img src="{{ category.icon.url }}">
                     <div class="box-content">
-                        <p class="numbers1" data-val="4597+">{{ category.number }}</p>
+                        <p class="numbers1" data-val="{{ category.number }}">{{ category.number }}</p>
                         
                         {% if category.has_dropdown %}
                         <div class="dropdown">

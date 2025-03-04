@@ -213,12 +213,13 @@
             <div class="container">
                 <div class="row1">
                     <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        {% for quote in eventQuote %}
                         <div class="subscribe__content">
-                            <h2 class="subscribe__title">"It takes a great strength to live a life <br> on a machine"
-                            </h2>
+                            {{ quote.event_quotes|safe}}
                             <!-- <span class="subscribe__title-image icon-email"></span> -->
                             <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
                         </div>
+                        {% endfor %}
                     </div>
                     <!-- <div class="col-lg-7 wow fadeInUp">
                         <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
