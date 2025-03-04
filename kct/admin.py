@@ -6,19 +6,19 @@ from import_export.admin import ImportExportModelAdmin
 
 
 
-class SystemMasterCategoryresources(resources.ModelResource):
-    class Meta:
-        model = SystemMasterCategory
-        import_id_fields = ['id']
-        fields = ['id', 'name']
+# class SystemMasterCategoryresources(resources.ModelResource):
+#     class Meta:
+#         model = SystemMasterCategory
+#         import_id_fields = ['id']
+#         fields = ['id', 'name']
 
 
-class SystemMasterCategoryAdmin(ImportExportModelAdmin):
-    resource_class = SystemMasterCategoryresources
-    list_display = ['id', 'name']
-    search_fields = ['id','name']
+# class SystemMasterCategoryAdmin(ImportExportModelAdmin):
+#     resource_class = SystemMasterCategoryresources
+#     list_display = ['id', 'name']
+#     search_fields = ['id','name']
 
-admin.site.register(SystemMasterCategory,SystemMasterCategoryAdmin)
+# admin.site.register(SystemMasterCategory,SystemMasterCategoryAdmin)
 
 
 
@@ -88,63 +88,63 @@ admin.site.register(DropdownOption, dropdownoptionsAdmin)
 
 
 
-class KeyProgramMasterresource(resources.ModelResource):
-    class Meta:
-        model = KeyProgramMaster
-        import_id_fields = ['id']
-        fields = ['id','system', 'is_active']
+# class KeyProgramMasterresource(resources.ModelResource):
+#     class Meta:
+#         model = KeyProgramMaster
+#         import_id_fields = ['id']
+#         fields = ['id','system', 'is_active']
 
-class KeyProgramMasterAdmin(ImportExportModelAdmin):
-    resource_class = KeyProgramMasterresource
-    list_display = ['id','system', 'is_active']
-    search_fields = ['id', 'name']
-admin.site.register(KeyProgramMaster, KeyProgramMasterAdmin)
-
-
-
-
-class BeneficiaryAidresource(resources.ModelResource):
-    class Meta:
-        model = BeneficiaryAid
-        import_id_fields = ['id']
-        fields = ['id', 'system', 'is_active']
-
-class BeneficiaryAidAdmin(ImportExportModelAdmin):
-    resource_class = BeneficiaryAidresource
-    list_display = ['id','system', 'is_active']
-    search_fields = ['id', 'name']
-admin.site.register(BeneficiaryAid, BeneficiaryAidAdmin)
-
-
-
-class CaseStudiesMasterresource(resources.ModelResource):
-    class Meta:
-        model = CaseStudiesMaster
-        import_id_fields = ['id']
-        fields = ['id', 'system', 'is_active']
-
-class CaseStudiesMasterAdmin(ImportExportModelAdmin):
-    resource_class = CaseStudiesMasterresource
-    list_display = ['id','system', 'is_active']
-    search_fields = ['id', 'name']
-admin.site.register(CaseStudiesMaster, CaseStudiesMasterAdmin)
+# class KeyProgramMasterAdmin(ImportExportModelAdmin):
+#     resource_class = KeyProgramMasterresource
+#     list_display = ['id','system', 'is_active']
+#     search_fields = ['id', 'name']
+# admin.site.register(KeyProgramMaster, KeyProgramMasterAdmin)
 
 
 
 
+# class BeneficiaryAidresource(resources.ModelResource):
+#     class Meta:
+#         model = BeneficiaryAid
+#         import_id_fields = ['id']
+#         fields = ['id', 'system', 'is_active']
+
+# class BeneficiaryAidAdmin(ImportExportModelAdmin):
+#     resource_class = BeneficiaryAidresource
+#     list_display = ['id','system', 'is_active']
+#     search_fields = ['id', 'name']
+# admin.site.register(BeneficiaryAid, BeneficiaryAidAdmin)
 
 
-class LatestEventMasterresource(resources.ModelResource):
-    class Meta:
-        model = LatestEventMaster
-        import_id_fields = ['id']
-        fields = ['id', 'system', 'is_active']
 
-class LatestEventMasterAdmin(ImportExportModelAdmin):
-    resource_class = LatestEventMasterresource
-    list_display = ['id','system', 'is_active']
-    search_fields = ['id', 'name']
-admin.site.register(LatestEventMaster, LatestEventMasterAdmin)
+# class CaseStudiesMasterresource(resources.ModelResource):
+#     class Meta:
+#         model = CaseStudiesMaster
+#         import_id_fields = ['id']
+#         fields = ['id', 'system', 'is_active']
+
+# class CaseStudiesMasterAdmin(ImportExportModelAdmin):
+#     resource_class = CaseStudiesMasterresource
+#     list_display = ['id','system', 'is_active']
+#     search_fields = ['id', 'name']
+# admin.site.register(CaseStudiesMaster, CaseStudiesMasterAdmin)
+
+
+
+
+
+
+# class LatestEventMasterresource(resources.ModelResource):
+#     class Meta:
+#         model = LatestEventMaster
+#         import_id_fields = ['id']
+#         fields = ['id', 'system', 'is_active']
+
+# class LatestEventMasterAdmin(ImportExportModelAdmin):
+#     resource_class = LatestEventMasterresource
+#     list_display = ['id','system', 'is_active']
+#     search_fields = ['id', 'name']
+# admin.site.register(LatestEventMaster, LatestEventMasterAdmin)
 
 
 
@@ -189,14 +189,14 @@ admin.site.register(ListItemCategory, ListItemAdmin)
 
 
 
-class KCTEnquireMasterresource(resources.ModelResource):
-    class Meta:
-        model = KCTEnquireMaster
-        import_id_fields = ['id']
-        fields = ['id', 'name', 'email', 'phone', 'message', 'is_active']
+# class KCTEnquireMasterresource(resources.ModelResource):
+#     class Meta:
+#         model = KCTEnquireMaster
+#         import_id_fields = ['id']
+#         fields = ['id', 'name', 'email', 'phone', 'message', 'is_active']
 
-class KCTEnquireMasterAdmin(ImportExportModelAdmin):
-    resource_class = KCTEnquireMasterresource
-    list_display = ['id','name', 'email', 'phone', 'message', 'is_active']
-    search_fields = ['id', 'name', 'email', 'phone']
-admin.site.register(KCTEnquireMaster, KCTEnquireMasterAdmin)
+# class KCTEnquireMasterAdmin(ImportExportModelAdmin):
+#     resource_class = KCTEnquireMasterresource
+#     list_display = ['id','name', 'email', 'phone', 'message', 'is_active']
+#     search_fields = ['id', 'name', 'email', 'phone']
+# admin.site.register(KCTEnquireMaster, KCTEnquireMasterAdmin)

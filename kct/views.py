@@ -13,6 +13,8 @@ from django.conf import settings
 import razorpay
 
 def home(request):
+    slider_items = SystemMaster.objects.filter(system_name__startswith='Slider', is_active=True)
+    print(slider_items, ".............................................................")
     master_items = SystemMaster.objects.all()  
     about_section = SystemMaster.objects.filter(system_name='KCT').first()
     categories = BeneficiaryCategory.objects.prefetch_related('dropdown_options').all()
@@ -28,6 +30,7 @@ def home(request):
      
 
     context = {
+        'slider_items': slider_items,
         'master_items': master_items,  
         'about_section': about_section,
         'categories': categories,  
@@ -187,99 +190,95 @@ def contact(request):
 
 
 
-client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_SECRET_KEY))
+# client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_SECRET_KEY))
 def donate(request):
     donate_data = SystemMaster.objects.get(system_name="Donate Section")
     footer_data = get_footer_data()
 
-    if request.method == 'POST':
-        try:
-            amount = int(float(request.POST.get('amount'))) * 100  # Amount in paise
-            currency = 'INR'
-            receipt = 'order_rcptid_11'
+    # if request.method == 'POST':
+    #     try:
+    #         amount = int(float(request.POST.get('amount'))) * 100  # Amount in paise
+    #         currency = 'INR'
+    #         receipt = 'order_rcptid_11'
 
-            print(f"Creating Razorpay order for amount: {amount}, currency: {currency}")  # Debugging statement
+    #         print(f"Creating Razorpay order for amount: {amount}, currency: {currency}")  # Debugging statement
 
-            # Create a Razorpay order
-            order = client.order.create({'amount': amount, 'currency': currency, 'receipt': receipt})
-            print(f"Razorpay order created: {order}")  # Debugging statement
+    #         # Create a Razorpay order
+    #         order = client.order.create({'amount': amount, 'currency': currency, 'receipt': receipt})
+    #         print(f"Razorpay order created: {order}")  # Debugging statement
 
-            # Save the donation data to the database
-            donation = Donation.objects.create(
-                whypay=request.POST.get('whypay'),
-                paying_from=request.POST.get('paying_from'),
-                amount=request.POST.get('amount'),
-                fullname=request.POST.get('fullname'),
-                phone=request.POST.get('phone'),
-                email=request.POST.get('email'),
-                pan=request.POST.get('pan'),
-                aadhar=request.POST.get('aadhar'),
-                address=request.POST.get('address'),
-                company_name=request.POST.get('company_name'),
-                company_phone=request.POST.get('company_phone'),
-                company_address=request.POST.get('company_address'),
-                company_email=request.POST.get('company_email'),
-                company_pan=request.POST.get('company_pan'),
-                contact_person_name=request.POST.get('contact_person_name'),
-                contact_person_phone=request.POST.get('contact_person_phone'),
-                razorpay_order_id=order['id']
-            )
-            print(f"Donation record created: {donation}")  # Debugging statement
+    #         # Save the donation data to the database
+    #         donation = Donation.objects.create(
+    #             whypay=request.POST.get('whypay'),
+    #             paying_from=request.POST.get('paying_from'),
+    #             amount=request.POST.get('amount'),
+    #             fullname=request.POST.get('fullname'),
+    #             phone=request.POST.get('phone'),
+    #             email=request.POST.get('email'),
+    #             pan=request.POST.get('pan'),
+    #             aadhar=request.POST.get('aadhar'),
+    #             address=request.POST.get('address'),
+    #             company_name=request.POST.get('company_name'),
+    #             company_phone=request.POST.get('company_phone'),
+    #             company_address=request.POST.get('company_address'),
+    #             company_email=request.POST.get('company_email'),
+    #             company_pan=request.POST.get('company_pan'),
+    #             contact_person_name=request.POST.get('contact_person_name'),
+    #             contact_person_phone=request.POST.get('contact_person_phone'),
+    #             razorpay_order_id=order['id']
+    #         )
+    #         print(f"Donation record created: {donation}")  # Debugging statement
 
-            return JsonResponse(order)
-        except Exception as e:
-            print(f"Error creating Razorpay order: {e}")  # Debugging statement
-            return JsonResponse({'error': str(e)}, status=400)
+    #         return JsonResponse(order)
+    #     except Exception as e:
+    #         print(f"Error creating Razorpay order: {e}")  # Debugging statement
+    #         return JsonResponse({'error': str(e)}, status=400)
 
-    else:
-        form = DonationForm()
+    # else:
+    #     form = DonationForm()
 
     context = {
         'donate_data': donate_data,
         'footer_data': footer_data,
-        'form': form,
+        # 'form': form,
     }
     return render(request, 'kct/donate.html', context)
 
 
 
 
-@csrf_exempt
-def payment_success(request):
-    if request.method == 'POST':
-        print("Payment success view called!")  # Debugging statement
+# @csrf_exempt
+# def payment_success(request):
+#     if request.method == 'POST':
+#         print("Payment success view called!")  
 
-        try:
-            # Parse the JSON data from the request body
-            data = json.loads(request.body)
-            payment_id = data.get('razorpay_payment_id')
-            order_id = data.get('razorpay_order_id')
-            signature = data.get('razorpay_signature')
+#         try:
+            
+#             data = json.loads(request.body)
+#             payment_id = data.get('razorpay_payment_id')
+#             order_id = data.get('razorpay_order_id')
+#             signature = data.get('razorpay_signature')
 
-            print(f"Payment ID: {payment_id}, Order ID: {order_id}, Signature: {signature}")  # Debugging statement
+#             print(f"Payment ID: {payment_id}, Order ID: {order_id}, Signature: {signature}")  
+#             params_dict = {
+#                 'razorpay_order_id': order_id,
+#                 'razorpay_payment_id': payment_id,
+#                 'razorpay_signature': signature,
+#             }
 
-            # Prepare the data for signature verification
-            params_dict = {
-                'razorpay_order_id': order_id,
-                'razorpay_payment_id': payment_id,
-                'razorpay_signature': signature,
-            }
+#             client.utility.verify_payment_signature(params_dict)
+#             print("Signature verification successful!")  
 
-            # Verify the payment signature
-            client.utility.verify_payment_signature(params_dict)
-            print("Signature verification successful!")  # Debugging statement
+#             donation = Donation.objects.get(razorpay_order_id=order_id)
+#             donation.payment_status = 'COMPLETED'
+#             donation.save()
+#             print("Payment status updated to COMPLETED!")  
 
-            # Update the payment status to COMPLETED
-            donation = Donation.objects.get(razorpay_order_id=order_id)
-            donation.payment_status = 'COMPLETED'
-            donation.save()
-            print("Payment status updated to COMPLETED!")  # Debugging statement
-
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            print(f"Error: {e}")  # Debugging statement
-            return JsonResponse({'status': 'failure', 'error': str(e)})
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+#             return JsonResponse({'status': 'success'})
+#         except Exception as e:
+#             print(f"Error: {e}")  
+#             return JsonResponse({'status': 'failure', 'error': str(e)})
+#     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 
 
@@ -324,11 +323,13 @@ def event_detail(request, slug):
 def displayParticularEvent(request, eventId):
     eventDetail = EventMaster.objects.filter(id=eventId, is_active=True).order_by('order')
     everEvent = EventMaster.objects.exclude(id=eventId)
+    eventQuote = EventMaster.objects.filter(id=eventId, is_active=True)
     footer_data = get_footer_data()
 
     context = {
         'eventDetail': eventDetail,
         'everEvent': everEvent,
+        'eventQuote':eventQuote,
         'footer_data': footer_data
         
         }
