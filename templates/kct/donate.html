@@ -92,7 +92,7 @@
                             </a>
                         </div>
     
-                        <form id="donationForm" action="{% url 'donate' %}" method="post">
+                        <!-- <form id="donationForm" action="{% url 'donate' %}" method="post">
                             {% csrf_token %}
                             <div class="form-row">
                                 <div class="form-group">
@@ -105,7 +105,6 @@
                                 </div>
                             </div>
     
-                            <!-- Personal Account Form -->
                             <div id="personal-account-form" class="form-section" style="display: none;">
                                 <div class="form-row">
                                     <div class="form-group">
@@ -139,7 +138,6 @@
                                 </div>
                             </div>
     
-                            <!-- Official Account Form -->
                             <div id="official-account-form" class="form-section" style="display: none;">
                                 <div class="form-row">
                                     <div class="form-group">
@@ -177,7 +175,6 @@
                                 </div>
                             </div>
     
-                            <!-- Donation Amount -->
                             <div class="form-group">
                                 {{ form.amount.label_tag }}
                                 {{ form.amount }}
@@ -186,25 +183,22 @@
                             <div class="form-group text-center">
                                 <button type="submit" class="submit-button">Donate Now</button>
                             </div>
-                        </form>
+                        </form> -->
     
                     </div>
                 </div>
             </div>
         </section>
     
-        <script>
-            // Function to toggle visibility based on 'Paying From' selection
+        <!-- <script>
             function toggleFormSections() {
                 const payingFrom = document.getElementById('id_paying_from').value;
                 const personalAccountForm = document.getElementById('personal-account-form');
                 const officialAccountForm = document.getElementById('official-account-form');
         
-                // Hide both forms initially
                 personalAccountForm.style.display = 'none';
                 officialAccountForm.style.display = 'none';
         
-                // Show the selected form
                 if (payingFrom === 'personal-account') {
                     personalAccountForm.style.display = 'block';
                 } else if (payingFrom === 'official-account') {
@@ -212,63 +206,57 @@
                 }
             }
         
-            // Call the function when the page loads
             document.addEventListener('DOMContentLoaded', function () {
-                toggleFormSections(); // Initialize form visibility
+                toggleFormSections(); 
             });
         
-            // Call the function when the 'paying_from' field changes
             document.getElementById('id_paying_from').addEventListener('change', function () {
                 toggleFormSections();
             });
         
-            // Handle form submission
             document.getElementById('donationForm').addEventListener('submit', function (e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault(); 
         
-                const formData = new FormData(document.getElementById('donationForm')); // Get form data
+                const formData = new FormData(document.getElementById('donationForm')); 
         
                 fetch("{% url 'donate' %}", {
                     method: 'POST',
                     headers: {
-                        'X-CSRFToken': '{{ csrf_token }}', // Include CSRF token
+                        'X-CSRFToken': '{{ csrf_token }}', 
                     },
-                    body: formData, // Send form data
+                    body: formData, 
                 })
-                .then(response => response.json()) // Parse JSON response
+                .then(response => response.json()) 
                 .then(data => {
-                    // Open Razorpay payment interface
                     const options = {
-                        key: 'rzp_test_xiMcTjBlVV2j8h', // Your Razorpay key
-                        amount: data.amount, // Amount in paise
+                        key: 'rzp_test_xiMcTjBlVV2j8h', 
+                        amount: data.amount, 
                         currency: 'INR',
-                        order_id: data.id, // Order ID from the server
+                        order_id: data.id, 
                         name: 'Khidmat Trust',
                         description: 'Donation',
                         handler: function (response) {
-                            console.log("Payment successful! Response:", response);  // Debugging statement
+                            console.log("Payment successful! Response:", response);  
                         
-                            // Prepare the data to send to the server
                             const paymentData = {
                                 razorpay_payment_id: response.razorpay_payment_id,
                                 razorpay_order_id: response.razorpay_order_id,
                                 razorpay_signature: response.razorpay_signature,
                             };
                         
-                            // Send the payment response to the server
-                            fetch("{% url 'payment_success' %}", {
+                             {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'X-CSRFToken': '{{ csrf_token }}',
                                 },
-                                body: JSON.stringify(paymentData),  // Send payment response as JSON
+                                body: JSON.stringify(paymentData),  
                             })
                             .then(response => response.json())
                             .then(data => {
                                 if (data.status === 'success') {
                                     alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
-                                    window.location.href = "{% url 'donate' %}";  // Redirect to home or success page
+                                    window.location.href = "{% url 'donate' %}";  
                                 } else {
                                     alert('Payment verification failed. Please contact support.');
                                 }
@@ -290,7 +278,6 @@
         
                     const rzp = new Razorpay(options);
         
-                    // Handle payment failure
                     rzp.on('payment.failed', function (response) {
                         fetch("", {
                             method: 'POST',
@@ -298,7 +285,7 @@
                                 'Content-Type': 'application/json',
                                 'X-CSRFToken': '{{ csrf_token }}',
                             },
-                            body: JSON.stringify(response), // Send payment response
+                            body: JSON.stringify(response), 
                         })
                         .then(response => response.json())
                         .then(data => {
@@ -306,7 +293,7 @@
                         });
                     });
         
-                    rzp.open(); // Open the Razorpay payment interface
+                    rzp.open(); 
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -314,9 +301,7 @@
                 });
             });
         </script>
-        <!-- RAZORPAY INTEGRATION HERE -->
-        <script src="https://checkout.razorpay.com/v1/checkout.js">
-        </script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
         <section class="subscribe">
             <div class="subscribe__bg"></div>
             <div class="container">
