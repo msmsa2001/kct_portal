@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-!)^349*n=1g-7vfigbm-w)l#)t8kq$whbe&26t*(y$kdsssbc5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -80,10 +80,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "kct_portal",
-        "USER": "postgres",
-        "PASSWORD": "root",
+        "USER": "kct",
+        "PASSWORD": "kct123",
         "HOST": "localhost",  # Change if using a remote server
-        "PORT": "5433",
+        "PORT": "5432",
     }
 }
 
@@ -91,7 +91,7 @@ DATABASES = {
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "sfiles")]
+STATICFILES_DIRS = []
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -150,5 +150,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 APPEND_SLASH = False
 
 
+
 # RAZORPAY_KEY_ID = 'rzp_test_xiMcTjBlVV2j8h'
 # RAZORPAY_SECRET_KEY = 'AREBxhesXkY9EsfTJjAJT5AD'
+
