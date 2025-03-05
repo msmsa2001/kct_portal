@@ -88,7 +88,7 @@ def get_data_dict_Event():
 def get_gallery_images():
     try:
         gallery_records = SystemMaster.objects.filter(system_name="Gallery").order_by('created_at')
-        print(gallery_records, "gallery_records**********************************")
+        # print(gallery_records, "gallery_records**********************************")
 
         return gallery_records
 
@@ -196,7 +196,7 @@ def get_footer_data():
             footer_data[title] = descriptions[i] if i < len(descriptions) else ""
 
         # Debugging output to check accuracy
-        print("Extracted Footer Data:", footer_data)
+        # print("Extracted Footer Data:", footer_data)
 
         return footer_data
 

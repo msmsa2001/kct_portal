@@ -179,13 +179,13 @@
             <div class="container">
                 <div class="row1">
                     <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        {% for quote in page_quotes %}
                         <div class="subscribe__content">
-                            <h2 class="subscribe__title">"Khidmat Charitable Trust – A small step for us, <br> a big
-                                change for many. <br>
-                                Together, we make a difference."</h2>
+                            <h2 class="subscribe__title">{{ quote.page_quotes|safe }}</h2>
                             <!-- <span class="subscribe__title-image icon-email"></span> -->
                             <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
                         </div>
+                        {% endfor %}
                     </div>
                     <!-- <div class="col-lg-7 wow fadeInUp">
                     <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
@@ -408,7 +408,7 @@
     <script src="{% static 'js/imagesloaded.min.js' %}"></script>
 
     <script src="{% static 'js/cleenhearts.js' %}"></script>
-    <script src="{% static 'https://unpkg.com/swiper/swiper-bundle.min.js' %}"></script>
+    <!-- <script src="{% static 'https://unpkg.com/swiper/swiper-bundle.min.js' %}"></script> -->
 </body>
 
 {% endblock content %}
