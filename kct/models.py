@@ -16,6 +16,7 @@ class SystemMaster(models.Model):
         upload_to='banner/', 
         validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp', 'svg'])], 
         null=True, blank=True)
+    page_quotes = models.TextField(max_length=255, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -24,6 +25,8 @@ class SystemMaster(models.Model):
         return self.system_name if self.system_name else "System Master Entry"
 
 
+
+# Data inserts from Django panel in this model.
 class EventMaster(models.Model):
     event_title = models.CharField(max_length=255)
     event_description = models.TextField()
@@ -64,46 +67,13 @@ class DropdownOption(models.Model):
         related_name="dropdown_options"
     )
     name = models.CharField(max_length=100)
+    count = models.IntegerField(null=True)
     is_active = models.BooleanField(default=True)
  
 
     def __str__(self):
         return f"{self.name} ({self.category.name})"
 
-
-class KeyProgramMaster(models.Model):
-    system = models.OneToOneField(SystemMaster, on_delete=models.CASCADE, related_name="key_program_master")
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.system.system_name
-
-
-class BeneficiaryAid(models.Model):
-    system = models.OneToOneField(SystemMaster, on_delete=models.CASCADE, related_name="beneficiary_aid")
-    is_active = models.BooleanField(default=True)
-
-
-    def __str__(self):
-        return self.system.system_name
-
-
-class CaseStudiesMaster(models.Model):
-    system = models.OneToOneField(SystemMaster, on_delete=models.CASCADE, related_name="case_study_master")
-    is_active = models.BooleanField(default=True)
-
-
-    def __str__(self):
-        return self.system.system_name
-
-
-class LatestEventMaster(models.Model):
-    system = models.OneToOneField(SystemMaster, on_delete=models.CASCADE, related_name="latest_event_master")
-    is_active = models.BooleanField(default=True)
-
-
-    def __str__(self):
-        return self.system.system_name
 
 
 class ManagingListCategoryMaster(models.Model):
@@ -141,11 +111,7 @@ class KCTEnquireMaster(models.Model):
 
 
 
-
-
-from django.db import models
-
-class Donation(models.Model):
+# class Donation(models.Model):
     # PAYMENT_CHOICES = [
     #     ('personal-account', 'Personal Account'),
     #     ('official-account', 'Official Account'),
@@ -186,7 +152,7 @@ class Donation(models.Model):
     # payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='PENDING')
     # razorpay_order_id = models.CharField(max_length=255, blank=True, null=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.system.system_name
+    # def __str__(self):
+    #     return self.system.system_name

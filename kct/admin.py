@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export import resources 
-from .models import BeneficiaryAid, CaseStudiesMaster, KCTEnquireMaster, KeyProgramMaster, LatestEventMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster, SystemMasterCategory
+from .models import  KCTEnquireMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -189,14 +189,14 @@ admin.site.register(ListItemCategory, ListItemAdmin)
 
 
 
-# class KCTEnquireMasterresource(resources.ModelResource):
-#     class Meta:
-#         model = KCTEnquireMaster
-#         import_id_fields = ['id']
-#         fields = ['id', 'name', 'email', 'phone', 'message', 'is_active']
+class KCTEnquireMasterresource(resources.ModelResource):
+    class Meta:
+        model = KCTEnquireMaster
+        import_id_fields = ['id']
+        fields = ['id', 'name', 'email', 'phone', 'message', 'is_active']
 
-# class KCTEnquireMasterAdmin(ImportExportModelAdmin):
-#     resource_class = KCTEnquireMasterresource
-#     list_display = ['id','name', 'email', 'phone', 'message', 'is_active']
-#     search_fields = ['id', 'name', 'email', 'phone']
-# admin.site.register(KCTEnquireMaster, KCTEnquireMasterAdmin)
+class KCTEnquireMasterAdmin(ImportExportModelAdmin):
+    resource_class = KCTEnquireMasterresource
+    list_display = ['id','name', 'email', 'phone', 'message', 'is_active']
+    search_fields = ['id', 'name', 'email', 'phone']
+admin.site.register(KCTEnquireMaster, KCTEnquireMasterAdmin)

@@ -8,9 +8,10 @@
     <div class="custom-cursor__cursor"></div>
     <div class="custom-cursor__cursor-two"></div>
     <div class="page-wrapper">
-        
+
         <section class="page-header @@extraClassName">
-            <div class="page-header__bg" style="background-image: url('/static/images/backgrounds/contact3-bg.png');"></div>
+            <div class="page-header__bg" style="background-image: url('/static/images/backgrounds/contact3-bg.png');">
+            </div>
             <div class="container">
                 <h2 class="page-header__title">Contact Us</h2>
                 <ul class="cleenhearts-breadcrumb list-unstyled">
@@ -26,8 +27,8 @@
                         <div class="contact-one__map">
                             <div class="google-map contact-one__google__map map-contact">
                                 <iframe title="template google map"
-                                src="https://maps.google.com/maps?t=m&amp;output=embed&amp;iwloc=near&amp;z=17&amp;q=68%2C+Mirza+Galib+Rd%2C+Police+Colony%2C+Ashadham+Colony%2C+Madanpura%2C+Mumbai%2C+india"
-                                class="map__contact-one__google__map" allowfullscreen>
+                                    src="https://maps.google.com/maps?t=m&amp;output=embed&amp;iwloc=near&amp;z=17&amp;q=68%2C+Mirza+Galib+Rd%2C+Police+Colony%2C+Ashadham+Colony%2C+Madanpura%2C+Mumbai%2C+india"
+                                    class="map__contact-one__google__map" allowfullscreen>
                                 </iframe>
                             </div>
                             <div class="contact-one__info">
@@ -37,7 +38,8 @@
                                     </div>
                                     <div class="contact-one__info__content">
                                         <h4 class="contact-one__info__title">Office Address</h4>
-                                        <address class="contact-one__info__text">{{ footer_data.address|linebreaksbr }}</address>
+                                        <address class="contact-one__info__text">{{ footer_data.address|linebreaksbr }}
+                                        </address>
                                     </div>
                                 </div>
                                 <div class="contact-one__info__item">
@@ -47,7 +49,8 @@
                                     <div class="contact-one__info__content">
                                         <h4 class="contact-one__info__title">Quick Contact</h4>
                                         <a href="tel:{{ footer_data.phone }}"
-                                            class="contact-one__info__text contact-one__info__text--link">{{ footer_data.phone }}</a>
+                                            class="contact-one__info__text contact-one__info__text--link">
+                                            {{footer_data.phone }}</a>
                                     </div>
                                 </div>
                                 <div class="contact-one__info__item">
@@ -57,7 +60,8 @@
                                     <div class="contact-one__info__content">
                                         <h4 class="contact-one__info__title">Support Email</h4>
                                         <a href="mailto:{{ footer_data.email }}"
-                                            class="contact-one__info__text contact-one__info__text--link">{{ footer_data.email }}</a>
+                                            class="contact-one__info__text contact-one__info__text--link">
+                                                {{footer_data.email }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +70,7 @@
                     <div class="col-lg-6 wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
                         <div class="contact-one__form">
                             <div class="contact-one__form__bg"
-                                style="background-image: url('images/backgrounds/contact-bg-1-1.png');"></div>
+                                style="background-image: url('/static/images/backgrounds/contact-bg-1-1.png');"></div>
                             <h2 class="contact-one__title">Enquire Now </h2>
                             <form class="contact-one__form__inner contact-form-validated form-one wow fadeInUp"
                                 data-wow-duration="1500ms" action="{% url 'contact' %}" method="post">
@@ -75,26 +79,30 @@
                                     <div class="col-12">
                                         <div class="form-one__control">
                                             <input type="text" name="name" id="name" placeholder="enter your name"
-                                                class="form-one__control__input">
+                                                class="form-one__control__input" required>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-one__control">
-                                            <input type="text" name="email" id="email" placeholder="your email"
-                                                class="form-one__control__input">
+                                            <input type="email" name="email" id="email" placeholder="your email"
+                                                class="form-one__control__input" required>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-one__control">
-                                            <input type="tel" name="phone" id="phone" placeholder="phone number"
-                                                class="form-one__control__input">
+                                            <input type="tel" name="phone" id="phone" placeholder="Phone Number"
+                                                class="form-one__control__input" maxlength="10" required>
+                                            <small id="phone-error" class="error-message" style="display: none;">
+                                                Please enter a valid 10-digit phone number.
+                                            </small>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-one__control">
                                             <textarea name="message" id="message" cols="30" rows="10"
                                                 placeholder="write message . . ."
-                                                class="form-one__control__input form-one__control__message"></textarea>
+                                                class="form-one__control__input form-one__control__message"
+                                                required></textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -115,20 +123,66 @@
                 </div>
             </div>
         </section>
-        
+
+        <div id="loader" class="loader" style="display: none;">
+            <div class="loader-spinner"></div>
+        </div>
+
+        <script>
+            document.querySelector('.contact-one__form__inner').addEventListener('submit', function (event) {
+                event.preventDefault(); 
+
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const message = document.getElementById('message').value.trim();
+                const phoneError = document.getElementById('phone-error');
+
+                phoneError.style.display = 'none';
+                const existingSuccess = document.querySelector('.form-success-message');
+                if (existingSuccess) existingSuccess.remove();
+
+                const phoneRegex = /^\d{10}$/;
+                const isPhoneValid = phoneRegex.test(phone);
+
+                if (name && email && isPhoneValid && message) {
+                    document.getElementById('loader').style.display = 'flex';
+
+                    setTimeout(function () {
+                        document.getElementById('loader').style.display = 'none';
+
+                        event.target.reset();
+
+                        const successMessage = document.createElement('div');
+                        successMessage.className = 'form-success-message';
+                        successMessage.textContent = 'Form submitted successfully!';
+                        document.querySelector('.contact-one__form').appendChild(successMessage);
+
+                        setTimeout(function () {
+                            successMessage.remove();
+                        }, 1000); 
+                    }, 1000); 
+                } else {
+                    if (!isPhoneValid) {
+                        phoneError.style.display = 'block';
+                    }
+                }
+            });
+        </script>
+
 
         <section class="subscribe">
             <div class="subscribe__bg"></div>
             <div class="container">
                 <div class="row1">
                     <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        {% for quote in page_quotes %}
                         <div class="subscribe__content">
-                            <h2 class="subscribe__title">"Khidmat Charitable Trust – A small step for us, <br> a big
-                                change for many. <br>
-                                Together, we make a difference."</h2>
+                            <h2 class="subscribe__title">{{ quote.page_quotes|safe }}</h2>
                             <!-- <span class="subscribe__title-image icon-email"></span> -->
                             <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
                         </div>
+                        {% endfor %}
                     </div>
                     <!-- <div class="col-lg-7 wow fadeInUp">
                         <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
@@ -147,7 +201,7 @@
                 <div class="subscribe__shape__two"></div>
             </div>
         </section>
-       
+
     </div>
 
     <div class="mobile-nav__wrapper">
@@ -155,7 +209,8 @@
         <div class="mobile-nav__content">
             <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
             <div class="logo-box">
-                <a href="{% url 'home' %}" aria-label="logo image"><img src="images/logo-light.png" width="155" alt="" /></a>
+                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'images/logo-light.png' %}"
+                        width="155" alt="" /></a>
             </div>
             <div class="mobile-nav__container"></div>
             <ul class="mobile-nav__contact list-unstyled">
@@ -174,7 +229,7 @@
                     <span class="sr-only">Facebook</span>
                 </a>
                 <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
-                    <img src="images/X_logo white.svg" alt="X Logo" class="x-logo" />
+                    <img src="{% static 'images/X_logo white.svg' %}" alt="X Logo" class="x-logo" />
                     <span class="sr-only">Twitter</span>
                 </a>
                 <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D" aria-hidden="true">
@@ -203,7 +258,7 @@
         <span class="scroll-to-top__text">back top</span>
         <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
     </a>
-  
+
     <script>
         let calScrollValue = () => {
             let scrollProgress = document.getElementById('progressbar');
@@ -230,6 +285,19 @@
 
         document.getElementById('progress').addEventListener('click', () => {
             // Do nothing on click, just update the percentage text
+        });
+    </script>
+    <script>
+        document.getElementById('phone').addEventListener('input', function () {
+            const phoneInput = this.value;
+            const phonePattern = /^[0-9]{10}$/; // Exactly 10 digits
+            const errorMessage = document.getElementById('phone-error');
+
+            if (phonePattern.test(phoneInput)) {
+                errorMessage.style.display = 'none'; // Hide error if valid
+            } else {
+                errorMessage.style.display = 'block'; // Show error if invalid
+            }
         });
     </script>
     <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
