@@ -10,10 +10,37 @@ from django.core.mail import send_mail
 # from django.http import JsonResponse
 from django.conf import settings
 # import razorpay
+import requests
 
 def home(request):
+    # Step 1: JWT Token API Call
+    token_url = "https://api.khidmattrust.org/api/Account/ValidateKey?Key=KhidmatAPILive"
+    data_url = "https://api.khidmattrust.org/api/Display/GetData"
+
+    try:
+        token_response = requests.get(token_url)
+        token_response.raise_for_status()  # Raise error for 4xx/5xx status
+        token_data = token_response.json()
+        jwt_token = token_data.get("Token") or token_data.get("token")
+
+        if not jwt_token:
+            raise ValueError("JWT Token not found in response")
+
+        # Step 2: Fetch Data Using JWT Token
+        headers = {"Authorization": f"Bearer {jwt_token}"}
+        data_response = requests.get(data_url, headers=headers)
+        data_response.raise_for_status()
+        api_data = data_response.json()
+
+        print(api_data)
+
+    except requests.RequestException as e:
+        print(f"API Error: {e}")
+        api_data = {}
+
+    # Existing Django Queries
     slider_items = SystemMaster.objects.filter(system_name__startswith='Slider', is_active=True)
-    master_items = SystemMaster.objects.all()  
+    master_items = SystemMaster.objects.all()
     about_section = SystemMaster.objects.filter(system_name='KCT').first()
     categories = BeneficiaryCategory.objects.prefetch_related('dropdown_options').all()
     key_program_data = get_data_dict()
@@ -26,26 +53,26 @@ def home(request):
     footer_data = get_footer_data()
     display_event = EventMaster.objects.filter(is_active=True).order_by('order')
     page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
-    print(page_quotes, "....................................................................................")
-     
 
+    # Final Context
     context = {
         'slider_items': slider_items,
-        'master_items': master_items,  
+        'master_items': master_items,
         'about_section': about_section,
-        'categories': categories,  
+        'categories': categories,
         'keyprogram': key_program_data.items(),
-        'beneficiaryaid':beneficiaryaid.items(),
-        'casestudy':casestudy.items(),
-        'latestevent':latestevent.items(),
+        'beneficiaryaid': beneficiaryaid.items(),
+        'casestudy': casestudy.items(),
+        'latestevent': latestevent.items(),
         'our_aim': our_aim,
         'our_vision': our_vision,
         'our_mission': our_mission,
         'footer_data': footer_data,
         'display_event': display_event,
         'page_quotes': page_quotes,
-        
+        'api_data': api_data,  # API data added to context
     }
+
     return render(request, 'kct/index.html', context)
 
 def about(request):
@@ -121,6 +148,8 @@ def career(request):
 def contact(request):
     page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
     footer_data = get_footer_data()
+    success = False  
+
     if request.method == 'POST':
         Name = request.POST.get('name', '').strip()
         Email = request.POST.get('email', '').strip()
@@ -132,6 +161,7 @@ def contact(request):
         if all([Name, Email, Phone]):
             if KCTEnquireMaster.objects.filter(email=Email).first():
                 messages.warning(request, "You have already Sumitted the Form, Please wait we will connect with you within a 24 hours.")
+                
             try:
                 new_record = KCTEnquireMaster(name=Name, email=Email, phone=Phone, message=Message)
                 new_record.save()
@@ -150,18 +180,24 @@ def contact(request):
                 Best Regards,
                 Your Company Name
                 """
+
+                print("Waiting")
                 form_email = settings.EMAIL_HOST_USER
-                recipient_list = [Email]
+                recipient_list = ["sadique.leewayzon@gmail.com"]
                 send_mail(subject, message_body, form_email, recipient_list)
                 messages.success(request, "Your enquiry has been submitted successfully.")
 
             except Exception as e:
+                print(e)
                 messages.error(request, f"An error occurred: {str(e)}")
 
         else:
+
             messages.error(request, "Please fill in all required fields.")
 
         print(Name, Email, Phone, Message)
+
+        
 
     context = {
         'footer_data': footer_data,
