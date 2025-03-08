@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-!)^349*n=1g-7vfigbm-w)l#)t8kq$whbe&26t*(y$kdsssbc5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -76,22 +76,32 @@ WSGI_APPLICATION = "kct_portal.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "kct_portal",
+#         "USER": "kct",
+#         "PASSWORD": "kct123",
+#         "HOST": "localhost",  # Change if using a remote server
+#         "PORT": "5432",
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "kct_portal",
-        "USER": "kct",
-        "PASSWORD": "kct123",
+        "USER": "postgres",
+        "PASSWORD": "root",
         "HOST": "localhost",  # Change if using a remote server
-        "PORT": "5432",
+        "PORT": "5433",
     }
 }
 
-
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = []
+# STATICFILES_DIRS = []
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "sfiles")]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

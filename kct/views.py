@@ -1,21 +1,46 @@
 import json
 from django.shortcuts import render, get_object_or_404
 
-from kct.forms import DonationForm
 from kct_portal import settings
 from django.views.decorators.csrf import csrf_exempt
-from .models import Donation, EventMaster, KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
+from .models import EventMaster, KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
 from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.http import JsonResponse
+# from django.http import JsonResponse
 from django.conf import settings
-import razorpay
+# import razorpay
+import requests
 
 def home(request):
+    # Step 1: JWT Token API Call
+    token_url = "https://api.khidmattrust.org/api/Account/ValidateKey?Key=KhidmatAPILive"
+    data_url = "https://api.khidmattrust.org/api/Display/GetData"
+
+    try:
+        token_response = requests.get(token_url)
+        token_response.raise_for_status()  # Raise error for 4xx/5xx status
+        token_data = token_response.json()
+        jwt_token = token_data.get("Token") or token_data.get("token")
+
+        if not jwt_token:
+            raise ValueError("JWT Token not found in response")
+
+        # Step 2: Fetch Data Using JWT Token
+        headers = {"Authorization": f"Bearer {jwt_token}"}
+        data_response = requests.get(data_url, headers=headers)
+        data_response.raise_for_status()
+        api_data = data_response.json()
+
+        print(api_data)
+
+    except requests.RequestException as e:
+        print(f"API Error: {e}")
+        api_data = {}
+
+    # Existing Django Queries
     slider_items = SystemMaster.objects.filter(system_name__startswith='Slider', is_active=True)
-    print(slider_items, ".............................................................")
-    master_items = SystemMaster.objects.all()  
+    master_items = SystemMaster.objects.all()
     about_section = SystemMaster.objects.filter(system_name='KCT').first()
     categories = BeneficiaryCategory.objects.prefetch_related('dropdown_options').all()
     key_program_data = get_data_dict()
@@ -27,24 +52,27 @@ def home(request):
     our_mission = SystemMaster.objects.filter(system_name="Our Mission").first()
     footer_data = get_footer_data()
     display_event = EventMaster.objects.filter(is_active=True).order_by('order')
-     
+    page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
 
+    # Final Context
     context = {
         'slider_items': slider_items,
-        'master_items': master_items,  
+        'master_items': master_items,
         'about_section': about_section,
-        'categories': categories,  
+        'categories': categories,
         'keyprogram': key_program_data.items(),
-        'beneficiaryaid':beneficiaryaid.items(),
-        'casestudy':casestudy.items(),
-        'latestevent':latestevent.items(),
+        'beneficiaryaid': beneficiaryaid.items(),
+        'casestudy': casestudy.items(),
+        'latestevent': latestevent.items(),
         'our_aim': our_aim,
         'our_vision': our_vision,
         'our_mission': our_mission,
         'footer_data': footer_data,
-        'display_event': display_event
-        
+        'display_event': display_event,
+        'page_quotes': page_quotes,
+        'api_data': api_data,  # API data added to context
     }
+
     return render(request, 'kct/index.html', context)
 
 def about(request):
@@ -56,6 +84,7 @@ def about(request):
     our_mission = SystemMaster.objects.filter(system_name="Our Mission").first()
     affiliated_trust_category = SystemMasterCategory.objects.filter(name="Affiliated Trust List").first()
     affiliated_trusts = SystemMaster.objects.filter(category=affiliated_trust_category)
+    page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
     afillat = get_data_afillat()
     footer_data = get_footer_data()
      
@@ -69,6 +98,7 @@ def about(request):
         'our_mission': our_mission,
         'affiliated_trusts': afillat,
         'footer_data': footer_data,
+        'page_quotes': page_quotes,
         
     }
     return render(request, 'kct/about.html', context)
@@ -77,10 +107,12 @@ def activity(request):
     activities_page = get_data_activies()
     gallery_items = get_gallery_images()
     footer_data = get_footer_data()
+    page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
     context = {
         'gallery_items' : gallery_items,
         'activities_page':activities_page,
         'footer_data': footer_data,
+        'page_quotes': page_quotes,
     }
     return render(request, 'kct/activities.html', context)
 
@@ -88,21 +120,25 @@ def benefits(request):
     beneficiaryaid = get_data_dict_aid()
     benefits_page = get_data_benefits()
     footer_data = get_footer_data()
+    page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
 
     context = {
         'beneficiaryaid':beneficiaryaid.items(),
         'benefits_page':benefits_page,
         'footer_data': footer_data,
+        'page_quotes': page_quotes,
     }
     return render(request, 'kct/benefits.html',context)
 
 def career(request):
     career_page = get_data_career()
     footer_data = get_footer_data()
+    page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
 
     context = {
         'career_page':career_page,
         'footer_data': footer_data,
+        'page_quotes': page_quotes,
     }
     return render(request, 'kct/careers.html',context)
 
@@ -110,7 +146,10 @@ def career(request):
 
 
 def contact(request):
+    page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
     footer_data = get_footer_data()
+    success = False  
+
     if request.method == 'POST':
         Name = request.POST.get('name', '').strip()
         Email = request.POST.get('email', '').strip()
@@ -122,6 +161,7 @@ def contact(request):
         if all([Name, Email, Phone]):
             if KCTEnquireMaster.objects.filter(email=Email).first():
                 messages.warning(request, "You have already Sumitted the Form, Please wait we will connect with you within a 24 hours.")
+                
             try:
                 new_record = KCTEnquireMaster(name=Name, email=Email, phone=Phone, message=Message)
                 new_record.save()
@@ -140,21 +180,28 @@ def contact(request):
                 Best Regards,
                 Your Company Name
                 """
+
+                print("Waiting")
                 form_email = settings.EMAIL_HOST_USER
-                recipient_list = [Email]
+                recipient_list = ["sadique.leewayzon@gmail.com"]
                 send_mail(subject, message_body, form_email, recipient_list)
                 messages.success(request, "Your enquiry has been submitted successfully.")
 
             except Exception as e:
+                print(e)
                 messages.error(request, f"An error occurred: {str(e)}")
 
         else:
+
             messages.error(request, "Please fill in all required fields.")
 
         print(Name, Email, Phone, Message)
 
+        
+
     context = {
         'footer_data': footer_data,
+        'page_quotes': page_quotes,
     }
     return render(request, 'kct/contact.html',context)
 

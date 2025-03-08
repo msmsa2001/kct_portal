@@ -10,7 +10,7 @@
     <div class="custom-cursor__cursor"></div>
     <div class="custom-cursor__cursor-two"></div>
     <div class="preloader">
-        <div class="preloader__image" style="background-image: url(images/loader.png)"></div>
+        <div class="preloader__image" style="background-image: url(/static/images/loader.png)"></div>
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
@@ -60,7 +60,7 @@
                 NUMBER OF BENEFICIARIES
             </h6>
             <div class="container2">
-                {% for category in categories %}
+                {% for category in categories %} 
                 <div class="box dd-box" data-aos="fade-up" data-aos-duration="{{ forloop.counter|add:1 }}000">
                     <img src="{{ category.icon.url }}">
                     <div class="box-content">
@@ -74,7 +74,7 @@
                             </p>
                             <p class="dropdown-content">
                                 {% for option in category.dropdown_options.all %}
-                                <a>{{ option.name }}</a>
+                                <a>{{ option.name }} - {{ option.count }}</a>
                                 {% endfor %}
                             </p>
                         </div>
@@ -521,13 +521,13 @@
             <div class="container">
                 <div class="row1">
                     <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        {% for quote in page_quotes %}
                         <div class="subscribe__content">
-                            <h2 class="subscribe__title">"Khidmat Charitable Trust – A small step for us, <br> a big
-                                change for many. <br>
-                                Together, we make a difference."</h2>
+                            <h2 class="subscribe__title">{{ quote.page_quotes|safe }}</h2>
                             <!-- <span class="subscribe__title-image icon-email"></span> -->
                             <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
                         </div>
+                        {% endfor %}
                     </div>
                     <!-- <div class="col-lg-7 wow fadeInUp">
                         <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
@@ -782,31 +782,37 @@
         });
     </script>
     <script>
-        // Dropdown functionality
-        document.querySelectorAll('.dropdown-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const dropdownContent = button.nextElementSibling;
-
-                // Toggle the dropdown content visibility
-                if (dropdownContent.style.display === 'block') {
-                    dropdownContent.style.display = 'none';
-                } else {
-                    dropdownContent.style.display = 'block';
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+    
+            dropdownButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Close all other dropdowns
+                    dropdownButtons.forEach(otherButton => {
+                        if (otherButton !== button) {
+                            const otherDropdownContent = otherButton.nextElementSibling;
+                            otherDropdownContent.classList.remove('open');
+                        }
+                    });
+    
+                    // Toggle the clicked dropdown
+                    const dropdownContent = button.nextElementSibling;
+                    dropdownContent.classList.toggle('open');
+                });
+            });
+    
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!event.target.closest('.dropdown')) {
+                    dropdownButtons.forEach(button => {
+                        const dropdownContent = button.nextElementSibling;
+                        dropdownContent.classList.remove('open');
+                    });
                 }
             });
         });
-
-        // Optional: Close dropdowns when clicking outside
-        document.addEventListener('click', (event) => {
-            document.querySelectorAll('.dropdown-content').forEach(dropdown => {
-                if (!dropdown.parentElement.contains(event.target)) {
-                    dropdown.style.display = 'none';
-                }
-            });
-        });
-
     </script>
-    <script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
     const dropdownButtons = document.querySelectorAll('.dropdown-btn');
 
@@ -817,7 +823,7 @@
         });
     });
 });
-    </script>
+    </script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
