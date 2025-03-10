@@ -66,7 +66,6 @@
                     <div class="box-content">
                         <p class="numbers1" data-val="{{ category.number }}">{{ category.number }}</p>
                         
-                        {% if category.has_dropdown %}
                         <div class="dropdown">
                             <p class="dropdown-btn below-number">
                                 {{ category.name }}
@@ -74,18 +73,15 @@
                             </p>
                             <p class="dropdown-content">
                                 {% for option in category.dropdown_options.all %}
-                                <a>{{ option.name }} - {{ option.count }}</a>
+                                <a>{{ option.name }} - {{ option.count }}</a> <br>
                                 {% endfor %}
                             </p>
                         </div>
-                        {% else %}
-                        <p class="below-number">{{ category.name }}</p>
-                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}
             </div>
-        </section>
+        </section>        
         
         <section class="about-one about-one--home section-space">
             <div class="about-one__bg">
