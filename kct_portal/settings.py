@@ -24,7 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-!)^349*n=1g-7vfigbm-w)l#)t8kq$whbe&26t*(y$kdsssbc5"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+
 DEBUG = False
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -88,10 +91,24 @@ DATABASES = {
 }
 
 
+# DATABASES = {
+#      "default": {
+#          "ENGINE": "django.db.backends.sqlite3",
+#          "NAME": BASE_DIR / "db.sqlite3",
+#          "ENGINE": "django.db.backends.postgresql",
+#          "NAME": "kct_portal",
+#          "USER": "postgres",
+#          "PASSWORD": "root",
+#          "HOST": "localhost",  # Change if using a remote server
+#          "PORT": "5433",
+#      }
+#  }
+ 
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_DIRS = []
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "sfiles")]
 
 
 MEDIA_URL = '/media/'

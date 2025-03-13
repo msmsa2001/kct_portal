@@ -81,7 +81,7 @@ class dropdownoptions(resources.ModelResource):
 
 class dropdownoptionsAdmin(ImportExportModelAdmin):
     resource_class = dropdownoptions
-    list_display = ['id','category', 'name', 'is_active']
+    list_display = ['id','category', 'name', 'count','is_active']
     search_fields = ['id', 'name']
 admin.site.register(DropdownOption, dropdownoptionsAdmin)
 
