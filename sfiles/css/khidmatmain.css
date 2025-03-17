@@ -27787,7 +27787,11 @@ body.boxed-wrapper .main-header__cart {
     font-size: 14px;
     transition: transform 0.3s;
 }
-
+@media screen and (max-width: 768px) {
+    .main-slider-one__title__text {
+        white-space: normal !important; /* Mobile me text normal flow me ayega */
+    }
+}
 @media (max-width: 400px) {
     .container2 .box .box-content .below-number {
         font-size: 11px;
@@ -27839,7 +27843,9 @@ body.boxed-wrapper .main-header__cart {
     transition: max-height 0.3s ease-out;
     display: none;
 }
-
+.dropdown-content a {
+    display: block;
+}
 .container2 .box .dropdown-content.open {
     max-height: 200px; /* Adjust this value based on your content */
     display: block;

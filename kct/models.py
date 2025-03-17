@@ -21,6 +21,9 @@ class SystemMaster(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ["id"]
+
     def __str__(self):
         return self.system_name if self.system_name else "System Master Entry"
 
@@ -40,6 +43,9 @@ class EventMaster(models.Model):
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ["id"]
+
 
     def __str__(self):
         return self.event_title
@@ -55,6 +61,8 @@ class BeneficiaryCategory(models.Model):
     has_dropdown = models.BooleanField(default=False) 
     is_active = models.BooleanField(default=True)
 
+    class Meta:
+        ordering = ["id"] 
 
     def __str__(self):
         return self.name
@@ -69,7 +77,9 @@ class DropdownOption(models.Model):
     name = models.CharField(max_length=100)
     count = models.IntegerField(null=True)
     is_active = models.BooleanField(default=True)
- 
+
+    class Meta:
+        ordering = ["id"]
 
     def __str__(self):
         return f"{self.name} ({self.category.name})"
@@ -79,6 +89,9 @@ class DropdownOption(models.Model):
 class ManagingListCategoryMaster(models.Model):
     title = models.CharField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["id"]
 
 
     def __str__(self):
@@ -101,6 +114,9 @@ class KCTEnquireMaster(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["id"]
 
 
     def __str__(self):
