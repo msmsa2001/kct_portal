@@ -11689,9 +11689,14 @@ body.megamenu-popup-active .mobile-nav__content {
     border-radius: 0px 1000px 1000px 0px;
 }
 
-.about-one .row {
+/* .about-one .row {
+    align-items: center;
+} */
+
+.about-one .above-one-img {
     align-items: center;
 }
+
 
 .about-one__image {
     position: relative;
@@ -28173,4 +28178,14 @@ body.boxed-wrapper .main-header__cart {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+#upi-id{
+    color: #204a8f;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#upi-id:hover{
+    text-decoration: underline; 
+     text-decoration-color: #c62b23;
 }
