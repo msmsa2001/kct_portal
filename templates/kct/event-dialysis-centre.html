@@ -14,69 +14,26 @@
 
     <div class="page-wrapper">
 
-        <!-- <div class="topbar-one">
-            <div class="container-fluid">
-                <div class="topbar-one__inner">
-                    <ul class="list-unstyled topbar-one__info">
-                        <li class="topbar-one__info__item">
-                            <span class="topbar-one__info__icon icon-paper-plane"></span>
-                            <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a>
-                        </li>
-                    </ul>
-                    <div class="topbar-one__right">
-                        <div class="social-link topbar-one__social">
-                            <a href="https://www.facebook.com/people/Khidmat-Charitable-Trust/100081203701961/?mibextid=ZbWKwL">
-                      <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                      <span class="sr-only">Facebook</span>
-                    </a>
-                            <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D">
-                      <i class="fab fa-instagram" aria-hidden="true"></i>
-                      <span class="sr-only">Instagram</span>
-                    </a>
-                            <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
-                      <img src="images/X_logo 1.svg" alt="X Logo" class="x-logo" />
-                      <span class="sr-only">Twitter</span>
-                    </a>
-                            <a href="https://www.youtube.com/@khidmattrust" aria-hidden="true">
-                      <i class="fab fa-youtube"></i>
-                      <span class="sr-only">Youtube</span>
-                    </a>
-                        </div>
-                    </div>
-                </div>
+    
+            <div class="container" style="display: flex;align-items: center;justify-content: center;">
+                {% for event in eventDetail %}
+                <h2 class="page-header__title project_page-header__title">{{ event.event_title }}</h2>
+                {% endfor %}
             </div>
-        </div> -->
-
-        
-
-        <section class="page-header @@extraClassName">
-            <div class="page-header__bg"></div>
-
-            <div class="container">
-                <h2 class="page-header__title">Events</h2>
-                <ul class="cleenhearts-breadcrumb list-unstyled">
-                    <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
-                    {% for event in eventDetail %}
-
-                    <li><span>{{ event.event_title }}</span></li>  
-                    {% endfor %}
-                </ul>
-            </div>
-        </section>
 
         <section class="event-details section-space">
             <div class="container">
                 <div class="row gutter-y-60">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         {% for event in eventDetail %}
                         <div class="event-details__content">
                             <div class="event-details__image wow fadeInUp" data-wow-duration="1500ms"
                                 data-wow-delay="00ms">
                                 <img src="{{ event.event_img.url }}" alt="event-details">
-                                <div class="event-details__hall">
+                                <!-- <div class="event-details__hall">
                                     <span>{{ event.reactions }}</span>
                                     <span>Reactions</span>
-                                </div>
+                                </div> -->
                                 <!-- <div class="event-details__date">
                                     <span>17</span>
                                     <span>July</span>
@@ -92,7 +49,7 @@
                                 {{ event.event_feature|safe }}    
                             </div>
                         </div>
-
+             
                         {% endfor %}
 
                         <div class="event-details__speaker mt-5">
@@ -124,86 +81,7 @@
                             {% endfor %}
                         </div>
                     </div>
-                    <div class="col-lg-4 mt-0">
-                        <aside class="sidebar-event">
-                            <div class="sidebar-event__contact contact-one sidebar-event__item wow fadeInUp"
-                                data-wow-duration="1500ms" data-wow-delay="00ms">
-                                <div class="contact-one__info">
-                                    <div class="contact-one__info__item">
-                                        <div class="contact-one__info__icon">
-                                            <span class="icon-location"></span>
-                                        </div>
-                                        <div class="contact-one__info__content">
-                                            <h4 class="contact-one__info__title">Mailing Address</h4>
-                                            <address class="contact-one__info__text">{{ footer_data.address|linebreaksbr }}</address>
-                                        </div>
-                                    </div>
-                                    <div class="contact-one__info__item">
-                                        <div class="contact-one__info__icon">
-                                            <span class="icon-phone"></span>
-                                        </div>
-                                        <div class="contact-one__info__content">
-                                            <h4 class="contact-one__info__title">Quick Contact</h4>
-                                            <a href="tel:{{ footer_data.phone }}"
-                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.phone }}</a>
-                                        </div>
-                                    </div>
-                                    <div class="contact-one__info__item">
-                                        <div class="contact-one__info__icon">
-                                            <span class="icon-envelope"></span>
-                                        </div>
-                                        <div class="contact-one__info__content">
-                                            <h4 class="contact-one__info__title">support email</h4>
-                                            <a href="mailto:{{ footer_data.email }}"
-                                                class="contact-one__info__text contact-one__info__text--link">{{ footer_data.email }}</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="sidebar-event__contact__image">
-                                    <img src="{% static 'images/events/event-1.jpg' %}" alt="events">
-                                </div>
-                            </div>
-                            <div class="sidebar-event__map sidebar-event__item wow fadeInUp" data-wow-duration="1500ms"
-                                data-wow-delay="100ms">
-                                <div class="google-map @@extraClassName">
-                                    <iframe title="template google map"
-                                        src="https://maps.google.com/maps?t=m&amp;output=embed&amp;iwloc=near&amp;z=17&amp;q=68%2C+Mirza+Galib+Rd%2C+Police+Colony%2C+Ashadham+Colony%2C+Madanpura%2C+Mumbai%2C+india"
-                                        class="map__@@extraClassName" allowfullscreen></iframe>
-                                </div>
-
-                            </div>
-
-
-                            <div class="reaction-section">
-                                <h2>What's your reaction?</h2>
-                                <div class="reaction-buttons">
-                                    <div class="reaction-box" onclick="increaseCount(this)">
-                                        <i class="reaction-icon">&#128077;</i>
-                                        <!-- Thumbs Up Icon -->
-                                        <span class="reaction-count">2</span>
-                                        <p>Cool</p>
-                                    </div>
-                                    <div class="reaction-box" onclick="increaseCount(this)">
-                                        <i class="reaction-icon">&#128078;</i>
-                                        <!-- Thumbs Down Icon -->
-                                        <span class="reaction-count">0</span>
-                                        <p>Upset</p>
-                                    </div>
-                                    <!-- <div class="reaction-box" onclick="increaseCount(this)">
-                                        <i class="reaction-icon">&#10084;</i>
-                                        <span class="reaction-count">0</span>
-                                        <p>Love</p>
-                                    </div>
-                                    <div class="reaction-box" onclick="increaseCount(this)">
-                                        <i class="reaction-icon">&#128518;</i>
-                                        <span class="reaction-count">0</span>
-                                        <p>LOL</p>
-                                    </div> -->
-                                </div>
-                            </div>
-
-                        </aside>
-                    </div>
+                   
                 </div>
             </div>
         </section>

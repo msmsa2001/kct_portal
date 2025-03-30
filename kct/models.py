@@ -172,3 +172,39 @@ class KCTEnquireMaster(models.Model):
 
     # def __str__(self):
     #     return self.system.system_name
+class ProjectMaster(models.Model):
+    project_title = models.CharField(max_length=255)
+    project_description = models.TextField()
+    project_feature = models.TextField(max_length=10000, blank=True)
+    project_img = models.FileField(upload_to='project_images/')
+    time = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["id"]
+
+
+    def __str__(self):
+        return self.project_title
+
+
+
+class HomeBannerMaster(models.Model):
+    slide_title = models.CharField(max_length=255)
+    slide_description = models.TextField()
+    slide_img = models.FileField(upload_to='banner_images/')
+    for_more_info = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["id"]
+
+
+    def __str__(self):
+        return self.slide_title

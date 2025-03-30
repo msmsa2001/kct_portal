@@ -14,7 +14,7 @@
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
-        <section class="main-slider-one">
+        <!-- <section class="main-slider-one">
             <div class="main-slider-one__wrapper">
                 <div class="main-slider-one__carousel cleenhearts-owl__carousel owl-carousel" data-owl-options='{
                     "loop": true,
@@ -54,167 +54,204 @@
                     {% endfor %}
                 </div>
             </div>
-        </section>
-        <section class="section-space beneficiaries">
-            <h6 class="sec-title__tagline sec-title__tagline--center">
-                NUMBER OF BENEFICIARIES
-            </h6>
-            <div class="container2">
-                {% for category in categories %} 
-                <div class="box dd-box" data-aos="fade-up" data-aos-duration="{{ forloop.counter|add:1 }}000">
-                    <img src="{{ category.icon.url }}">
-                    <div class="box-content">
-                        <p class="numbers1" data-val="{{ category.number }}">{{ category.number }}</p>
-                        
-                        <div class="dropdown">
-                            <p class="dropdown-btn below-number">
-                                {{ category.name }}
-                                <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
-                            </p>
-                            <p class="dropdown-content">
-                                {% for option in category.dropdown_options.all %}
-                                <a>{{ option.name }} - {{ option.count }}</a>
-                                {% endfor %}
-                            </p>
+        </section> -->
+
+        <section class="hero-slider hero-style-1">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+
+                    {% for item in slider_items %}
+                    <div class="swiper-slide">
+                        <div class="slide-inner slide-bg-image" data-background="{{ item.slide_img.url }}">
+                            <div class="container">
+
+                                <div data-swiper-parallax="300" class="slide-title">
+                                    <h2>{{item.slide_title}}</h2>
+                                </div>
+                                <div data-swiper-parallax="400" class="slide-text">
+                                    <p>{{item.slide_description}}</p>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div data-swiper-parallax="500" class="slide-btns">
+                                    <a href="#" class="theme-btn">More info >></a>
+                                </div>
+                            </div>
+                            <div class="slide-shape">
+                                <img src="{% static 'images/shapes/shape.png' %}" alt="Not Found">
+                            </div>
                         </div>
+                        <!-- end slide-inner -->
                     </div>
+
+                    {% endfor %}
+                    
+                    <!-- end swiper-slide -->
                 </div>
-                {% endfor %}
+                <!-- end swiper-wrapper -->
+                <!-- swipper controls -->
+                <div class="swiper-pagination"></div>
             </div>
-        </section>        
-        
-        <section class="about-one about-one--home section-space">
-            <div class="about-one__bg">
-                <div class="about-one__bg__border"></div>
-                <div class="about-one__bg__inner" style="
-              background-image: url('static/images/shapes/about-shape-1-1.png');
-            "></div>
-            </div>
-            <div class="container">
-                <div class="row above-one-img gutter-y-50">
-                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-                        <div class="about-one__left">
-                            <div class="about-one__image">
-                                {% if about_section and about_section.system_img %}
-                                    <img src="{{ about_section.system_img.url }}" alt="about" class="about-one__image__one" />
-                                {% else %}
-                                    <img src="{% static 'images/about/abtimg1.jpg' %}" alt="about" class="about-one__image__one" />
-                                {% endif %}
+
+        </section>
+
+          <!-- ABOUT SECTION START -->
+          <section class="ul-about ul-about-2 section-space ul-section-spacing wow animate__fadeInUp">
+            <div class="ul-container">
+                <div class="row row-cols-md-2 row-cols-1 align-items-center gy-4 ul-about-row">
+                    <div class="col">
+                        <div class="ul-about-imgs ul-about-2-img">
+                            <div class="img-wrapper">
+                                <img src="{% static 'images/about/about-2-img.jpg' %}" alt="Image">
+                            </div>
+
+                            <div class="ul-about-2-stat">
+                                <span class="number">15+</span>
+                                <span class="txt">Years Of Experience</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="about-one__content">
-                            <div class="sec-title">
-                                <h6 class="sec-title__tagline">ABOUT</h6>
-                                {% if about_section %}
-                                    <h3 class="sec-title__title">
-                                        {{ about_section.system_title }}
-                                        <span class="sec-title__title__inner">{{ about_section.system_name }}</span>
-                                    </h3>
-                                {% endif %}
-                            </div>
-                            <div class="about-one__text-box wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                {% if about_section %}
-                                    <p class="about-one__text">{{ about_section.system_value|linebreaks }}</p>
-                                {% endif %}
-                            </div>
-                            <div class="about-one__wrapper" id="about-one">
-                                <div class="row gutter-y-40">
-                                    <div class="col-lg-4 col-sm-4 col-12 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                        <div class="about-one__donate about-one__donate--one">
-                                            <div class="about-one__donate__icon">
-                                                <span><img src="{% static 'images/about/khidmat_2-02.png' %}" /></span>
-                                            </div>
-                                            <h4 class="about-one__donate__title">Our Aim</h4>
-                                            <p class="about-p">{{ our_aim.system_value }}</p>
-                                            <!-- <div class="about-one__donate__text">
-                                                <span></span>
-                                            </div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-4 col-12 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                                        <div class="about-one__donate about-one__donate--two">
-                                            <div class="about-one__donate__icon">
-                                                <span><img src="{% static 'images/about/khidmat_2-04.png' %}" /></span>
-                                            </div>
-                                            <h4 class="about-one__donate__title">Our Vision</h4>
-                                            <p class="about-p">{{ our_vision.system_value }}</p>
-                                            <!-- <div class="about-one__donate__text">
-                                                <span></span>
-                                            </div> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-4 col-12 wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
-                                        <div class="about-one__donate about-one__donate--three">
-                                            <div class="about-one__donate__icon">
-                                                <span><img src="{% static 'images/about/khidmat_2-03.png' %}" style="margin-top: 3px;" /></span>
-                                            </div>
-                                            <h4 class="about-one__donate__title">Our Mission</h4>
-                                            <p>{{ our_mission.system_value }}</p>
-                                            <!-- <div class="about-one__donate__text">
-                                                <span></span>
-                                            </div> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="vismisWrapp mt-5" id="about-two">
-                                <div class="vmcard">
-                                    <div class="icon red">
-                                        <img src="{% static 'images/about/khidmat_2-02.png' %}" />
-                                    </div>
-                                    <h3>Our Aim</h3>
-                                    <p>
-                                        {{ our_aim.system_value }}
-                                    </p>
-                                </div>
-            
-                                <div class="vmcard">
-                                    <div class="icon blue">
-                                        <img src="{% static 'images/about/khidmat_2-03.png' %}" />
-                                    </div>
-                                    <h3>Our Vision</h3>
-                                    <p>
-                                        {{ our_vision.system_value }}
-                                    </p>
-                                </div>
-            
-                                <div class="vmcard">
-                                    <div class="icon green">
-                                        <img src="{% static 'images/about/khidmat_2-04.png' %}" />
-                                    </div>
-                                    <h3>Our Mission</h3>
-                                    <p>{{ our_mission.system_value }}</p>
-                                </div>
-                            </div>
-                            <div class="contact-information">
-                                <a href="{% url 'about' %}" class="contact-information__btn cleenhearts-btn">
-                                    <div class="cleenhearts-btn__icon-box">
-                                        <div class="cleenhearts-btn__icon-box__inner">
-                                            <span class="icon-duble-arrow"></span>
-                                        </div>
-                                    </div>
-                                    <span class="cleenhearts-btn__text mrbtn">more about us</span>
-                                </a>
-                                <div class="contact-information__phone">
-                                    <div class="contact-information__phone__icon">
-                                        <span class="icon-phone"></span>
-                                    </div>
-                                    <div class="contact-information__phone__text">
-                                        <span>Contact Us</span>
-                                        <h5><a href="tel:+912223082291">+91 86579 70797</a></h5>
-                                    </div>
-                                </div>
-                            </div>
+
+                    <!-- txt -->
+                    <div class="col">
+                        <div class="ul-about-txt">
+                            <span class="ul-section-sub-title ul-section-sub-title--2">About US</span>
+                            {% if about_section %}
+                            <h2 class="ul-section-title">{{about_section.system_title}}</h2>
+                            {% endif %}
+
+                            {% if about_section %}
+                            <p class="ul-section-descr">{{ about_section.system_value|linebreaks }}</p>
+                            {% endif %}
+                            
+                            <a href="{% url 'about' %}" class="ul-btn"><i
+                                    class="flaticon-fast-forward-double-right-arrows-symbol"></i> Explore More</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <img src="{% static 'images/shapes/about-shape-1-2.png' %}" alt="cleenhearts" class="about-one__hand" />
+        </section>
+        <!-- ABOUT SECTION END -->
+
+        <section class="section-space mission-vision">
+            <div class="mission">
+                <img src="{% static 'images/gallery/gallery-slide-1.jpg' %}" alt="Mission Image">
+                <div class="text-box">
+                    <h4>Our Mission</h4>
+                    {% if our_mission %}
+                    <h3>{{our_mission.system_title}}</h3>
+                    <p>{{our_mission.system_value}}</p>
+
+                    {% endif%}
+                    </div>
+            </div>
+
+            <div class="vision">
+                <div class="text-box">
+                    <h4>Our Vision</h4>
+                    {% if our_vision %}
+                    <h3>{{our_vision.system_title}}</h3>
+                    <p>{{our_vision.system_value}}</p>
+                    {% endif%}
+                </div>
+                <img src="{% static 'images/gallery/gallery-slide-12.jpg' %}" alt="Vision Image">
+            </div>
+        </section>
+
+        <section class="section-space">
+            <h2 class="sec-title__tagline sec-title__tagline--center">Number Of Beneficiaries</h2>
+            <div class="ben-counts">
+                <div class="count-box" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape1.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers1" data-val="4597k+">4000
+                        <p class="below-number">Medical Aid</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape2.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers1" data-val="8945+">8000</p>
+                        <p class="below-number">Cancer</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape3.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers" data-val="10K+">000K+</p>
+                        <p class="below-number">Dialysis</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape4.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers" data-val="5CR+">000CR+</p>
+                        <p class="below-number">Education</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape4.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers" data-val="5CR+">000CR+</p>
+                        <p class="below-number">Education</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape4.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers" data-val="5CR+">000CR+</p>
+                        <p class="below-number">Education</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape4.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers" data-val="5CR+">000CR+</p>
+                        <p class="below-number">Education</p>
+                    </div>
+                </div>
+
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/shapes/bg-shape4.png' %}" alt="Shape" class="shape">
+                        <img src="{% static 'images/svg 1.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div>
+                        <p class="numbers" data-val="5CR+">000CR+</p>
+                        <p class="below-number">Education</p>
+                    </div>
+                </div>
+            </div>
         </section>
         
-        <section class="help-donate-one section-space-top">
+        <!-- <section class="help-donate-one section-space-top">
             <div class="help-donate-one__bg cleenhearts-jarallax" data-jarallax data-speed="0.3"
                 data-imgPosition="50% -100%" style="background-image: url('/static/images/backgrounds/keyprogress.jpg');">
             </div>
@@ -250,9 +287,9 @@
                     {% endfor %}
                 </div>
             </div>
-        </section>
+        </section> -->
 
-        <section class="events-one section-space">
+        <!-- <section class="events-one section-space">
 
             <div class="container">
                 <div class="sec-title">
@@ -274,88 +311,8 @@
                     {% endfor %}
                 </div>
             </div>
-        </section>
-        <section class="testimonials-one section-space">
-            <div class="testimonials-one__bg cleenhearts-jarallax" data-jarallax data-speed="0.3"
-                data-imgPosition="50% -100%" style="
-            background-image: url(static/images/backgrounds/testimonial-bg-1.jpg);
-          "></div>
-            <div class="container">
-                <div class="testimonials-one__wrapper">
-                    <div class="testimonials-one__top">
-                        <div class="row gutter-y-30 align-items-center">
-                            <div class="col-lg-12">
-                                <div class="sec-title">
-                                    <h6 class="sec-title__tagline @@extraClassName sec-title__tagline--center">
-                                        CASE STUDIES
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonials-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
-                        data-owl-options='{
-                "items": 1,
-                "margin": 10,
-                "smartSpeed": 700,
-                "loop":true,
-                "autoplay": 6000,
-                "nav":false,
-                "dots":true,
-                "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
-                "responsive":{
-                    "0":{
-                        "items": 1,
-                        "margin": 0
-                    },
-                    "575":{
-                        "items": 1,
-                        "margin": 0
-                    },
-                    "768":{
-                        "items": 1,
-                        "margin": 0
-                    },
-                    "992":{
-                        "items": 1,
-                        "margin": 0
-                    },
-                    "1200":{
-                        "items": 1,
-                        "margin": 0
-                    }
-                }
-                }'>
-                        {% for title, description in casestudy %}
-                        <div class="item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
-                            <div class="testimonials-card">
-                                <div class="testimonials-card__bg"></div>
-                                <div class="testimonials-card__info">
-                                    <div class="testimonials-card__info__left">
-                                        <h4 class="testimonials-card__name">{{title}}</h4>
-                                    </div>
-                                    <div class="cleenhearts-ratings testimonials-card__rattings">
-                                        <span class="icon-star"></span><span class="icon-star"></span><span
-                                            class="icon-star"></span><span class="icon-star"></span><span
-                                            class="icon-star"></span>
-                                    </div>
-                                </div>
-                                <div class="testimonials-card__content">
-                                    <p class="testimonials-card__text">
-                                        {{description}}
-                                    </p>
-                                    <div class="testimonials-card__quote">
-                                        <span class="icon-quote"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
-        </section>
+        </section> -->
+        
         <!-- <div class="blog-one section-space">
             <div class="container">
                 <div class="row">
@@ -714,21 +671,25 @@
         });
     </script>
     <script>
-        let valueDisplays = document.querySelectorAll(".numbers1");
-        let interval = 4000;
+       let valueDisplays = document.querySelectorAll(".numbers1");
+let interval = 4000;
 
-        valueDisplays.forEach((valueDisplay) => {
-            let startValue = 0;
-            let endValue = parseInt(valueDisplay.getAttribute("data-val"));
-            let increment = 200;
-            let duration = Math.floor(interval / (endValue / increment));
+valueDisplays.forEach((valueDisplay) => {
+    let startValue = 0;
 
-            let counter = setInterval(() => {
-                startValue = Math.min(startValue + increment, endValue);
-                valueDisplay.textContent = startValue;
-                if (startValue === endValue) clearInterval(counter);
-            }, duration);
-        });
+    let dataVal = valueDisplay.getAttribute("data-val");
+    let numericPart = parseInt(dataVal); 
+    let suffix = dataVal.replace(numericPart, "");
+
+    let increment = Math.ceil(numericPart / 20); 
+    let duration = Math.floor(interval / (numericPart / increment));
+
+    let counter = setInterval(() => {
+        startValue = Math.min(startValue + increment, numericPart);
+        valueDisplay.textContent = startValue + suffix;
+        if (startValue === numericPart) clearInterval(counter);
+    }, duration);
+});
     </script>
 
     <script>
@@ -736,17 +697,19 @@
         let interval1 = 4000;
 
         valueDisplays1.forEach((valueDisplay) => {
-            let startValue = 0;
-            let endVaue = parseInt(valueDisplay.getAttribute
-                ("data-val"));
-            let duration = Math.floor(interval / endVaue);
-            let counter = setInterval(function () {
-                startValue += 1;
-                valueDisplay.textContent = startValue;
-                if (startValue == endVaue) {
-                    clearInterval(counter);
-                }
-            }, duration);
+        let startValue = 0;
+        let dataVal = valueDisplay.getAttribute("data-val");
+        let numericPart = parseInt(dataVal);
+        let suffix = dataVal.replace(numericPart, "");
+        let duration = Math.floor(interval1 / numericPart);
+
+        let counter = setInterval(function () {
+            startValue += 1;
+            valueDisplay.textContent = startValue + suffix;
+            if (startValue == numericPart) {
+                clearInterval(counter);
+            }
+        }, duration);
         });
     </script>
     <script>
@@ -869,6 +832,15 @@
     <script src="{% static 'js/cleenhearts.js' %}"></script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-plugin-collection.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-plugin-collection.js"></script>
+    <script src="js/script.js"></script>
 
     <script>
         AOS.init();

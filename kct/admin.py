@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export import resources 
-from .models import  KCTEnquireMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster
+from .models import  HomeBannerMaster, KCTEnquireMaster, ProjectMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -200,3 +200,35 @@ class KCTEnquireMasterAdmin(ImportExportModelAdmin):
     list_display = ['id','name', 'email', 'phone', 'message', 'is_active']
     search_fields = ['id', 'name', 'email', 'phone']
 admin.site.register(KCTEnquireMaster, KCTEnquireMasterAdmin)
+
+
+
+class ProjectMasterresources(resources.ModelResource):
+    class Meta:
+        model = ProjectMaster
+        import_id_fields = ['id'] 
+        # fields = ['id', 'event_title', 'event_description','event_feature', 'event_img', 'reactions', 'time', 'order', 'is_active']  
+class ProjectMasterAdmin(ImportExportModelAdmin):
+    # list_display = ('event_title','event_description','is_active')
+    resource_class = ProjectMasterresources
+    list_display = [field.name for field in ProjectMaster._meta.get_fields()]
+    search_fields = ['id','event_title']
+
+admin.site.register(ProjectMaster,ProjectMasterAdmin)
+
+
+
+
+
+class HomeBannerMasterresources(resources.ModelResource):
+    class Meta:
+        model = HomeBannerMaster
+        import_id_fields = ['id'] 
+        # fields = ['id', 'event_title', 'event_description','event_feature', 'event_img', 'reactions', 'time', 'order', 'is_active']  
+class HomeBannerMasterAdmin(ImportExportModelAdmin):
+    # list_display = ('event_title','event_description','is_active')
+    resource_class = HomeBannerMasterresources
+    list_display = [field.name for field in HomeBannerMaster._meta.get_fields()]
+    search_fields = ['id','event_title']
+
+admin.site.register(HomeBannerMaster,HomeBannerMasterAdmin)

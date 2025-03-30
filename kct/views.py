@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 
 from kct_portal import settings
 from django.views.decorators.csrf import csrf_exempt
-from .models import EventMaster, KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
+from .models import EventMaster, HomeBannerMaster, KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
 from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -39,7 +39,8 @@ def home(request):
         api_data = {}
 
     # Existing Django Queries
-    slider_items = SystemMaster.objects.filter(system_name__startswith='Slider', is_active=True)
+    # slider_items = SystemMaster.objects.filter(system_name__startswith='Slider', is_active=True)
+    slider_items = HomeBannerMaster.objects.filter(is_active=True)
     master_items = SystemMaster.objects.all()
     about_section = SystemMaster.objects.filter(system_name='KCT').first()
     categories = BeneficiaryCategory.objects.prefetch_related('dropdown_options').all()
@@ -87,6 +88,7 @@ def about(request):
     page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
     afillat = get_data_afillat()
     footer_data = get_footer_data()
+    casestudy = get_data_dict_casestdy()
      
 
     context = {
@@ -99,6 +101,7 @@ def about(request):
         'affiliated_trusts': afillat,
         'footer_data': footer_data,
         'page_quotes': page_quotes,
+        'casestudy':casestudy.items(),
         
     }
     return render(request, 'kct/about.html', context)

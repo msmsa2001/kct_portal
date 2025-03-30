@@ -175,6 +175,88 @@
                 </div>
             </div>
         </section>
+
+        <section class="testimonials-one section-space">
+            <div class="testimonials-one__bg cleenhearts-jarallax" data-jarallax data-speed="0.3"
+                data-imgPosition="50% -100%" style="
+            background-image: url(static/images/backgrounds/testimonial-bg-1.jpg);
+          "></div>
+            <div class="container">
+                <div class="testimonials-one__wrapper">
+                    <div class="testimonials-one__top">
+                        <div class="row gutter-y-30 align-items-center">
+                            <div class="col-lg-12">
+                                <div class="sec-title">
+                                    <h6 class="sec-title__tagline @@extraClassName sec-title__tagline--center">
+                                        CASE STUDIES
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonials-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
+                        data-owl-options='{
+                "items": 1,
+                "margin": 10,
+                "smartSpeed": 700,
+                "loop":true,
+                "autoplay": 6000,
+                "nav":false,
+                "dots":true,
+                "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
+                "responsive":{
+                    "0":{
+                        "items": 1,
+                        "margin": 0
+                    },
+                    "575":{
+                        "items": 1,
+                        "margin": 0
+                    },
+                    "768":{
+                        "items": 1,
+                        "margin": 0
+                    },
+                    "992":{
+                        "items": 1,
+                        "margin": 0
+                    },
+                    "1200":{
+                        "items": 1,
+                        "margin": 0
+                    }
+                }
+                }'>
+                        {% for title, description in casestudy %}
+                        <div class="item wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="00ms">
+                            <div class="testimonials-card">
+                                <div class="testimonials-card__bg"></div>
+                                <div class="testimonials-card__info">
+                                    <div class="testimonials-card__info__left">
+                                        <h4 class="testimonials-card__name">{{title}}</h4>
+                                    </div>
+                                    <div class="cleenhearts-ratings testimonials-card__rattings">
+                                        <span class="icon-star"></span><span class="icon-star"></span><span
+                                            class="icon-star"></span><span class="icon-star"></span><span
+                                            class="icon-star"></span>
+                                    </div>
+                                </div>
+                                <div class="testimonials-card__content">
+                                    <p class="testimonials-card__text">
+                                        {{description}}
+                                    </p>
+                                    <div class="testimonials-card__quote">
+                                        <span class="icon-quote"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </section>
         
 
 
@@ -302,30 +384,58 @@
     </script>
 
 
-    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+crossorigin="anonymous"></script>
 
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
 
-    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
-    <script src="{% static 'js/jarallax.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
 
-    <script src="{% static 'js/jquery-ui.js' %}"></script>
+<script src="{% static 'js/jarallax.min.js' %}"></script>
 
-    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
 
-    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
 
-    <script src="{% static 'js/wNumb.min.js' %}"></script>
+<script src="{% static 'js/jquery.appear.min.js' %}"></script>
 
-    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'js/jquery.circle-progress.min.js' %}"></script>
 
-    <script src="{% static 'js/wow.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
 
-    <script src="{% static 'js/imagesloaded.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
 
-    <script src="{% static 'js/cleenhearts.js' %}"></script>
+<script src="{% static 'js/nouislider.min.js' %}"></script>
 
+<script src="{% static 'js/tiny-slider.js' %}"></script>
 
+<script src="{% static 'js/wNumb.min.js' %}"></script>
+
+<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+
+<script src="{% static 'js/wow.js' %}"></script>
+
+<script src="{% static 'js/imagesloaded.min.js' %}"></script>
+
+<script src="{% static 'js/isotope.js' %}"></script>
+
+<script src="{% static 'js/countdown.min.js' %}"></script>
+
+<script src="{% static 'js/jquery.circleType.js' %}"></script>
+
+<script src="{% static 'js/jquery.lettering.min.js' %}"></script>
+
+<script src="{% static 'js/cleenhearts.js' %}"></script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+AOS.init();
+</script>
 </body>
 {% endblock content %}
