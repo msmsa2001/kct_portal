@@ -29,35 +29,47 @@
                     <div class="main-header__right">
                         <nav class="main-header__nav main-menu">
                             <ul class="main-menu__list">
-                                <li>
-                                    <a class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+                                <li class="megamenu">
+                                    <a href="{% url 'home' %}">Home</a>
                                 </li>
                                 <li>
-                                    <a class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">About Us</a>
+                                    <a href="{% url 'about' %}">About Us</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a>Project <i class="fa fa-chevron-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a >Project 2</a></li>
+                                        <li><a >Project 3</a></li>
+                                    </ul>
                                 </li>
                                 <li>
-                                    <a class="{% if request.resolver_match.url_name == 'activity' %}active{% endif %}" href="{% url 'activity' %}">Activities</a>
+                                    <a >Corporate</a>
                                 </li>
                                 <li>
-                                    <a class="{% if request.resolver_match.url_name == 'benefits' %}active{% endif %}" href="{% url 'benefits' %}">Benefits</a>
+                                    <a href="{% url 'activity' %}">Activity</a>
+                                </li>
+                                <li class="dropdown">
+                                    <a >Resource Center <i class="fa fa-chevron-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a >Resource 1</a></li>
+                                        <li><a >Resource 2</a></li>
+                                        <li><a >Resource 3</a></li>
+                                    </ul>
                                 </li>
                                 <li>
-                                    <a class="{% if request.resolver_match.url_name == 'career' %}active{% endif %}" href="{% url 'career' %}">Careers</a>
-                                </li>
-                                <li>
-                                    <a class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'contact' %}">Contacts</a>
+                                    <a href="{% url 'contact' %}">Contact</a>
                                 </li>
                             </ul>
-                        </nav>                        
+                        </nav>
                         <a href="{% url 'donate' %}" class="cleenhearts-btn donate-now-btn" id="cleenhearts-btn">
-                            <span class="cleenhearts-btn__text" id="cleenhearts-btn__text">donate now</span>
+                            <span class="cleenhearts-btn__text" id="cleenhearts-btn__text">Donate Now</span>
                         </a>
                         <div class="mobile-nav__btn mobile-nav__toggler">
                             <span></span>
                             <span></span>
                             <span></span>
                         </div>
-
+        
                         <div class="main-header__cart">
                             <a href="{% url 'donate' %}" class="cleenhearts-btn main-header__btn">
                                 <div class="cleenhearts-btn__icon-box">
@@ -65,13 +77,14 @@
                                         <span class="icon-donate"></span>
                                     </div>
                                 </div>
-                                <span class="cleenhearts-btn__text">donate now</span>
+                                <span class="cleenhearts-btn__text">Donate Now</span>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
+        
 
 
         <aside class="sidebar-one">
