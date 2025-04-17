@@ -1,0 +1,281 @@
+{% extends 'main/base.html' %}
+
+
+
+{% load static %}
+
+{% block content %}
+
+<body class="custom-cursor">
+
+    <div class="custom-cursor__cursor"></div>
+    <div class="custom-cursor__cursor-two"></div>
+
+
+    <div class="page-wrapper">
+
+    
+            <div class="container" style="display: flex;align-items: center;justify-content: center;">
+                {% for item in govtscheme %}
+                <h2 class="page-header__title project_page-header__title">{{ item.govtscheme_title }}</h2>
+                {% endfor %}
+            </div>
+
+        <section class="event-details section-space">
+            <div class="container">
+                <div class="row gutter-y-60">
+                    <div class="col-lg-12">
+                        {% for item in govtscheme %}
+                        <div class="event-details__content">
+                            <div class="event-details__image wow fadeInUp" data-wow-duration="1500ms"
+                                data-wow-delay="00ms">
+                                <img src="{{ item.govtscheme_img.url }}" alt="event-details">
+                                <!-- <div class="event-details__hall">
+                                    <span>{{ event.reactions }}</span>
+                                    <span>Reactions</span>
+                                </div> -->
+                                <!-- <div class="event-details__date">
+                                    <span>17</span>
+                                    <span>July</span>
+                                </div> -->
+                            </div>
+                            <div class="event-details__time">
+                                <i class="event-details__time__icon fa fa-clock"></i>
+                                <span class="event-details__time__text">{{ item.time }}</span>
+                            </div>
+                            <h3 class="event-details__title mb-2">{{ item.govtscheme_title }}</h3>
+                            <div class="event-details__text mt-2">
+
+                                {{ item.govtscheme_feature|safe }}    
+                            </div>
+                        </div>
+             
+                        {% endfor %}
+                        <br>
+                        <br>
+                        <br>
+                    
+                    <div class="blog-one">
+                        <div class="container ">
+                            <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
+                              data-owl-options='{
+                                "items": 3,
+                                "margin": 20,
+                                "loop": true,
+                                "autoplay": true,
+                                "autoplayTimeout": 2000,
+                                "autoplayHoverPause": true,
+                                "dots": false,
+                                "nav": true,
+                                "responsive": {
+                                  "0": { "items": 1 },
+                                  "576": { "items": 2 },
+                                  "992": { "items": 3 }
+                                }
+                              }'>
+                              
+                              <!-- Sample Images -->
+                               <div class="item"><img src="https://placehold.co/600x400?text=Image+1" alt="Image 1"></div>
+                               <div class="item"><img src="https://placehold.co/800x400?text=Image+2" alt="Image 2"></div>
+                               <div class="item"><img src="https://placehold.co/600x400?text=Image+3" alt="Image 3"></div>
+                               <div class="item"><img src="https://placehold.co/600x400?text=Image+4" alt="Image 4"></div>
+                               <div class="item"><img src="https://placehold.co/600x400?text=Image+5" alt="Image 5"></div>
+                        
+                            </div>
+                          </div>
+                    </div>
+
+                        <div class="event-details__speaker mt-5">
+                            <h3 class="event-details__speaker__title event-details__title">Related Posts</h3>
+                            {% for item in govtschemes %}
+                            <div class="event-details__speaker__info wow fadeInUp" data-wow-duration="1500ms"
+                                data-wow-delay="00ms">
+                                <div class="event-details__speaker__image">
+                                    <img src="{{ item.govtscheme_img.url }}" alt="">
+                                </div>
+                                <div class="event-details__speaker__content">
+                                    <div class="event-details__speaker__content__inner">
+                                        <div class="event-details__speaker__indentity">
+                                            <h4 class="event-details__speaker__name">
+                                                {{ item.govtscheme_title }}
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="event-details__speaker__text">
+                                        <p>
+                                            {{ item.govtscheme_description|slice:":220" }}{% if item.govtscheme_description|length > 230 %}...{% endif %}
+
+                                        </p>
+                                        <a href="{% url 'govtScheme' item.id %}"> <button
+                                                class="btnrd cleenhearts-btn">Read More</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </section>
+
+      
+        <section class="subscribe">
+            <div class="subscribe__bg"></div>
+            <div class="container">
+                <div class="row1">
+                    <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
+                        {% for quote in eventQuote %}
+                        <div class="subscribe__content">
+                            {{ quote.event_quotes|safe}}
+                            <!-- <span class="subscribe__title-image icon-email"></span> -->
+                            <!-- <h2 class="subscribe__title">Subscribe Now</h2> -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- <div class="col-lg-7 wow fadeInUp">
+                        <form action="#" data-url="MAILCHIMP_FORM_URL" class="subscribe__form mc-form" data-wow-delay="200ms" data-wow-duration="1500ms">
+                            <input type="email" name="EMAIL" id="subscribe" placeholder="enter your email" class="subscribe__form__input" />
+                            <button type="submit" class="subscribe__form__btn">
+                           <span class="subscribe__form__btn__text">Subscribe now</span>
+                            <span class="subscribe__form__btn__icon icon-paper-plane"></span>
+                           </button>
+                        </form>
+                        <div class="mc-form__response"></div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="subscribe__shape">
+                <div class="subscribe__shape__one"></div>
+                <div class="subscribe__shape__two"></div>
+            </div>
+        </section>
+
+       
+
+    </div>
+
+
+
+    <div class="mobile-nav__wrapper">
+        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
+        <div class="mobile-nav__content">
+            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
+            <div class="logo-box">
+                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'images/logo-light.png' %}" width="155" alt="" /></a>
+            </div>
+            <div class="mobile-nav__container"></div>
+            <ul class="mobile-nav__contact list-unstyled">
+                <li>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a> <br>
+                </li>
+                <li>
+                    <i class="fa fa-phone-alt"></i>
+                    <a href="tel:+91 86579 70797 ">+91 86579 70797 </a>
+                </li>
+            </ul>
+            <div class="mobile-nav__social">
+                <a href="https://facebook.com">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
+                    <img src="{% static 'images/X_logo white.svg' %}" alt="X Logo" class="x-logo" />
+                    <span class="sr-only">Twitter</span>
+                </a>
+                <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D" aria-hidden="true">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="https://youtube.com" aria-hidden="true">
+                    <i class="fab fa-youtube"></i>
+                    <span class="sr-only">Youtube</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="search-popup @@extraClassName">
+        <div class="search-popup__overlay search-toggler"></div>
+        <div class="search-popup__content">
+            <form role="search" method="get" class="search-popup__form" action="#">
+                <input type="text" id="search" placeholder="Search Here..." />
+                <button type="submit" aria-label="search submit" class="khidmat-btn">
+                    <span><i class="icon-search"></i></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
+        <span class="scroll-to-top__text">back top</span>
+        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
+    </a>
+
+  
+
+    <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
+
+    <script src="{% static 'js/jarallax.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery-ui.js' %}"></script>
+
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+
+    <script src="{% static 'js/wNumb.min.js' %}"></script>
+
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+
+    <script src="{% static 'js/wow.js' %}"></script>
+
+    <script src="{% static 'js/imagesloaded.min.js' %}"></script>
+
+    <script src="{% static 'js/cleenhearts.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="js/script.js"></script>
+
+    <script>
+        function increaseCount(element) {
+            let countElement = element.querySelector('.reaction-count');
+            let currentCount = parseInt(countElement.textContent);
+            countElement.textContent = currentCount + 1;
+        }
+    </script>
+    <script>
+        let calScrollValue = () => {
+            let scrollProgress = document.getElementById('progressbar');
+            let pos = document.documentElement.scrollTop;
+            let calHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrollValue = Math.round((pos * 100) / calHeight);
+            let progressValue = document.querySelector('.progressValue');
+
+            if (pos > 100) {
+                scrollProgress.style.display = 'grid';
+            } else {
+                scrollProgress.style.display = 'none';
+            }
+
+            // Corrected string interpolation
+            progressValue.textContent = `${scrollValue}%`;
+
+            // Fixing the background style
+            scrollProgress.style.background = `conic-gradient(#194eb9 ${scrollValue}%, #67ccff ${scrollValue}%)`;
+        }
+
+        window.onscroll = calScrollValue;
+        window.onload = calScrollValue;
+
+        document.getElementById('progress').addEventListener('click', () => {
+            // Do nothing on click, just update the percentage text
+        });
+    </script>
+
+</body>
+{% endblock content %}

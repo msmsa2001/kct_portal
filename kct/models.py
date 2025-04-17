@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from ckeditor.fields import RichTextField
 
 class SystemMasterCategory(models.Model):
     name = models.CharField(max_length=255, unique=True) 
@@ -175,7 +176,7 @@ class KCTEnquireMaster(models.Model):
 class ProjectMaster(models.Model):
     project_title = models.CharField(max_length=255)
     project_description = models.TextField()
-    project_feature = models.TextField(max_length=10000, blank=True)
+    project_feature = RichTextField()
     project_img = models.FileField(upload_to='project_images/')
     time = models.CharField(max_length=255, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -208,3 +209,62 @@ class HomeBannerMaster(models.Model):
 
     def __str__(self):
         return self.slide_title
+    
+
+class GovtSchemeMaster(models.Model):
+    govtscheme_title = models.CharField(max_length=255)
+    govtscheme_description = models.TextField()
+    govtscheme_feature = RichTextField()
+    govtscheme_img = models.FileField(upload_to='govtscheme_images/')
+    time = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["id"]
+
+
+    def __str__(self):
+        return self.govtscheme_title
+
+class ProjectImage(models.Model):
+    project = models.ForeignKey(ProjectMaster, on_delete=models.CASCADE, related_name='images')
+    image = models.FileField(upload_to='project_images/multiple/')
+    caption = models.CharField(max_length=255, blank=True, null=True)  # optional
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Image for {self.project.project_title}"
+    
+
+class BeneficiaryData(models.Model):
+    year = models.IntegerField()
+    category = models.CharField(max_length=100)
+    beneficiaries = models.IntegerField()
+    amount = models.BigIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+
+def __str__(self):
+    return self.category
+
+
+class PartnerLogo(models.Model):
+    name = models.CharField(max_length=100,blank=True, null=True)
+    image = models.FileField(upload_to='logos/')
+    website = models.URLField(blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return 'hello'
+    
+class GalleryItem(models.Model):
+    system_img = models.FileField(upload_to='gallery/')
+    category = models.CharField(max_length=100, null=True, blank=True)
+    is_active = models.BooleanField(default=True)

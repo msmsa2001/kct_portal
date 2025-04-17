@@ -38,22 +38,23 @@
                                 <li class="dropdown">
                                     <a>Project <i class="fa fa-chevron-down"></i></a>
                                     <ul class="dropdown-menu">
-                                        <li><a >Project 2</a></li>
-                                        <li><a >Project 3</a></li>
+                                        {% for porject in Projects %}
+                                        <li>
+                                        <a href="{% url 'projectDetail' porject.id %}">{{ porject.project_title }}</a>
+                                        </li>
+                                        {% endfor %}
                                     </ul>
                                 </li>
-                                <li>
-                                    <a >Corporate</a>
-                                </li>
-                                <li>
+                                <!-- <li>
                                     <a href="{% url 'activity' %}">Activity</a>
-                                </li>
+                                </li> -->
                                 <li class="dropdown">
                                     <a >Resource Center <i class="fa fa-chevron-down"></i></a>
                                     <ul class="dropdown-menu">
-                                        <li><a >Resource 1</a></li>
-                                        <li><a >Resource 2</a></li>
-                                        <li><a >Resource 3</a></li>
+                                        <li><a href="{% url 'news' %}">Khidmat in News</a></li>
+                                        <li><a >Annual Report</a></li>
+                                        <!-- <li><a href="{% url 'success_story' %}">Sucess Stories</a></li> -->
+                                        <li><a href="{% url 'gallery' %}">Gallery</a></li>
                                     </ul>
                                 </li>
                                 <li>
