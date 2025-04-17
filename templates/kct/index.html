@@ -14,48 +14,6 @@
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
-        <!-- <section class="main-slider-one">
-            <div class="main-slider-one__wrapper">
-                <div class="main-slider-one__carousel cleenhearts-owl__carousel owl-carousel" data-owl-options='{
-                    "loop": true,
-                    "animateOut": "fadeOut",
-                    "animateIn": "fadeIn",
-                    "items": 1,
-                    "autoplay": true,
-                    "autoplayTimeout": 7000,
-                    "smartSpeed": 1000,
-                    "nav": false,
-                    "dots": true,
-                    "margin": 0,
-                    "responsive": {
-                        "0": { "items": 1 },
-                        "600": { "items": 1 },
-                        "1000": { "items": 1 }
-                    }
-                }'>
-                    {% for item in slider_items %}
-                    <div class="item">
-                        <div class="main-slider-one__item">
-                            <div class="main-slider-one__bg" style="background-image: url('{{ item.system_img.url }}');"></div>
-                            <div class="main-slider-one__shape-one" style="background-image: url(static/images/shapes/slider-1-shape-1.png);"></div>
-                            <div class="main-slider-one__shape-two" style="background-image: url(static/images/shapes/slider-1-shape-2.png);"></div>
-                            <div class="main-slider-one__content">
-                                <h2 class="main-slider-one__title">
-                                    <span class="main-slider-one__title__text" style="white-space: pre-line;">{{ item.system_title }}</span><br />
-                                </h2>
-                                <div class="main-slider-one__btn">
-                                    <h2 class="sliderTxt">
-                                        <span class="cleenhearts-btn__text" style="color: #fff; font-size: 32px;">{{ item.system_value }}</span>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section> -->
-
         <section class="hero-slider hero-style-1">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
@@ -63,24 +21,27 @@
                     {% for item in slider_items %}
                     <div class="swiper-slide">
                         <div class="slide-inner slide-bg-image" data-background="{{ item.slide_img.url }}">
+                            
+                            <!-- ✅ Dark Overlay for better text readability -->
+                            <div class="overlay"></div>
+                    
                             <div class="container">
-
                                 <div data-swiper-parallax="300" class="slide-title">
-                                    <h2>{{item.slide_title}}</h2>
+                                    <h2 data-aos="zoom-out-up">{{ item.slide_title }}</h2>
                                 </div>
                                 <div data-swiper-parallax="400" class="slide-text">
-                                    <p>{{item.slide_description}}</p>
+                                    <p>{{ item.slide_description }}</p>
                                 </div>
                                 <div class="clearfix"></div>
-                                <div data-swiper-parallax="500" class="slide-btns">
+                                <!-- <div data-swiper-parallax="500" class="slide-btns">
                                     <a href="#" class="theme-btn">More info >></a>
-                                </div>
+                                </div> -->
                             </div>
+                    
                             <div class="slide-shape">
                                 <img src="{% static 'images/shapes/shape.png' %}" alt="Not Found">
                             </div>
                         </div>
-                        <!-- end slide-inner -->
                     </div>
 
                     {% endfor %}
@@ -101,29 +62,35 @@
                     <div class="col">
                         <div class="ul-about-imgs ul-about-2-img">
                             <div class="img-wrapper">
-                                <img src="{% static 'images/about/about-2-img.jpg' %}" alt="Image">
+                                <img src="{% static 'images/about/LSUK7796.JPG' %}" data-aos="flip-left" alt="Image">
                             </div>
 
-                            <div class="ul-about-2-stat">
+                            <!-- <div class="ul-about-2-stat">
                                 <span class="number">15+</span>
                                 <span class="txt">Years Of Experience</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
                     <!-- txt -->
                     <div class="col">
                         <div class="ul-about-txt">
-                            <span class="ul-section-sub-title ul-section-sub-title--2">About US</span>
+                            <span class="ul-section-sub-title ul-section-sub-title--2" data-aos="fade-up-left">About US</span>
                             {% if about_section %}
-                            <h2 class="ul-section-title">{{about_section.system_title}}</h2>
+                            <h2 class="ul-section-title" data-aos="fade-up-left">{{about_section.system_title}}</h2>
                             {% endif %}
 
                             {% if about_section %}
-                            <p class="ul-section-descr">{{ about_section.system_value|linebreaks }}</p>
+                            <span data-aos="fade-down">
+                                <p class="ul-section-descr" >{{ about_section.system_value|linebreaks }}</p>
+                            </span>
                             {% endif %}
+
+                            <div class="img-wrapper" data-aos="fade-up-left">
+                                <img src="{% static 'images/about/about-home-page.png' %}" alt="Image">
+                            </div>
                             
-                            <a href="{% url 'about' %}" class="ul-btn"><i
+                            <a href="{% url 'about' %}" class="ul-btn" data-aos="fade-up-left"><i
                                     class="flaticon-fast-forward-double-right-arrows-symbol"></i> Explore More</a>
                         </div>
                     </div>
@@ -132,33 +99,38 @@
         </section>
         <!-- ABOUT SECTION END -->
 
-        <section class="section-space mission-vision">
+        <section class="mission-vision">
             <div class="mission">
-                <img src="{% static 'images/gallery/gallery-slide-1.jpg' %}" alt="Mission Image">
+                <div class="mission-img" data-aos="fade-down-right">
+                    <img src="{% static 'images/mission.jpeg' %}" alt="Mission Image">
+                </div>
                 <div class="text-box">
-                    <h4>Our Mission</h4>
+                    <h4 data-aos="fade-left">Our Mission</h4>
                     {% if our_mission %}
-                    <h3>{{our_mission.system_title}}</h3>
-                    <p>{{our_mission.system_value}}</p>
-
-                    {% endif%}
-                    </div>
+                        <h3 data-aos="fade-up-left">{{ our_mission.system_title }}</h3>
+                        <p data-aos="fade-up-left">{{ our_mission.system_value }}</p>
+                    {% endif %}
+                </div>
             </div>
 
             <div class="vision">
                 <div class="text-box">
-                    <h4>Our Vision</h4>
+                    <h4 data-aos="fade-right">Our Vision</h4>
                     {% if our_vision %}
-                    <h3>{{our_vision.system_title}}</h3>
-                    <p>{{our_vision.system_value}}</p>
-                    {% endif%}
+                        <h3 data-aos="fade-up-right">{{ our_vision.system_title }}</h3>
+                        <p data-aos="fade-up-right">{{ our_vision.system_value }}</p>
+                    {% endif %}
                 </div>
-                <img src="{% static 'images/gallery/gallery-slide-12.jpg' %}" alt="Vision Image">
+                <div class="vision-img" data-aos="fade-left">
+                    <img src="{% static 'images/vision.jpeg' %}" alt="Vision Image">
+                </div>
             </div>
         </section>
 
-        <section class="section-space">
-            <h2 class="sec-title__tagline sec-title__tagline--center">Number Of Beneficiaries</h2>
+        <!-- <section class="section-space">
+            <div class="sec-title">
+                <h2 class="sec-title__tagline sec-title__tagline--center">PROJECT STATISTICS</h2>
+            </div>
             <div class="ben-counts">
                 <div class="count-box" data-aos="fade-up" data-aos-duration="1000">
                     <div class="icon-container">
@@ -249,157 +221,17 @@
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <!-- <section class="help-donate-one section-space-top">
-            <div class="help-donate-one__bg cleenhearts-jarallax" data-jarallax data-speed="0.3"
-                data-imgPosition="50% -100%" style="background-image: url('/static/images/backgrounds/keyprogress.jpg');">
-            </div>
-            <div class="container">
-                <div class="sec-title keyprogress">
-                    <h6 class="sec-title__tagline sec-title__tagline--center">
-                        Key Programs
-                    </h6>
-                    <p class="text-center mt-3">
-                        Treat your sick by giving Sadaqah (charity)
-                    </p>
-                </div>
-
-                <div class="row">
-                    {% for title, description in keyprogram %}
-                    <div class="col-lg-3 col-md-6">
-                        <div class="keyp-item">
-                            <span>
-                                {% if title == 'Medical' %}
-                                <img src="{% static 'images/keyprograms/icon1.png' %}" alt="{{ title }}">
-                                {% elif title == 'Dialysis' %}
-                                <img src="{% static 'images/keyprograms/icon2.png' %}" alt="{{ title }}">
-                                {% elif title == 'Education' %}
-                                <img src="{% static 'images/keyprograms/icon3.png' %}" alt="{{ title }}">
-                                {% elif title == 'Food' %}
-                                <img src="{% static 'images/keyprograms/icon4.png' %}" alt="{{ title }}">
-                                {% endif %}
-                            </span>
-                            <h4>{{ title }}</h4>
-                            <p>{{ description }}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section> -->
-
-        <!-- <section class="events-one section-space">
-
-            <div class="container">
-                <div class="sec-title">
-                    <h6 class="sec-title__tagline sec-title__tagline--center">
-                        HOW BENEFICIARIES RECEIVE OUR AID?
-                    </h6>
-                </div>
-
-                <div class="gradient-cards">
-                    {% for title, description in beneficiaryaid %}
-                    <div class="card" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
-                        data-aos-duration="1500">
-                        <div class="container-card bg-green-box">
-
-                            <p class="card-title">{{title}}</p>
-                            <p class="card-description">{{description}}</p>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
         </section> -->
         
+        
+       
         <!-- <div class="blog-one section-space">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 col-md-9">
                         <div class="sec-title">
-                            <h6 class="sec-title__tagline">
-                                Our Latest Event
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-        
-                {% if latestevent %}
-                <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
-                    data-owl-options='{
-                        "items": 3,
-                        "margin": 30,
-                        "smartSpeed": 700,
-                        "loop": true,
-                        "autoplay": false,
-                        "nav": false,
-                        "dots": true,
-                        "navText": ["<span class=\"icon-arrow-left\"></span>", "<span class=\"icon-arrow-right\"></span>"],
-                        "responsive": {
-                            "0": { "items": 1, "margin": 20 },
-                            "575": { "items": 1, "margin": 30 },
-                            "768": { "items": 2, "margin": 30 },
-                            "992": { "items": 3, "margin": 30 },
-                            "1200": { "items": 3, "margin": 30 }
-                        }
-                    }'>
-        
-                    {% for title, description in latestevent %}
-                    <div class="item">
-                        <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
-                            {% if title == 'DIALYSIS CENTRE' %}
-                            <a class="blog-card__image">
-                                    <img src="{% static 'images/events/event-1.jpg' %}" alt="{{ title }}" />
-                                    <div class="blog-card__react"><span>2</span> Reactions</div>
-                            </a>
-                            {% elif title == 'RAMZAN AND MONTHLY RATION AID' %}
-                            <a class="blog-card__image">
-                                    <img src="{% static 'images/events/event-2.jpg' %}" alt="{{ title }}" />
-                                    <div class="blog-card__react"><span>2</span> Reactions</div>
-                            </a>
-                            {% elif title == 'WHY SHOULD ANYONE APPROACH KCT FOR HELP AND ASSISTANCE?' %}
-                            <a class="blog-card__image">
-                                    <img src="{% static 'images/events/event-3.jpg' %}" alt="{{ title }}" />
-                                    <div class="blog-card__react"><span>2</span> Reactions</div>
-                            </a>
-                            {% endif %}
-                            <div class="blog-card__content" style="background-image: url('static/images/blog/blog-bg-1-1.png');">
-                                <h3 class="blog-card__title">
-                                    <a>{{ title }}</a>
-                                </h3>
-                                <p>{{ description }}</p>
-
-                                {% if title == 'DIALYSIS CENTRE' %} 
-                                <a href="{% url 'dialysis' %}" class="blog-card__link">
-                            {% elif title == 'RAMZAN AND MONTHLY RATION AID' %}
-                                <a href="{% url 'ramzan' %}" class="blog-card__link">
-                            {% elif title == 'WHY SHOULD ANYONE APPROACH KCT FOR HELP AND ASSISTANCE?' %}
-                                <a href="{% url 'help' %}" class="blog-card__link">
-                            {% endif %}
-                                <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
-                                <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read More</span>
-                            </a>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-        
-                </div>
-                {% else %}
-                <p>No latest events available.</p>
-                {% endif %}
-            </div>
-        </div> -->
-       
-        <div class="blog-one section-space">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-7 col-md-9">
-                        <div class="sec-title">
                             <h6 class="sec-title__tagline @@extraClassName">
-                                Our latest Event
+                                Government Scheme
                             </h6>
                         </div>
                     </div>
@@ -437,24 +269,23 @@
                 }
             }
             }'>
-                    {% for event_item in display_event %}
+                    {% for govtscheme in govtschemes %}
                     <div class="item">
                         <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
-                            <a href="{% url 'displayParticularEvent' event_item.id %}" class="blog-card__image">
-                                <img src="{{ event_item.event_img.url }}" alt="DIALYSIS CENTRE" />
-                                <!-- <div class="blog-card__date"><span>17</span> July 2020</div> -->
-                                <div class="blog-card__react"><span>{{ event_item.reactions }}</span> Reactions</div>
+                            <a href="{% url 'displayParticularEvent' govtscheme.id %}" class="blog-card__image">
+                                <img src="{{ govtscheme.govtscheme_img.url }}" alt="DIALYSIS CENTRE" />
+                                
                             </a>
                             <div class="blog-card__content" style="
                     background-image: url('/static/images/blog/blog-bg-1-1.png');
                   ">
                                 <h3 class="blog-card__title">
-                                    <a href="{% url 'displayParticularEvent' event_item.id %}">{{ event_item.event_title }}</a>
+                                    <a href="{% url 'govtScheme' govtscheme.id %}">{{ govtscheme.govtscheme_title }}</a>
                                 </h3>
                                 <p>
-                                    {{ event_item.event_description|slice:":230" }}{% if event_item.event_description|length > 230 %}...{% endif %}
+                                    {{ govtscheme.govtscheme_description|slice:":230" }}{% if event_item.govtscheme_description|length > 230 %}...{% endif %}
                                 </p>
-                                <a href="{% url 'displayParticularEvent' event_item.id %}" class="blog-card__link">
+                                <a href="{% url 'govtScheme' govtscheme.id %}" class="blog-card__link">
                                     <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
                                     <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read
                                         More</span> </a>
@@ -464,7 +295,138 @@
                 {% endfor %}
                 </div>
             </div>
-        </div>
+        </div> -->
+
+        <!-- <div class="blog-one">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 col-md-9">
+                        <div class="sec-title">
+                            <h6 class="sec-title__tagline @@extraClassName">
+                                Scolarship Hub
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
+                    data-owl-options='{
+            "items": 3,
+            "margin": 30,
+            "smartSpeed": 700,
+            "loop":true,
+            "autoplay": false,
+            "nav":false,
+            "dots":true,
+            "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
+            "responsive":{
+                "0":{
+                    "items": 1,
+                    "margin": 20
+                },
+                "575":{
+                    "items": 1,
+                    "margin": 30
+                },
+                "768":{
+                    "items": 2,
+                    "margin": 30
+                },
+                "992":{
+                    "items": 3,
+                    "margin": 30
+                },
+                "1200":{
+                    "items": 3,
+                    "margin": 30
+                }
+            }
+            }'>
+                    {% for govtscheme in govtschemes %}
+                    <div class="item">
+                        <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
+                            <a href="{% url 'displayParticularEvent' govtscheme.id %}" class="blog-card__image">
+                                <img src="{{ govtscheme.govtscheme_img.url }}" alt="DIALYSIS CENTRE" />
+                                <div class="blog-card__date"><span>17</span> July 2020</div>
+                                <div class="blog-card__react"><span>{{ govtscheme.reactions }}</span> Reactions</div>
+                            </a>
+                            <div class="blog-card__content" style="
+                    background-image: url('/static/images/blog/blog-bg-1-1.png');
+                  ">
+                                <h3 class="blog-card__title">
+                                    <a href="{% url 'govtScheme' govtscheme.id %}">{{ govtscheme.govtscheme_title }}</a>
+                                </h3>
+                                <p>
+                                    {{ govtscheme.govtscheme_description|slice:":230" }}{% if event_item.govtscheme_description|length > 230 %}...{% endif %}
+                                </p>
+                                <a href="{% url 'govtScheme' govtscheme.id %}" class="blog-card__link">
+                                    <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
+                                    <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read
+                                        More</span> </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div> -->
+        
+
+        <div class="section" id="beneficiary-chart-section">
+            <h2 data-aos="fade-left">Beneficiaries & Amount Disbursed</h2>
+            
+            <!-- Year Selection Dropdown -->
+            <label for="yearSelect">Select Year:</label>
+            <select id="yearSelect">
+                {% for year, data in chart_data.items %}
+                <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+            </select>
+        
+            <!-- Canvas for Chart.js -->
+            <canvas id="beneficiaryChart" width="600" height="400" data-aos="fade-right"></canvas>
+          </div>
+
+
+          <section class="partner section-space">
+
+            <h2 data-aos="fade-up" data-aos-anchor-placement="top-center">Meet our Partners</h2>
+
+            <div class="blog-one section-space">
+                <div class="container ">
+                    <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
+                      data-owl-options='{
+                        "items": 6,
+                        "margin": 20,
+                        "loop": true,
+                        "autoplay": true,
+                        "autoplayTimeout": 2000,
+                        "autoplayHoverPause": false,
+                        "dots": false,
+                        "nav": true,
+                        "responsive": {
+                            "0": { "items": 2 },
+                            "576": { "items": 3 },
+                            "768": { "items": 4 },
+                            "992": { "items": 5 },
+                            "1200": { "items": 6 }
+                          }
+                      }'>
+                      
+                      <!-- Sample Images -->
+                      {% for logo in logos %}
+                      <div class="item patner">
+                        <a href="{{ logo.website|default:'/' }}" target="_blank" title="{{ logo.name }}">
+                            <img src="{{ logo.image.url }}" alt="{{ logo.name }}">
+                          </a>
+                      </div>
+                    {% endfor %}
+                
+                    </div>
+                  </div>
+            </div>
+          </section>
+          
+
         <a href="https://wa.me/918657970797?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services."
             class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -633,15 +595,82 @@
         </div>
     </div>
 
-    <!-- Second Popup -->
-    <!-- <div id="qrCodePopup" class="popup-overlay">
-        <div class="popup-content">
-            <button class="close-popup" id="closeQrCodePopup">&times;</button>
-            <h2>Scan to Donate</h2>
-            <img src="images/donate-pay.png" alt="QR Code" class="qr-code">
-            <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank" class="upi-link">UPI ID- upi1281220331</a>
-        </div>
-    </div> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+
+        const chartData = {{ chart_data_json|safe }};
+      
+        // Get list of years from keys
+        const years = Object.keys(chartData);
+        const currentYear = years[0]; // Use the first year as default
+      
+        // Populate year dropdown
+        const yearSelect = document.getElementById("yearSelect");
+        years.forEach(year => {
+          const option = document.createElement("option");
+          option.value = year;
+          option.text = year;
+          yearSelect.appendChild(option);
+        });
+      
+        // Set default selected year
+        yearSelect.value = currentYear;
+      
+        // Create chart config
+        const ctx = document.getElementById('beneficiaryChart').getContext('2d');
+        
+        const config = {
+  type: 'bar',
+  data: {
+    labels: chartData[currentYear].labels,
+    datasets: [
+      {
+        label: 'Beneficiaries',
+        data: chartData[currentYear].beneficiaries,
+        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+        yAxisID: 'y1', // Left y-axis for beneficiaries
+      },
+      {
+        label: 'Amount Disbursed (in ₹)',
+        data: chartData[currentYear].amount,
+        backgroundColor: 'rgba(255, 99, 132, 0.6)',
+        yAxisID: 'y2', // Right y-axis for amount
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y1: {
+        position: 'left',
+        beginAtZero: true,
+      },
+      y2: {
+        position: 'right',
+        beginAtZero: true,
+      }
+    }
+  }
+};
+      
+        const myChart = new Chart(ctx, config);
+      
+        // Handle year change
+        yearSelect.addEventListener('change', function () {
+          const selectedYear = this.value;
+          const yearData = chartData[selectedYear];
+      
+          myChart.data.labels = yearData.labels;
+          myChart.data.datasets[0].data = yearData.beneficiaries;
+          myChart.data.datasets[1].data = yearData.amount;
+          myChart.update();
+        });
+      </script>
+      
+      
+    
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const donateNowPopup = document.getElementById("donateNowPopup");
@@ -771,18 +800,12 @@ valueDisplays.forEach((valueDisplay) => {
             });
         });
     </script>
-    <!-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+  
 
-    dropdownButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const dropdownContent = this.nextElementSibling;
-            dropdownContent.classList.toggle('open');
-        });
-    });
-});
-    </script> -->
+ 
+ 
+    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

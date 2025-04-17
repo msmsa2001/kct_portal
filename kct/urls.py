@@ -13,6 +13,12 @@ urlpatterns = [
     path('dialysis', dialysis, name='dialysis'),
     path('ramzan', ramzan, name='ramzan'),
     path('help', help, name='help'),
-    path('display_particular_event/<int:eventId>/', displayParticularEvent, name='displayParticularEvent')
+    path('display_particular_event/<int:eventId>/', displayParticularEvent, name='displayParticularEvent'),
+    path('government-scheme/<int:schemeId>/', govtScheme, name='govtScheme'),
+    path('project-detail/<int:projectId>/', projectDetail, name='projectDetail'),
     # path('event/<slug:slug>/', views.event_detail, name='event_detail'),
+    path('news', news, name='news'),
+    path('gallery', gallery, name='gallery'),
+    path('sucess_story', success_story, name='success_story'),
+
 ]

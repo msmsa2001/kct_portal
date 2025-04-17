@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'kct',
-    'import_export'
+    'import_export',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -65,6 +66,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "kct.context_processors.project_list_processor",
             ],
         },
     },
@@ -82,16 +84,28 @@ DATABASES = {
         "NAME": "kct_portal",
         "USER": "kct",
         "PASSWORD": "kct123",
-        "HOST": "localhost",  # Change if using a remote server
+        "HOST": "13.233.98.14",  # Change if using a remote server
         "PORT": "5432",
     }
 }
 
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "kct_local",
+#         "USER": "postgres",
+#         "PASSWORD": "root",
+#         "HOST": "localhost",  # Change if using a remote server
+#         "PORT": "5433",
+#     }
+# }
+
+
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'sfiles')]
 
 
 MEDIA_URL = '/media/'
@@ -123,7 +137,33 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'shaziya.pyzon@gmail.com'  
-EMAIL_HOST_PASSWORD = 'uiif lowk pqva qxmg'  
+EMAIL_HOST_PASSWORD = 'uiif lowk pqva qxmg'
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert', 'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'code', 'items': ['CodeSnippet']},
+        ],
+        'extraPlugins': 'codesnippet,templates',
+        'codeSnippet_theme': 'monokai_sublime',
+        'allowedContent': True,
+        'extraAllowedContent': 'details summary[*]{*}(*)',
+        'templates_files': ['/static/js/custom_templates.js'],
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
