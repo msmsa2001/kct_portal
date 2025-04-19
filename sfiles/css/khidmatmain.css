@@ -28981,6 +28981,7 @@ input[type=number] {
 .mission-vision {
     /* background: linear-gradient(to right, #f8f9fa, #e9ecef); */
     padding: 20px 100px;
+    position: relative;
 }
 .mission {
     display: flex;
