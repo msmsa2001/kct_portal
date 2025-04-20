@@ -78,19 +78,64 @@
         </section>
 
         <section class="donate-page mt-5">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
+
                         <h2 class="subscribe__title donate-quote">
                             {{ donate_data.system_title|safe }}
                         </h2>
     
-                        <div class="donate-page__content text-center">
-                            <img src="{{ donate_data.system_img.url }}" alt="Donate Image">
-                            <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank">
-                                <p id="upi-id">UPI ID - {{ donate_data.system_value }}</p>
-                            </a>
-                        </div>
+                       
+
+
+                        <div class="donation_container">
+                            <div class="left-section">
+                              <h2>
+                                Your contribution<br>
+                                can be the reason someone lives,<br>
+                                learns, or heals — donate now and<br>
+                                make a lasting impact.
+                              </h2>
+                          
+                              <p>
+                                Now your donations and charity made to Khidmat Charitable Trust is eligible for tax
+                                deductions up to 50% under Sec. 80G of I.T Act, 1961.
+                              </p>
+                              <p>
+                                As per Income Tax Act, 1961 furnishing your PAN details is compulsory to avail tax exemptions
+                              </p>
+
+                              <div class="donate-page__content text-center">
+                                <img src="{{ donate_data.system_img.url }}" alt="Donate Image">
+                                <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank">
+                                    <p id="upi-id">UPI ID - {{ donate_data.system_value }}</p>
+                                </a>
+                            </div>
+                          
+                              
+                            </div>
+                          
+                            <div class="right-section">
+                              <div class="section-title">Foreign Donations</div>
+                              <div class="donation-info">
+                                Bank name: SBI BANK<br>
+                                Account Name: Khidmat Charitable Trust<br>
+                                Acct No: 40258295876 (FCRA SAVING ACCOUNT)<br>
+                                Branch code: 00691<br>
+                                IFS Code: SBIN0000691<br>
+                                SWIFT code: SBININBB104<br><br>
+                                ADD: FCRA cell, 4th floor, State Bank of India, New Delhi Main Branch 11, Sansad Marg, New Delhi - 110001.
+                              </div>
+                          
+                              <div class="section-title" style="margin-top: 30px;">Local Donations</div>
+                              <div class="donation-info">
+                                Bank name: Union Bank Of India<br>
+                                Account Name: Khidmat Charitable Trust<br>
+                                Acct No: 318702010036490<br>
+                                Branch: Null Bazar Mumbai<br>
+                                IFS Code: UBIN0531871<br>
+                                Acct Typ: Saving Account
+                              </div>
+                            </div>
+                          </div>
     
                         <!-- <form id="donationForm" action="{% url 'donate' %}" method="post">
                             {% csrf_token %}
@@ -186,8 +231,6 @@
                         </form> -->
     
                     </div>
-                </div>
-            </div>
         </section>
     
         <!-- <script>

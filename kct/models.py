@@ -243,7 +243,7 @@ class ProjectImage(models.Model):
     
 
 class BeneficiaryData(models.Model):
-    year = models.IntegerField()
+    year = models.CharField(max_length=100)
     category = models.CharField(max_length=100)
     beneficiaries = models.IntegerField()
     amount = models.BigIntegerField()

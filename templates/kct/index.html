@@ -29,9 +29,9 @@
                                 <div data-swiper-parallax="300" class="slide-title">
                                     <h2 data-aos="zoom-out-up">{{ item.slide_title }}</h2>
                                 </div>
-                                <div data-swiper-parallax="400" class="slide-text">
+                                <!-- <div data-swiper-parallax="400" class="slide-text">
                                     <p>{{ item.slide_description }}</p>
-                                </div>
+                                </div> -->
                                 <div class="clearfix"></div>
                                 <!-- <div data-swiper-parallax="500" class="slide-btns">
                                     <a href="#" class="theme-btn">More info >></a>
@@ -383,6 +383,9 @@
                 <option value="{{ year }}">{{ year }}</option>
             {% endfor %}
             </select>
+
+            <p>Total Beneficiaries: <span id="totalBeneficiaries">0</span></p>
+            <p>Total Amount Disbursed: ₹ <span id="totalAmount">0</span></p>
         
             <!-- Canvas for Chart.js -->
             <canvas id="beneficiaryChart" width="600" height="400" data-aos="fade-right"></canvas>
@@ -604,12 +607,20 @@
     
     <script>
 
+function updateTotals(yearData) {
+  const totalBeneficiaries = yearData.beneficiaries.reduce((a, b) => a + b, 0);
+  const totalAmount = yearData.amount.reduce((a, b) => a + b, 0);
+
+  document.getElementById("totalBeneficiaries").textContent = totalBeneficiaries;
+  document.getElementById("totalAmount").textContent = totalAmount.toLocaleString('en-IN');
+}
         const chartData = {{ chart_data_json|safe }};
       
         // Get list of years from keys
         const years = Object.keys(chartData);
         const currentYear = years[0]; // Use the first year as default
-      
+
+
         // Populate year dropdown
         const yearSelect = document.getElementById("yearSelect");
         years.forEach(year => {
@@ -624,6 +635,7 @@
       
         // Create chart config
         const ctx = document.getElementById('beneficiaryChart').getContext('2d');
+        
         
         const config = {
   type: 'bar',
@@ -660,16 +672,19 @@
 };
       
         const myChart = new Chart(ctx, config);
-      
+        updateTotals(chartData[currentYear]);
         // Handle year change
         yearSelect.addEventListener('change', function () {
           const selectedYear = this.value;
           const yearData = chartData[selectedYear];
+
       
           myChart.data.labels = yearData.labels;
           myChart.data.datasets[0].data = yearData.beneficiaries;
           myChart.data.datasets[1].data = yearData.amount;
           myChart.update();
+
+          updateTotals(yearData);
         });
       </script>
       
