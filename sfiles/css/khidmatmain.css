@@ -754,7 +754,7 @@ textarea {
     .hero-style-1 .slide-title h2 {
         font-size: 35px;
         line-height: 30px;
-        margin-top: 220px;
+        margin-top: 120px;
     }
     .header-style-2 .navigation .navbar-brand,
     .header-style-3 .navigation .navbar-brand {
@@ -30059,7 +30059,7 @@ input[type=number] {
     border-radius: 8px;
   }
 
-  .section-title {
+  .qr_section-title {
     color: #fff;
     border-bottom: 1px solid #ccc;
     padding-bottom: 10px;
