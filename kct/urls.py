@@ -18,6 +18,7 @@ urlpatterns = [
     path('project-detail/<int:projectId>/', projectDetail, name='projectDetail'),
     # path('event/<slug:slug>/', views.event_detail, name='event_detail'),
     path('news', news, name='news'),
+    path('anual_report', anual_report, name='anual_report'),
     path('gallery', gallery, name='gallery'),
     path('sucess_story', success_story, name='success_story'),
 

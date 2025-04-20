@@ -729,16 +729,17 @@ textarea {
 
 .hero-style-1 .slide-title {
     max-width: 100%;
-    margin-top: 10px;
+    margin-bottom: -10px;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
 .hero-style-1 .slide-title h2 {
     font-size: 5rem;
     color: #fff;
-    margin: 0 0 0.43em;
+    margin-top: 220px;
     line-height: 80px;
     font-weight: 600;
+
     /* text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1); */
 }
 
@@ -753,6 +754,7 @@ textarea {
     .hero-style-1 .slide-title h2 {
         font-size: 35px;
         line-height: 30px;
+        margin-top: 220px;
     }
     .header-style-2 .navigation .navbar-brand,
     .header-style-3 .navigation .navbar-brand {
@@ -29527,6 +29529,8 @@ input[type=number] {
   }
 
 
+
+
 .success_story {
 /* background: linear-gradient(to right, #f8f9fa, #e9ecef); */
     padding: 20px 100px;
@@ -29579,6 +29583,10 @@ input[type=number] {
     }
     .success_story{
         padding: 20px 10px;
+    }
+
+    .video-section{
+        max-width: 350px;
     }
 
     .story_card-img,
@@ -29756,6 +29764,7 @@ input[type=number] {
     border-radius: 5px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s;
+    z-index: 1;
   }
   
   .card-item:hover {
@@ -29818,7 +29827,7 @@ input[type=number] {
   }
 
   .trustee-logo-circle {
-    background-color: #9f201f;
+    background-color: white;
     color: #fff;
     width: 90px;
     height: 90px;
@@ -29991,4 +30000,97 @@ input[type=number] {
     top: 0;
     right: 0;
     opacity: 0.05;
+  }
+
+  .mobile-only {
+    display: none;
+}
+.desktop-only {
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .mobile-only {
+        display: block;
+    }
+    .desktop-only {
+        display: none;
+    }
+}
+
+.donation_container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 40px;
+    justify-content: space-between;
+    background-image: url('pattern.png');
+  }
+
+  .left-section, .right-section {
+    flex: 1;
+    min-width: 300px;
+    padding: 20px;
+  }
+
+  .left-section h2 {
+    color: #c62828;
+    font-size: 28px;
+    line-height: 1.4;
+  }
+
+  .left-section p {
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+  .qr-code {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .qr-code img {
+    width: 200px;
+    max-width: 100%;
+  }
+
+  .right-section {
+    background-color: #1d4e89;
+    color: white;
+    border-radius: 8px;
+  }
+
+  .section-title {
+    color: #fff;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+
+  .donation-info {
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .donation_container {
+      padding: 20px;
+      flex-direction: column;
+    }
+
+    .left-section h2 {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .left-section h2 {
+      font-size: 20px;
+    }
+
+    .left-section p, .donation-info {
+      font-size: 14px;
+    }
   }

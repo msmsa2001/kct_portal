@@ -74,33 +74,35 @@
                     </div>
                    
 
-                    <div class="blog-one">
+                    <div class="blog-one section-space">
                         <div class="container ">
                             <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
                               data-owl-options='{
-                                "items": 3,
-                                "margin": 20,
+                                "items": 6,
+                                "margin": 10,
                                 "loop": true,
                                 "autoplay": true,
                                 "autoplayTimeout": 2000,
-                                "autoplayHoverPause": true,
+                                "autoplayHoverPause": false,
                                 "dots": false,
                                 "nav": true,
                                 "responsive": {
-                                  "0": { "items": 1 },
-                                  "576": { "items": 2 },
-                                  "992": { "items": 3 }
-                                }
+                                    "0": { "items": 1 },
+                                    "576": { "items": 2 },
+                                    "992": { "items": 3 }
+                                  }
                               }'>
                               
                               <!-- Sample Images -->
-                               <div class="item"><img src="https://placehold.co/600x400?text=Image+1" alt="Image 1"></div>
-                               <div class="item"><img src="https://placehold.co/800x400?text=Image+2" alt="Image 2"></div>
-                               <div class="item"><img src="https://placehold.co/600x400?text=Image+3" alt="Image 3"></div>
-                               <div class="item"><img src="https://placehold.co/600x400?text=Image+4" alt="Image 4"></div>
-                               <div class="item"><img src="https://placehold.co/600x400?text=Image+5" alt="Image 5"></div>
+                              {% for news in kct_news %}
+                              <div class="item">
+                                    <img src="{{ news.system_img.url }}" alt="{{ news.name }}">
+                              </div>
+                            {% endfor %}
                         
                             </div>
+        
+                            
                           </div>
                     </div>
 

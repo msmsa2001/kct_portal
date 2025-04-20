@@ -451,10 +451,20 @@ def projectDetail(request, projectId):
 
 def news(request):
      footer_data = get_footer_data()
+     kct_news = GalleryItem.objects.filter(is_active=True,category='news_section')
+     context = {
+        'footer_data': footer_data,
+        'kct_news':kct_news
+        }
+     return render(request, "kct/news.html",context)
+
+
+def anual_report(request):
+     footer_data = get_footer_data()
      context = {
         'footer_data': footer_data
         }
-     return render(request, "kct/news.html",context)
+     return render(request, "kct/anual_report.html",context)
 
 def gallery(request):
     gallery_items = GalleryItem.objects.filter(is_active=True,category='gallery_page')
