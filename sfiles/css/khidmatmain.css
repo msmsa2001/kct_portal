@@ -7193,7 +7193,7 @@ textarea {
 .main-menu .main-menu__list li ul li>a,
 .main-menu-two .main-menu__list li ul li>a {
     font-size: 14px;
-    line-height: 26px;
+    line-height: 15px;
     color: var(--cleenhearts-base, #2e2e2e);
     font-family: var(--cleenhearts-heading-font, "Quicksand", sans-serif);
     font-weight: 700;
@@ -7729,9 +7729,10 @@ body.megamenu-popup-active .mobile-nav__content {
 } */
 
 .mobile-nav__content .main-menu__list li a button {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 250px;
     background-color: transparent;
+    margin-left:-10px ;
     border: none;
     outline: none;
     color: var(--cleenhearts-base, #2e2e2e);
@@ -7743,11 +7744,11 @@ body.megamenu-popup-active .mobile-nav__content {
     transition: transform 500ms ease;
 }
 
-/* .mobile-nav__content .main-menu__list li a button.expanded {
+.mobile-nav__content .main-menu__list li a button.expanded {
     transform: rotate(0deg);
-    background-color: var(--cleenhearts-purple, #965995);
+    /* background-color: var(--cleenhearts-purple, #965995); */
     color: var(--cleenhearts-white, #fff);
-} */
+}
 
 .mobile-nav__social {
     display: flex;
