@@ -106,7 +106,8 @@ def home(request):
     return render(request, 'kct/index.html', context)
 
 def about(request):
-    managinglist = ManagingListCategoryMaster.objects.prefetch_related('items').all()
+    # managinglist = ManagingListCategoryMaster.objects.prefetch_related('items').all()
+    managinglist = ManagingListCategoryMaster.objects.filter(is_active=True).prefetch_related('items')
     categories = ListItemCategory.objects.all()  
     about_section_page = get_data_about_page()
     our_aim = SystemMaster.objects.filter(system_name="Our Aim").first()
@@ -118,6 +119,7 @@ def about(request):
     afillat = get_data_afillat()
     footer_data = get_footer_data()
     casestudy = get_data_dict_casestdy()
+    awards = GalleryItem.objects.filter(is_active=True,category='award_section')
      
 
     context = {
@@ -131,6 +133,7 @@ def about(request):
         'footer_data': footer_data,
         'page_quotes': page_quotes,
         'casestudy':casestudy.items(),
+        'awards':awards
         
     }
     return render(request, 'kct/about.html', context)
