@@ -30157,7 +30157,7 @@ input[type=number] {
 
 @media screen and (max-width: 768px) {
     .h2_text {
-        font-size: 6vw;
+        font-size: 12vw;
     }
 }
 
