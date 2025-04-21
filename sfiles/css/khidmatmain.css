@@ -30003,85 +30003,98 @@ input[type=number] {
   }
 
 
-.donation_container {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 40px;
-    justify-content: space-between;
-    background-image: url('pattern.png');
-  }
-
-  .left-section, .right-section {
-    flex: 1;
-    min-width: 300px;
-    padding: 20px;
-  }
-
-  .left-section h2 {
-    color: #c62828;
-    font-size: 28px;
-    line-height: 1.4;
-  }
-
-  .left-section p {
-    font-size: 16px;
-    margin-top: 20px;
-  }
-
-  .qr-code {
-    text-align: center;
-    margin-top: 40px;
-  }
-
-  .qr-code img {
-    width: 200px;
-    max-width: 100%;
-  }
-
-  .right-section {
-    background-color: #1d4e89;
-    color: white;
-    border-radius: 8px;
-  }
-
-  .qr_section-title {
-    color: #fff;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-
-  .donation-info {
-    margin-top: 10px;
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  /* Responsive tweaks */
-  @media (max-width: 768px) {
-    .donation_container {
-      padding: 20px;
-      flex-direction: column;
-    }
-
-    .left-section h2 {
-      font-size: 24px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .left-section h2 {
-      font-size: 20px;
-    }
-
-    .left-section p, .donation-info {
-      font-size: 14px;
-    }
-  }
-
   .download-pdf a{
     line-height: 40px;
     max-width: 400px;
     width: 300px;
   }
+
+  .donate-section {
+    width: 100vw;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .donate-section {
+    padding: 80px 0;
+  }
+
+  .donate-title {
+    color: #8b3d3d;
+    font-size: 64px;
+    font-weight: 800;
+  }
+
+  .donate-description {
+    font-size: 22px;
+    margin-top: 20px;
+  }
+
+  .donate-description b {
+    font-weight: 700;
+  }
+
+  .bank-details {
+    background-color: #204a8f;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+    /* margin-top: 30px; */
+  }
+
+  .bank-details h4 {
+    text-decoration: underline;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  .bank-details p {
+    font-size: 18px;
+    margin: 6px 0;
+    color: white;
+  }
+
+  .qr-img {
+    width: 300px;
+    display: block;
+    margin: 20px auto 10px;
+  }
+
+  .donate-img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+  }
+
+  .Foreign_donation{
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .Foreign_donation_details{
+    width: 40vw;
+  }
+
+  @media (max-width: 768px) {
+    .donate-title {
+      font-size: 42px;
+    }
+
+    .donate-description {
+      font-size: 18px;
+    }
+
+    .bank-details p {
+      font-size: 16px;
+    }
+    .Foreign_donation_details{
+        width: 90vw;
+      }
+  }
+
+ 
