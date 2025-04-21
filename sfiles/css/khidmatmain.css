@@ -29414,6 +29414,16 @@ input[type=number] {
   .blog-one__carousel .item {
     overflow: hidden;
   }
+  .blog-one__carousel .awards_img{
+    width: 100%;
+    height: 300px;
+  }
+
+  .blog-one__carousel .awards_img img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
 
  
   #beneficiary-chart-section {
