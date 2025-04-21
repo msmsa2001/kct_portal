@@ -137,11 +137,11 @@
 
             <div class="count_in_number">
                 <div class="count_box1">
-                    <h1 class="numbers1 h2_text" data-val="123.7K+">₹ 56.53Cr</h1>
+                    <h1 class="numbers1 h2_text" data-val="56.53Cr">₹ 56.53Cr</h1>
                     <p>In Services</p>
                 </div>
                 <div class="count_box2">
-                    <h1 class="numbers1 h2_text " data-val="250K">250K</h1>
+                    <h1 class="numbers1 h2_text " data-val="190K">190K</h1>
                     <p>Beneficiaries</p>
                 </div>
             </div>
@@ -828,56 +828,57 @@ valueDisplays.forEach((valueDisplay) => {
     <script>
         function animateNumbersOnce(container) {
             const valueDisplays = container.querySelectorAll(".numbers1, .numbers");
-        
+    
             valueDisplays.forEach((valueDisplay) => {
                 let startValue = 0;
                 let dataVal = valueDisplay.getAttribute("data-val");
-        
-                // Extract numeric part safely
-                let numericPart = parseFloat(dataVal.replace(/[^\d.]/g, ''));
-                let suffix = dataVal.replace(numericPart, "");
+    
+                // Extract numeric part (like 27.2 from 27.2K+)
+                let numericPart = parseFloat(dataVal);
+    
+                // Extract suffix (like K+ or CR)
+                let suffixMatch = dataVal.match(/[^\d.]+$/);
+                let suffix = suffixMatch ? suffixMatch[0] : "";
+    
                 let interval = 4000;
-        
-                let increment = valueDisplay.classList.contains('numbers1')
-                    ? Math.ceil(numericPart / 20)
-                    : 1;
-        
-                let duration = Math.floor(interval / (numericPart / increment));
-        
+                let totalSteps = 50;
+    
+                let increment = parseFloat((numericPart / totalSteps).toFixed(2));
+                let duration = Math.floor(interval / totalSteps);
+    
                 let counter = setInterval(() => {
                     startValue = Math.min(startValue + increment, numericPart);
-                    valueDisplay.textContent = formatNumber(startValue) + suffix;
+                    
+                    // Format: if decimal ends with .0, remove it
+                    let formatted = startValue.toFixed(1).replace(/\.0$/, '');
+    
+                    valueDisplay.textContent = formatted + suffix;
+    
                     if (startValue >= numericPart) {
                         clearInterval(counter);
                     }
                 }, duration);
             });
         }
-        
-        function formatNumber(num) {
-            if (num >= 1000 && num < 1000000) return (num / 1000).toFixed(1) + "K";
-            if (num >= 1000000) return (num / 1000000).toFixed(1) + "M";
-            return Math.round(num);
-        }
-        
-        // Intersection Observer
+    
         const countSection = document.querySelector('.count_section');
-        
+    
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateNumbersOnce(entry.target);
-                    observer.unobserve(entry.target); // Run once only
+                    observer.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.5 // Start when 50% of the section is visible
+            threshold: 0.5
         });
-        
+    
         if (countSection) {
             observer.observe(countSection);
         }
-        </script>
+    </script>
+    
     <script>
         let calScrollValue = () => {
             let scrollProgress = document.getElementById('progressbar');
