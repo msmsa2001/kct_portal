@@ -611,7 +611,7 @@ function updateTotals(yearData) {
   const totalBeneficiaries = yearData.beneficiaries.reduce((a, b) => a + b, 0);
   const totalAmount = yearData.amount.reduce((a, b) => a + b, 0);
 
-  document.getElementById("totalBeneficiaries").textContent = totalBeneficiaries;
+  document.getElementById("totalBeneficiaries").textContent = totalBeneficiaries.toLocaleString('en-IN');
   document.getElementById("totalAmount").textContent = totalAmount.toLocaleString('en-IN');
 }
         const chartData = {{ chart_data_json|safe }};
