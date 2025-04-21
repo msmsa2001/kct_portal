@@ -69,7 +69,6 @@
             <div class="page-header__bg" style="background-image: url('/static/images/backgrounds/donate3-bg.png');">
             </div>
             <div class="container">
-                <h2 class="page-header__title">Donate Now</h2>
                 <ul class="cleenhearts-breadcrumb list-unstyled">
                     <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
                     <li><span>Donate Now</span></li>
@@ -77,162 +76,73 @@
             </div>
         </section>
 
-        <section class="donate-page mt-5">
 
-                        <h2 class="subscribe__title donate-quote">
-                            {{ donate_data.system_title|safe }}
-                        </h2>
+        <div class="container title-container" style="display: flex;align-items: center;justify-content: center; margin-top: 30px;">
+            <img src="{% static 'images/logo_icon_blue.png' %}" alt="bg" class="bg-watermark-img" />
+
+            <h2 class="page-header__title project_page-header__title">How You Can Help</h2>
+
+        </div>
+        
+        <section class="container donate-section">
+            <img src="{% static 'images/design_icon_1.png' %}" alt="Design" class="design-img"/>
+            <div class="row align-items-center">
+              <!-- Left Column -->
+              <div class="col-lg-6 col-md-12 mb-5">
+                
     
-                       
+                <p class="donate-description">
+                    Your contribution can be the reason someone lives, learns, economically, and educationally disadvantaged communities.
+                </p>
+        
+                <div class="bank-details">
+                  <h4>Bank Detail</h4>
+                  <p><strong> Khidmat Charitable Trust</strong></p>
+                  <p>Bank Name: Union Bank Of India</p>
+                  <p>A/c: 318702010036490</p>
+                  <p>IFS Code: UBIN0531871</p>
+                  <p>Branch: Null Bazar Mumbai</p>
+                </div>
+              </div>
+        
+              <!-- Right Column with QR + Button -->
+              <div class="col-lg-6 col-md-12 text-center donation_right_box">
+                <img src="{{ donate_data.system_img.url }}" alt="QR Code for Donation" class="qr-img">
+                <p class="mt-2">Scan the QR code to donate</p>
+        
+                <p class="mt-3">Or use this UPI ID:</p>
+                <!-- <h5><code>missionawareness@oksbi</code></h5> -->
+                <a href="https://www.upilinks.in/payment-link/upi1281220331" class="btn btn-success mt-3" target="_blank">
+                  Pay with UPI
+                </a>
+              </div>
+            </div>
+            <img src="{% static 'images/design_icon_2.png' %}" alt="Design" class="design-img2" />
+          </section>
+
+          <div class="container title-container" style="display: flex;align-items: center;justify-content: center; margin-top: 30px;">
+            <img src="{% static 'images/logo_icon_blue.png' %}" alt="bg" class="bg-watermark-img" />
+
+            <h2 class="page-header__title project_page-header__title">Foreign Donations</h2>
+        </div>
+
+          <section class="container donate-section Foreign_donation">
+
+                
+                <div class="bank-details Foreign_donation_details">
+                  <h4 style="text-align: center;">Bank Detail</h4>
+                  <p><strong> Khidmat Charitable Trust</strong></p>
+                  <p>Bank Name: SBI Bank</p>
+                  <p>A/c: 40258295876 (FCRA SAVING ACCOUNT)</p>
+                  <p>Branch code:00691</p>
+                  <p>IFS Code: SBIN0000691</p>
+                  <p>SWIFT Code: SBININBB104</p>
+                </div>
+
+          </section>
 
 
-                        <div class="donation_container">
-                            <div class="left-section">
-                              <h2>
-                                Your contribution<br>
-                                can be the reason someone lives,<br>
-                                learns, or heals — donate now and<br>
-                                make a lasting impact.
-                              </h2>
-                          
-                              <p>
-                                Now your donations and charity made to Khidmat Charitable Trust is eligible for tax
-                                deductions up to 50% under Sec. 80G of I.T Act, 1961.
-                              </p>
-                              <p>
-                                As per Income Tax Act, 1961 furnishing your PAN details is compulsory to avail tax exemptions
-                              </p>
-
-                              <div class="donate-page__content text-center">
-                                <img src="{{ donate_data.system_img.url }}" alt="Donate Image">
-                                <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank">
-                                    <p id="upi-id">UPI ID - {{ donate_data.system_value }}</p>
-                                </a>
-                            </div>
-                          
-                              
-                            </div>
-                          
-                            <div class="right-section">
-                              <div class="section-title">Foreign Donations</div>
-                              <div class="donation-info">
-                                Bank name: SBI BANK<br>
-                                Account Name: Khidmat Charitable Trust<br>
-                                Acct No: 40258295876 (FCRA SAVING ACCOUNT)<br>
-                                Branch code: 00691<br>
-                                IFS Code: SBIN0000691<br>
-                                SWIFT code: SBININBB104<br><br>
-                                ADD: FCRA cell, 4th floor, State Bank of India, New Delhi Main Branch 11, Sansad Marg, New Delhi - 110001.
-                              </div>
-                          
-                              <div class="section-title" style="margin-top: 30px;">Local Donations</div>
-                              <div class="donation-info">
-                                Bank name: Union Bank Of India<br>
-                                Account Name: Khidmat Charitable Trust<br>
-                                Acct No: 318702010036490<br>
-                                Branch: Null Bazar Mumbai<br>
-                                IFS Code: UBIN0531871<br>
-                                Acct Typ: Saving Account
-                              </div>
-                            </div>
-                          </div>
-    
-                        <!-- <form id="donationForm" action="{% url 'donate' %}" method="post">
-                            {% csrf_token %}
-                            <div class="form-row">
-                                <div class="form-group">
-                                    {{ form.whypay.label_tag }}
-                                    {{ form.whypay }}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.paying_from.label_tag }}
-                                    {{ form.paying_from }}
-                                </div>
-                            </div>
-    
-                            <div id="personal-account-form" class="form-section" style="display: none;">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        {{ form.fullname.label_tag }}
-                                        {{ form.fullname }}
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        {{ form.phone.label_tag }}
-                                        {{ form.phone }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form.email.label_tag }}
-                                        {{ form.email }}
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        {{ form.pan.label_tag }}
-                                        {{ form.pan }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form.aadhar.label_tag }}
-                                        {{ form.aadhar }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    {{ form.address.label_tag }}
-                                    {{ form.address }}
-                                </div>
-                            </div>
-    
-                            <div id="official-account-form" class="form-section" style="display: none;">
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        {{ form.company_name.label_tag }}
-                                        {{ form.company_name }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form.company_phone.label_tag }}
-                                        {{ form.company_phone }}
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    {{ form.company_address.label_tag }}
-                                    {{ form.company_address }}
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        {{ form.company_email.label_tag }}
-                                        {{ form.company_email }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form.company_pan.label_tag }}
-                                        {{ form.company_pan }}
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        {{ form.contact_person_name.label_tag }}
-                                        {{ form.contact_person_name }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ form.contact_person_phone.label_tag }}
-                                        {{ form.contact_person_phone }}
-                                    </div>
-                                </div>
-                            </div>
-    
-                            <div class="form-group">
-                                {{ form.amount.label_tag }}
-                                {{ form.amount }}
-                            </div>
-    
-                            <div class="form-group text-center">
-                                <button type="submit" class="submit-button">Donate Now</button>
-                            </div>
-                        </form> -->
-    
-                    </div>
-        </section>
-    
+       
         <!-- <script>
             function toggleFormSections() {
                 const payingFrom = document.getElementById('id_paying_from').value;
