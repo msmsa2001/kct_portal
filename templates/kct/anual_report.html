@@ -22,23 +22,42 @@
 
             </div>
 
+            <section class="event-details">
+                <div class="container" >     
+                    <div class="row gutter-y-60">
+                        <div class="col-lg-12">
+                            <div class="event-details__content">
+                                <div class="event-details__image wow fadeInUp" data-wow-duration="1500ms"
+                                    data-wow-delay="00ms">
+                                    <img src="{% static 'images/anual_report_img.jpg' %}" alt="event-details" style="border: 2px solid #f9f9f9;">
+                                </div>
+                                <!-- <div class="event-details__time">
+                                    <i class="event-details__time__icon fa fa-clock"></i>
+                                    <span class="event-details__time__text">{{ item.time }}</span>
+                                </div> -->
+                                <!-- <h3 class="event-details__title mb-2">Online Media</h3> -->
+                                <div class="event-details__text mt-2">
+    
+                                    <!-- {{ item.project_feature|safe }}     -->
+                                </div>
+                            </div>
+                            
+                      
+    
+                           
+                        </div>
+                       
+                    </div>
+                </div>
+            </section>
+
             <section class="event-details section-space title-container">
                 <img src="{% static 'images/design_icon_3.png' %}" alt="Design" class="design-img3" />
                 <div class="container">
                     <div class="row gutter-y-60">
                         <div class="col-12">
                             <div class="pdf-viewer-wrapper">
-                                <iframe 
-                                    src="{% static 'images/anual_report.pdf' %}" 
-                                    width="100%" 
-                                    height="700px"
-                                    style="border: none;"
-                                    class="desktop-only">
-                                    This browser does not support PDFs.
-                                </iframe>
-            
-                                <div class="mobile-only text-center">
-                                    <p>Your device doesn't support embedded PDFs. Please download to view:</p>
+                                <div class="download-pdf text-center">
                                     <a href="{% static 'images/anual_report.pdf' %}" class="btn btn-primary" download>Download PDF</a>
                                 </div>
                             </div>
