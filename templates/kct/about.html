@@ -301,7 +301,18 @@
                     {% for category in managinglist %}
                     <div class="{% if category.title == 'Pharmacy Store Association' %}col-6{% else %}col-xl-6 col-lg-6{% endif %} mt-4">
                         <div class="trustWrapp">
-                            <h3 class="pb-2">{{ category.title }}</h3>
+                            <div>
+                                <!-- <div class="icon-container" style="width: 60px; height: 60px;">
+                                    {% if category.title == 'Pharmacy Store Association' %}
+                                        <img src="{% static 'images/MedicalW.svg' %}" alt="Icon" class="icon">
+                                    {% elif category.title == 'Hospital Covered' %}
+                                        <img src="{% static 'images/MedicalW.svg' %}" alt="Icon" class="icon">
+                                    {% else %}
+                                        <img src="{% static 'images/default.svg' %}" alt="Icon" class="icon">
+                                    {% endif %}
+                                </div> -->
+                                <h3 class="pb-2" style="display: inline;">{{ category.title }}</h3>
+                            </div>
                             <!-- Apply two-column class to all lists except Pharmacy Store Association -->
                             <ul class="pharmacy-list {% if category.title != 'Pharmacy Store Association' %}two-column{% endif %}">
                                 {% for item in category.items.all %}
@@ -347,7 +358,7 @@
             <img src="{% static 'images/about/img_affilated.png' %}" alt="" class="affilated_bg" />
         </section>
 
-        <section class="testimonials-one section-space">
+        <!-- <section class="testimonials-one section-space">
             <div class="testimonials-one__bg cleenhearts-jarallax" data-jarallax data-speed="0.3"
                 data-imgPosition="50% -100%" style="
             background-image: url(static/images/backgrounds/testimonial-bg-1.jpg);
@@ -427,7 +438,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
         
 
 
