@@ -30002,21 +30002,6 @@ input[type=number] {
     opacity: 0.05;
   }
 
-  .mobile-only {
-    display: none;
-}
-.desktop-only {
-    display: block;
-}
-
-@media (max-width: 768px) {
-    .mobile-only {
-        display: block;
-    }
-    .desktop-only {
-        display: none;
-    }
-}
 
 .donation_container {
     display: flex;
@@ -30093,4 +30078,10 @@ input[type=number] {
     .left-section p, .donation-info {
       font-size: 14px;
     }
+  }
+
+  .download-pdf a{
+    line-height: 40px;
+    max-width: 400px;
+    width: 300px;
   }
