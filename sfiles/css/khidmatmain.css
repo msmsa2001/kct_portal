@@ -29810,6 +29810,9 @@ input[type=number] {
 .card-item:hover p b {
   color: white;
 }
+.card-item:hover img{
+    filter: invert(1);
+}
   .btn-learn-more:hover {
     background-color: #9f201f;
   }
