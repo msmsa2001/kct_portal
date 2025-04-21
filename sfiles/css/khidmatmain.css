@@ -29281,14 +29281,21 @@ input[type=number] {
 
 .ben-counts {
     position: relative;
-    background-image: url('../images/backgrounds/counter-bg.jpg');
+    background-image: url('../images/about/about_us.jpg');
     background-size: cover;
     background-position: center;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    /* display: grid; */
+    /* grid-template-columns: repeat(3, 1fr); */
+    /* grid-template-rows: 2fr 2fr; */
+
+    display: flex;
+    align-items: center;
     justify-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 50px 0;
+    z-index: -1;
 }
 
 .ben-counts::before {
@@ -29298,7 +29305,8 @@ input[type=number] {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Adjust darkness (0.5 for 50%) */
+    background: rgba(0, 0, 0, 0.7);
+     /* Adjust darkness (0.5 for 50%) */
     z-index: 1;
 }
 
@@ -29308,6 +29316,7 @@ input[type=number] {
 }
 
 .count-box {
+    width: 30%;
     text-align: center;
 }
 
@@ -29334,18 +29343,18 @@ input[type=number] {
 }
 @media screen and (max-width:800px){
     .ben-counts{
-        display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    }
+
+    .design-img{
+        height: 100%;
+        width: 200%;
     }
 }
 @media screen and (max-width:450px){
     .ben-counts{
-        display: grid;
-    grid-template-columns: repeat(1, 1fr);
     gap: 3rem;
     }
     .ben-counts, .numbers1, .numbers, .below-number{
-        color: #000;
         margin-bottom: -15px;
     }
 }
@@ -30111,3 +30120,44 @@ input[type=number] {
   }
 
  
+.icon-container{
+    width: 100px;
+    height: 100px;
+}
+
+.icon-container img{
+    width: 100%;
+    height: 100%;
+}
+
+
+.count_in_number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: nowrap;
+    margin: 2rem 0;
+}
+
+.count_box1,
+.count_box2 {
+    flex: 1; /* equal width */
+    max-width: 400px;
+    text-align: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.h2_text {
+    font-size: 3.5vw; /* Responsive font */
+    color: black;
+    margin: 0.5rem 0;
+}
+
+@media screen and (max-width: 768px) {
+    .h2_text {
+        font-size: 6vw;
+    }
+}
+
