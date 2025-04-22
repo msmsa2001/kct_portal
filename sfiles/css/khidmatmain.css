@@ -8552,7 +8552,7 @@ body.megamenu-popup-active .mobile-nav__content {
 }
 
 .custom-cursor__hover {
-    background-color: var(--cleenhearts-base, #2e2e2e);
+    /* background-color: var(--cleenhearts-base, #2e2e2e); */
     opacity: 0.4;
 }
 
@@ -30153,11 +30153,12 @@ input[type=number] {
     font-size: 3.5vw; /* Responsive font */
     color: black;
     margin: 0.5rem 0;
+    display: inline;
 }
 
 @media screen and (max-width: 768px) {
     .h2_text {
-        font-size: 12vw;
+        font-size: 9vw;
     }
 }
 
