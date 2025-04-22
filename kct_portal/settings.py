@@ -136,8 +136,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'shaziya.pyzon@gmail.com'  
-EMAIL_HOST_PASSWORD = 'uiif lowk pqva qxmg'
+EMAIL_HOST_USER = 'sadique.leewayzon@gmail.com'  
+EMAIL_HOST_PASSWORD = 'thhs mnxp zvmw mmzn'
 
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
