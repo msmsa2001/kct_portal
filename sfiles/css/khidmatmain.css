@@ -8520,13 +8520,13 @@ body.megamenu-popup-active .mobile-nav__content {
 # Custom Cursor
 --------------------------------------------------------------*/
 
-.custom1-cursor__cursor {
+.custom-cursor__cursor {
     width: 25px;
     height: 25px;
-    border-radius: 100%;
-    border: 1px solid var(--cleenhearts-base, #2e2e2e);
-    -webkit-transition: all 200ms ease-out;
-    transition: all 200ms ease-out;
+    /* border-radius: 100%; */
+    /* border: 1px solid var(--cleenhearts-base, #2e2e2e); */
+    /* -webkit-transition: all 200ms ease-out; */
+    /* transition: all 200ms ease-out; */
     position: fixed;
     pointer-events: none;
     left: 0;
@@ -8536,11 +8536,11 @@ body.megamenu-popup-active .mobile-nav__content {
     z-index: 999991;
 }
 
-.custom-cursor1__cursor-two {
+.custom-cursor__cursor-two {
     width: 10px;
     height: 10px;
     border-radius: 100%;
-    background-color: var(--cleenhearts-base, #2e2e2e);
+    /* background-color: var(--cleenhearts-base, #2e2e2e); */
     opacity: 0.3;
     position: fixed;
     -webkit-transform: translate(-50%, -50%);
@@ -29345,7 +29345,7 @@ input[type=number] {
     .ben-counts{
     }
 
-    .design-img{
+    .design-img,.design-img3,.what_we_do,.trustee_img_bg{
         height: 100%;
         width: 200%;
     }
