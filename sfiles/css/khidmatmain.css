@@ -8520,7 +8520,7 @@ body.megamenu-popup-active .mobile-nav__content {
 # Custom Cursor
 --------------------------------------------------------------*/
 
-.custom-cursor__cursor {
+.custom1-cursor__cursor {
     width: 25px;
     height: 25px;
     border-radius: 100%;
@@ -8536,7 +8536,7 @@ body.megamenu-popup-active .mobile-nav__content {
     z-index: 999991;
 }
 
-.custom-cursor__cursor-two {
+.custom-cursor1__cursor-two {
     width: 10px;
     height: 10px;
     border-radius: 100%;
