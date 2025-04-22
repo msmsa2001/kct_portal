@@ -8242,17 +8242,26 @@ body.megamenu-popup-active .mobile-nav__content {
     .page-header__title {
         font-size: 45px;
     }
+    .impact_heading{
+        font-size: 35px;
+    }
 }
 
 @media (max-width: 575px) {
     .page-header__title {
         font-size: 40px;
     }
+    .impact_heading{
+        font-size: 28px;
+    }
 }
 
 @media (max-width: 425px) {
     .page-header__title {
         font-size: 35px;
+    }
+    .impact_heading{
+        font-size: 30px;
     }
 }
 
@@ -30137,7 +30146,7 @@ input[type=number] {
     justify-content: center;
     gap: 2rem;
     flex-wrap: nowrap;
-    margin: 2rem 0;
+    margin: 0rem 0;
 }
 
 .count_box1,
