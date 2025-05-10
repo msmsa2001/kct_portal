@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export import resources 
-from .models import  KCTEnquireMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster
+from .models import  GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster, BeneficiaryData
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -200,3 +200,109 @@ class KCTEnquireMasterAdmin(ImportExportModelAdmin):
     list_display = ['id','name', 'email', 'phone', 'message', 'is_active']
     search_fields = ['id', 'name', 'email', 'phone']
 admin.site.register(KCTEnquireMaster, KCTEnquireMasterAdmin)
+
+
+
+class ProjectMasterresources(resources.ModelResource):
+    class Meta:
+        model = ProjectMaster
+        import_id_fields = ['id'] 
+        # fields = ['id', 'event_title', 'event_description','event_feature', 'event_img', 'reactions', 'time', 'order', 'is_active']  
+class ProjectMasterAdmin(ImportExportModelAdmin):
+    # list_display = ('event_title','event_description','is_active')
+    resource_class = ProjectMasterresources
+    list_display = [
+    field.name for field in ProjectMaster._meta.get_fields()
+    if not (field.one_to_many or field.many_to_many)
+]
+    search_fields = ['id',]
+
+admin.site.register(ProjectMaster,ProjectMasterAdmin)
+
+
+
+
+
+class HomeBannerMasterresources(resources.ModelResource):
+    class Meta:
+        model = HomeBannerMaster
+        import_id_fields = ['id'] 
+        # fields = ['id', 'event_title', 'event_description','event_feature', 'event_img', 'reactions', 'time', 'order', 'is_active']  
+class HomeBannerMasterAdmin(ImportExportModelAdmin):
+    # list_display = ('event_title','event_description','is_active')
+    resource_class = HomeBannerMasterresources
+    list_display = [field.name for field in HomeBannerMaster._meta.get_fields()]
+    search_fields = ['id','event_title']
+
+admin.site.register(HomeBannerMaster,HomeBannerMasterAdmin)
+
+
+
+class GovtSchemeMasterresources(resources.ModelResource):
+    class Meta:
+        model = GovtSchemeMaster
+        import_id_fields = ['id'] 
+        # fields = ['id', 'event_title', 'event_description','event_feature', 'event_img', 'reactions', 'time', 'order', 'is_active']  
+class GovtSchemeMasterAdmin(ImportExportModelAdmin):
+    # list_display = ('event_title','event_description','is_active')
+    resource_class = GovtSchemeMasterresources
+    list_display = [field.name for field in GovtSchemeMaster._meta.get_fields()]
+    search_fields = ['id','event_title']
+
+admin.site.register(GovtSchemeMaster,GovtSchemeMasterAdmin)
+
+
+
+class ProjectImageresources(resources.ModelResource):
+    class Meta:
+        model = ProjectImage
+        import_id_fields = ['id'] 
+        # fields = ['id', 'event_title', 'event_description','event_feature', 'event_img', 'reactions', 'time', 'order', 'is_active']  
+class ProjectImageAdmin(ImportExportModelAdmin):
+    # list_display = ('event_title','event_description','is_active')
+    resource_class = ProjectImageresources
+    list_display = [field.name for field in ProjectImage._meta.get_fields()]
+    search_fields = ['id',]
+
+admin.site.register(ProjectImage,ProjectImageAdmin)
+
+
+
+
+class BeneficiaryDataresources(resources.ModelResource):
+    class Meta:
+        model = BeneficiaryData
+        import_id_fields = ['id'] 
+class BeneficiaryDataAdmin(ImportExportModelAdmin):
+    resource_class = BeneficiaryDataresources
+    list_display = [field.name for field in BeneficiaryData._meta.get_fields()]
+    search_fields = ['id',]
+
+admin.site.register(BeneficiaryData,BeneficiaryDataAdmin)
+
+
+
+
+class PartnerLogoresources(resources.ModelResource):
+    class Meta:
+        model = PartnerLogo
+        import_id_fields = ['id'] 
+class PartnerLogoAdmin(ImportExportModelAdmin):
+    resource_class = PartnerLogoresources
+    list_display = [field.name for field in PartnerLogo._meta.get_fields()]
+    search_fields = ['id',]
+
+admin.site.register(PartnerLogo,PartnerLogoAdmin)
+
+
+
+class GalleryItemresources(resources.ModelResource):
+    class Meta:
+        model = GalleryItem
+        import_id_fields = ['id'] 
+class GalleryItemAdmin(ImportExportModelAdmin):
+    resource_class = GalleryItemresources
+    list_display = [field.name for field in GalleryItem._meta.get_fields()]
+    search_fields = ['id',]
+
+admin.site.register(GalleryItem,GalleryItemAdmin)
