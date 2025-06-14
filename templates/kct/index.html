@@ -386,38 +386,41 @@
             <div class="blog-one section-space">
                 <div class="container ">
                     <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
-                      data-owl-options='{
-                        "items": 6,
-                        "margin": 10,
-                        "loop": true,
-                        "autoplay": true,
-                        "autoplayTimeout": 2000,
-                        "autoplayHoverPause": false,
-                        "dots": false,
-                        "nav": true,
-                        "responsive": {
-                            "0": { "items": 2 },
-                            "576": { "items": 3 },
-                            "768": { "items": 3 },
-                            "992": { "items": 5 },
-                            "1200": { "items": 6 }
-                          }
-                      }'>
-                      
-                      <!-- Sample Images -->
-                      {% for logo in logos %}
-                      <div class="patner">
-                        <a href="{{ logo.website|default:'/' }}" target="_blank" title="{{ logo.name }}">
-                            <img src="{{ logo.image.url }}" alt="{{ logo.name }}">
-                          </a>
-                      </div>
-                    {% endfor %}
-                
+                        data-owl-options='{
+                    "items": 6,
+                    "margin": 10,
+                    "loop": true,
+                    "autoplay": true,
+                    "autoplayTimeout": 2000,
+                    "autoplayHoverPause": false,
+                    "dots": false,
+                    "nav": true,
+                    "responsive": {
+                        "0": { "items": 2 },
+                        "576": { "items": 3 },
+                        "768": { "items": 3 },
+                        "992": { "items": 5 },
+                        "1200": { "items": 6 }
+                      }
+                  }'>
+            
+                        {% for logo in logos %}
+                        <div class="patner text-center">
+                            <div>
+                                <a href="{{ logo.website|default:'/' }}" target="_blank" title="{{ logo.name }}">
+                                    <img src="{{ logo.image.url }}" alt="{{ logo.name }}">
+                                </a>
+                                {% if logo.name%}
+                                <p style="font-size: 11px;">{{ logo.name }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+            
                     </div>
-
-                    
-                  </div>
+                </div>
             </div>
+
           </section>
 
 
