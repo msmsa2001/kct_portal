@@ -5,7 +5,9 @@ from import_export.admin import ImportExportModelAdmin
 
 
 
-
+admin.site.site_header = "Khidmat Charitable Trust Admin Panel"
+admin.site.site_title = "KCT Admin Portal"
+admin.site.index_title = "Welcome to Khidmat Charitable Trust Dashboard"
 # class SystemMasterCategoryresources(resources.ModelResource):
 #     class Meta:
 #         model = SystemMasterCategory
