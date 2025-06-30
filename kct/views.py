@@ -62,7 +62,7 @@ def home(request):
     print(chart_data_json)
     # Existing Django Queries
     # slider_items = SystemMaster.objects.filter(system_name__startswith='Slider', is_active=True)
-    slider_items = HomeBannerMaster.objects.filter(is_active=True)
+    slider_items = HomeBannerMaster.objects.filter(is_active=True).order_by('order')
     master_items = SystemMaster.objects.all()
     about_section = SystemMaster.objects.filter(system_name='KCT').first()
     categories = BeneficiaryCategory.objects.prefetch_related('dropdown_options').all()

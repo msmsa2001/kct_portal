@@ -25103,7 +25103,7 @@ li:hover .sidebar__comments__icon::after {
 }
 
 .event-details__title {
-    font-size: 24px;
+    font-size: 35px;
     text-transform: capitalize;
     line-height: 1.541;
     margin-bottom: 28px;
@@ -25339,7 +25339,7 @@ li:hover .sidebar__comments__icon::after {
     }
 
     .event-details__title {
-        font-size: 22px;
+        font-size: 27px;
     }
 }
 
