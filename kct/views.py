@@ -18,26 +18,26 @@ def home(request):
     token_url = "https://api.khidmattrust.org/api/Account/ValidateKey?Key=KhidmatAPILive"
     data_url = "https://api.khidmattrust.org/api/Display/GetData"
 
-    try:
-        token_response = requests.get(token_url)
-        token_response.raise_for_status()  # Raise error for 4xx/5xx status
-        token_data = token_response.json()
-        jwt_token = token_data.get("Token") or token_data.get("token")
+    # try:
+    #     token_response = requests.get(token_url)
+    #     token_response.raise_for_status()  # Raise error for 4xx/5xx status
+    #     token_data = token_response.json()
+    #     jwt_token = token_data.get("Token") or token_data.get("token")
 
-        if not jwt_token:
-            raise ValueError("JWT Token not found in response")
+    #     if not jwt_token:
+    #         raise ValueError("JWT Token not found in response")
 
-        # Step 2: Fetch Data Using JWT Token
-        headers = {"Authorization": f"Bearer {jwt_token}"}
-        data_response = requests.get(data_url, headers=headers)
-        data_response.raise_for_status()
-        api_data = data_response.json()
+    #     # Step 2: Fetch Data Using JWT Token
+    #     headers = {"Authorization": f"Bearer {jwt_token}"}
+    #     data_response = requests.get(data_url, headers=headers)
+    #     data_response.raise_for_status()
+    #     api_data = data_response.json()
 
-        print(api_data)
+    #     print(api_data)
 
-    except requests.RequestException as e:
-        print(f"API Error: {e}")
-        api_data = {}
+    # except requests.RequestException as e:
+    #     print(f"API Error: {e}")
+    #     api_data = {}
 
     
     chart_data = defaultdict(lambda: {"labels": [], "beneficiaries": [], "amount": []})
@@ -95,7 +95,7 @@ def home(request):
         'footer_data': footer_data,
         'display_event': display_event,
         'page_quotes': page_quotes,
-        'api_data': api_data,  # API data added to context
+        # 'api_data': api_data,  # API data added to context
         'govtschemes':govtschemes,
         'chart_data': set(chart_data),
         'chart_data_json': chart_data_json,
