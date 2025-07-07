@@ -25107,6 +25107,7 @@ li:hover .sidebar__comments__icon::after {
     text-transform: capitalize;
     line-height: 1.541;
     margin-bottom: 28px;
+    color: #c62b23;
 }
 
 .event-details__text__inner {
