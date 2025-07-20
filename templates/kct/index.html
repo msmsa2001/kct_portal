@@ -54,7 +54,7 @@
             </div>
 
         </section>
-
+    
           <!-- ABOUT SECTION START -->
           <section class="ul-about ul-about-2 section-space ul-section-spacing wow animate__fadeInUp">
             <img src="{% static 'images/design_icon_1.png' %}" alt="Design" class="design-img"/>
@@ -148,7 +148,7 @@
                     <p>In Services</p>
                 </div>
                 <div class="count_box2">
-                    <h1 class="numbers1 h2_text " data-val="190K">190K</h1>
+                    <h1 class="numbers1 h2_text " data-val="{{ beneficiary_data.total_beneficiaries }}">00</h1>
                     <p>Beneficiaries</p>
                 </div>
             </div>
@@ -160,7 +160,7 @@
                         <img src="{% static 'images/MedicalW.svg' %}" alt="Icon" class="icon">
                     </div>
                     <div class="count_text-container">
-                        <p class="numbers1" data-val="123.7K+">000
+                        <p class="numbers1" data-val="{{ beneficiary_data.medical_aid }}">000
                         <p class="below-number">Medical Aid</p>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                         <img src="{% static 'images/cancer_icon_white.png' %}" alt="Icon" class="icon">
                     </div>
                     <div class="count_text-container">
-                        <p class="numbers1" data-val="27.2K+">0000</p>
+                        <p class="numbers1" data-val="{{ beneficiary_data.cancer }}">0000</p>
                         <p class="below-number">Cancer</p>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
                         <img src="{% static 'images/DialysisW.svg' %}" alt="Icon" class="icon">
                     </div>
                     <div class="count_text-container">
-                        <p class="numbers" data-val="36.3K+">00</p>
+                        <p class="numbers" data-val="{{ beneficiary_data.dialysis }}">00</p>
                         <p class="below-number">Dialysis</p>
                     </div>
                 </div>
@@ -190,7 +190,7 @@
                         <img src="{% static 'images/education_white.png' %}" alt="Icon" class="icon">
                     </div>
                     <div class="count_text-container">
-                        <p class="numbers" data-val="2.4K+">00</p>
+                        <p class="numbers" data-val="{{ beneficiary_data.education }}">00</p>
                         <p class="below-number">Education</p>
                     </div>
                 </div>
@@ -200,7 +200,7 @@
                         <img src="{% static 'images/Relief for PovertyW.svg' %}" alt="Icon" class="icon">
                     </div>
                     <div class="count_text-container">
-                        <p class="numbers" data-val="1.3K+">00</p>
+                        <p class="numbers" data-val="{{ beneficiary_data.relief_for_poverty }}">00</p>
                         <p class="below-number">Relief for Poverty</p>
                     </div>
                 </div>
@@ -676,93 +676,9 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
     
-    <script>
-
-function updateTotals(yearData) {
-  const totalBeneficiaries = yearData.beneficiaries.reduce((a, b) => a + b, 0);
-  const totalAmount = yearData.amount.reduce((a, b) => a + b, 0);
-
-  document.getElementById("totalBeneficiaries").textContent = totalBeneficiaries.toLocaleString('en-IN');
-  document.getElementById("totalAmount").textContent = totalAmount.toLocaleString('en-IN');
-}
-        const chartData = {{ chart_data_json|safe }};
-      
-        // Get list of years from keys
-        const years = Object.keys(chartData);
-        const currentYear = years[0]; // Use the first year as default
-
-
-        // Populate year dropdown
-        const yearSelect = document.getElementById("yearSelect");
-        years.forEach(year => {
-          const option = document.createElement("option");
-          option.value = year;
-          option.text = year;
-          yearSelect.appendChild(option);
-        });
-      
-        // Set default selected year
-        yearSelect.value = currentYear;
-      
-        // Create chart config
-        const ctx = document.getElementById('beneficiaryChart').getContext('2d');
         
-        
-        const config = {
-  type: 'bar',
-  data: {
-    labels: chartData[currentYear].labels,
-    datasets: [
-      {
-        label: 'Beneficiaries',
-        data: chartData[currentYear].beneficiaries,
-        backgroundColor: 'rgba(54, 162, 235, 0.6)',
-        yAxisID: 'y1', // Left y-axis for beneficiaries
-      },
-      {
-        label: 'Amount Disbursed (in ₹)',
-        data: chartData[currentYear].amount,
-        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-        yAxisID: 'y2', // Right y-axis for amount
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    scales: {
-      y1: {
-        position: 'left',
-        beginAtZero: true,
-      },
-      y2: {
-        position: 'right',
-        beginAtZero: true,
-      }
-    }
-  }
-};
-      
-        const myChart = new Chart(ctx, config);
-        updateTotals(chartData[currentYear]);
-        // Handle year change
-        yearSelect.addEventListener('change', function () {
-          const selectedYear = this.value;
-          const yearData = chartData[selectedYear];
-
-      
-          myChart.data.labels = yearData.labels;
-          myChart.data.datasets[0].data = yearData.beneficiaries;
-          myChart.data.datasets[1].data = yearData.amount;
-          myChart.update();
-
-          updateTotals(yearData);
-        });
-      </script>
-      
-      
-    
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const donateNowPopup = document.getElementById("donateNowPopup");
@@ -889,7 +805,7 @@ valueDisplays.forEach((valueDisplay) => {
         }
     </script>
     
-    <script>
+    <!-- <script>
         let calScrollValue = () => {
             let scrollProgress = document.getElementById('progressbar');
             let pos = document.documentElement.scrollTop;
@@ -916,7 +832,7 @@ valueDisplays.forEach((valueDisplay) => {
         document.getElementById('progress').addEventListener('click', () => {
             // Do nothing on click, just update the percentage text
         });
-    </script>
+    </script> -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const dropdownButtons = document.querySelectorAll('.dropdown-btn');

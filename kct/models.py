@@ -57,9 +57,9 @@ class EventMaster(models.Model):
 
 class BeneficiaryCategory(models.Model):
     name = models.CharField(max_length=100, default='Default Name')  
-    icon = models.FileField(upload_to='icons/', null=True, blank=True)
+    # icon = models.FileField(upload_to='icons/', null=True, blank=True)
     number = models.PositiveIntegerField(default=0)  
-    has_dropdown = models.BooleanField(default=False) 
+    # has_dropdown = models.BooleanField(default=False) 
     is_active = models.BooleanField(default=True)
 
     class Meta:
