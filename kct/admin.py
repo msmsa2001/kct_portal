@@ -106,3 +106,16 @@ class GalleryItemAdmin(ImportExportModelAdmin):
     search_fields = ['id',]
 
 admin.site.register(GalleryItem,GalleryItemAdmin)
+
+
+class BeneficiaryCategoryresources(resources.ModelResource):
+    class Meta:
+        model = BeneficiaryCategory
+        import_id_fields = ['id'] 
+        fields = ['id', 'name', 'icon', 'number', 'has_dropdown', 'is_active']  
+class BeneficiaryCategoryAdmin(ImportExportModelAdmin):
+    resource_class = BeneficiaryCategoryresources
+    list_display = ['id', 'name', 'number', 'is_active']
+    search_fields = ['id','name']
+
+admin.site.register(BeneficiaryCategory,BeneficiaryCategoryAdmin)
