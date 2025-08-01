@@ -30112,6 +30112,15 @@ input[type=number] {
     border-radius: 10px;
   }
 
+  .donate-box{
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+  }
+
   .Foreign_donation{
     min-height: 50vh;
     display: flex;
@@ -30126,6 +30135,12 @@ input[type=number] {
   @media (max-width: 768px) {
     .donate-title {
       font-size: 42px;
+    }
+    .pdf-wrapper{
+        flex-direction: column;
+    }
+    .donate-box{
+        flex-direction: column;
     }
 
     .donate-description {
