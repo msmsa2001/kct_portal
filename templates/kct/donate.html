@@ -109,9 +109,9 @@
         
                 <p class="mt-3">Or use this UPI ID:</p>
                 <!-- <h5><code>missionawareness@oksbi</code></h5> -->
-                <a href="upi://pay?pa=33384601@ubin&cu=INR" class="btn btn-success mt-3" target="_blank">
+                <button  onclick="payWithUPI()" class="btn btn-success mt-3" target="_blank">
                   Pay with UPI
-                </a>
+                </button>
               </div>
             </div>
             <img src="{% static 'images/design_icon_2.png' %}" alt="Design" class="design-img2" />
@@ -352,6 +352,12 @@
         document.getElementById('progress').addEventListener('click', () => {
         });
     </script>
+
+    <script>
+    function payWithUPI() {
+        window.location.href = "upi://pay?pa=33384601@ubin&cu=INR";
+    }
+</script>
 
     <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
 
