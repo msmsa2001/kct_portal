@@ -1,0 +1,58 @@
+version: '3.9'
+
+volumes:
+  kct_pg_data:
+  kct_redis_data:
+
+services:
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    depends_on:
+      - app
+    volumes:
+      - ./${NGINX_CONF}:/etc/nginx/nginx.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /var/www/certbot:/var/www/certbot
+      - ./static:/static
+      - ./media:/app/media
+    ports:
+      - "80:80"
+      - "443:443"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - environments/production.env
+    command: gunicorn kct_portal.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    volumes:
+      - ./:/usr/src/app
+      - ./static:/usr/src/app/static
+      - ./media:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+      - redis
+
+  database:
+    image: postgres:16.1
+    restart: always
+    shm_size: 1gb
+    volumes:
+      - kct_pg_data:/kct_pg_data/
+    ports:
+      - "5432:5432"
+    env_file:
+      - environments/production.env
+
+  redis:
+    image: redis:5.0-alpine
+    restart: always
+    volumes:
+      - kct_redis_data:/data
+    ports:
+      - "6379:6379"
