@@ -14,268 +14,417 @@
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
-        <section class="main-slider-one">
-            <div class="main-slider-one__wrapper">
-                <div class="main-slider-one__carousel cleenhearts-owl__carousel owl-carousel" data-owl-options='{
-                    "loop": true,
-                    "animateOut": "fadeOut",
-                    "animateIn": "fadeIn",
-                    "items": 1,
-                    "autoplay": true,
-                    "autoplayTimeout": 7000,
-                    "smartSpeed": 1000,
-                    "nav": false,
-                    "dots": true,
-                    "margin": 0,
-                    "responsive": {
-                        "0": { "items": 1 },
-                        "600": { "items": 1 },
-                        "1000": { "items": 1 }
-                    }
-                }'>
+        <section class="hero-slider hero-style-1">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+
                     {% for item in slider_items %}
-                    <div class="item">
-                        <div class="main-slider-one__item">
-                            <div class="main-slider-one__bg" style="background-image: url('{{ item.system_img.url }}');"></div>
-                            <div class="main-slider-one__shape-one" style="background-image: url(static/images/shapes/slider-1-shape-1.png);"></div>
-                            <div class="main-slider-one__shape-two" style="background-image: url(static/images/shapes/slider-1-shape-2.png);"></div>
-                            <div class="main-slider-one__content">
-                                <h2 class="main-slider-one__title">
-                                    <span class="main-slider-one__title__text" style="white-space: pre-line;">{{ item.system_title }}</span><br />
-                                </h2>
-                                <div class="main-slider-one__btn">
-                                    <h2 class="sliderTxt">
-                                        <span class="cleenhearts-btn__text" style="color: #fff; font-size: 32px;">{{ item.system_value }}</span>
-                                    </h2>
+                    <div class="swiper-slide">
+                        <div class="slide-inner slide-bg-image" data-background="{{ item.slide_img.url }}">
+                            
+                            <!-- ✅ Dark Overlay for better text readability -->
+                            <div class="overlay"></div>
+                    
+                            <div class="container">
+                                <div data-swiper-parallax="300" class="slide-title">
+                                    <h2 data-aos="zoom-out-up">{{ item.slide_title }}</h2>
                                 </div>
+                                <!-- <div data-swiper-parallax="400" class="slide-text">
+                                    <p>{{ item.slide_description }}</p>
+                                </div> -->
+                                <div class="clearfix"></div>
+                                <!-- <div data-swiper-parallax="500" class="slide-btns">
+                                    <a href="#" class="theme-btn">More info >></a>
+                                </div> -->
+                            </div>
+                    
+                            <div class="slide-shape">
+                                <img src="{% static 'images/shapes/shape.png' %}" alt="Not Found">
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-        <section class="section-space beneficiaries">
-            <h6 class="sec-title__tagline sec-title__tagline--center">
-                NUMBER OF BENEFICIARIES
-            </h6>
-            <div class="container2">
-                {% for category in categories %} 
-                <div class="box dd-box" data-aos="fade-up" data-aos-duration="{{ forloop.counter|add:1 }}000">
-                    <img src="{{ category.icon.url }}">
-                    <div class="box-content">
-                        <p class="numbers1" data-val="{{ category.number }}">{{ category.number }}</p>
-                        
-                        <div class="dropdown">
-                            <p class="dropdown-btn below-number">
-                                {{ category.name }}
-                                <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
-                            </p>
-                            <p class="dropdown-content">
-                                {% for option in category.dropdown_options.all %}
-                                <a>{{ option.name }} - {{ option.count }}</a>
-                                {% endfor %}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </section>        
-        
-        <section class="about-one about-one--home section-space">
-            <div class="about-one__bg">
-                <div class="about-one__bg__border"></div>
-                <div class="about-one__bg__inner" style="
-              background-image: url('static/images/shapes/about-shape-1-1.png');
-            "></div>
-            </div>
-            <div class="container">
-                <div class="row gutter-y-50">
-                    <div class="col-xl-6 wow fadeInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-                        <div class="about-one__left">
-                            <div class="about-one__image">
-                                {% if about_section and about_section.system_img %}
-                                    <img src="{{ about_section.system_img.url }}" alt="about" class="about-one__image__one" />
-                                {% else %}
-                                    <img src="{% static 'images/about/abtimg1.jpg' %}" alt="about" class="about-one__image__one" />
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="about-one__content">
-                            <div class="sec-title">
-                                <h6 class="sec-title__tagline">ABOUT</h6>
-                                {% if about_section %}
-                                    <h3 class="sec-title__title">
-                                        {{ about_section.system_title }}
-                                        <span class="sec-title__title__inner">{{ about_section.system_name }}</span>
-                                    </h3>
-                                {% endif %}
-                            </div>
-                            <div class="about-one__text-box wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                {% if about_section %}
-                                    <p class="about-one__text">{{ about_section.system_value|linebreaks }}</p>
-                                {% endif %}
-                            </div>
-                            <div class="about-one__wrapper" id="about-one">
-                                <div class="row gutter-y-40">
-                                    <div class="col-lg-4 col-sm-4 col-12 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                                        <div class="about-one__donate about-one__donate--one">
-                                            <div class="about-one__donate__icon">
-                                                <span><img src="{% static 'images/about/khidmat_2-02.png' %}" /></span>
-                                            </div>
-                                            <h4 class="about-one__donate__title">Our Aim</h4>
-                                            <p class="about-p">{{ our_aim.system_value }}</p>
-                                            <div class="about-one__donate__text">
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-4 col-12 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                                        <div class="about-one__donate about-one__donate--two">
-                                            <div class="about-one__donate__icon">
-                                                <span><img src="{% static 'images/about/khidmat_2-04.png' %}" /></span>
-                                            </div>
-                                            <h4 class="about-one__donate__title">Our Vision</h4>
-                                            <p class="about-p">{{ our_vision.system_value }}</p>
-                                            <div class="about-one__donate__text">
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-4 col-12 wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1500ms">
-                                        <div class="about-one__donate about-one__donate--three">
-                                            <div class="about-one__donate__icon">
-                                                <span><img src="{% static 'images/about/khidmat_2-03.png' %}" /></span>
-                                            </div>
-                                            <h4 class="about-one__donate__title">Our Mission</h4>
-                                            <p>{{ our_mission.system_value }}</p>
-                                            <div class="about-one__donate__text">
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="vismisWrapp mt-5" id="about-two">
-                                <div class="vmcard">
-                                    <div class="icon red">
-                                        <img src="{% static 'images/about/khidmat_2-02.png' %}" />
-                                    </div>
-                                    <h3>Our Aim</h3>
-                                    <p>
-                                        {{ our_aim.system_value }}
-                                    </p>
-                                </div>
-            
-                                <div class="vmcard">
-                                    <div class="icon blue">
-                                        <img src="{% static 'images/about/khidmat_2-03.png' %}" />
-                                    </div>
-                                    <h3>Our Vision</h3>
-                                    <p>
-                                        {{ our_vision.system_value }}
-                                    </p>
-                                </div>
-            
-                                <div class="vmcard">
-                                    <div class="icon green">
-                                        <img src="{% static 'images/about/khidmat_2-04.png' %}" />
-                                    </div>
-                                    <h3>Our Mission</h3>
-                                    <p>{{ our_mission.system_value }}</p>
-                                </div>
-                            </div>
-                            <div class="contact-information">
-                                <a href="{% url 'about' %}" class="contact-information__btn cleenhearts-btn">
-                                    <div class="cleenhearts-btn__icon-box">
-                                        <div class="cleenhearts-btn__icon-box__inner">
-                                            <span class="icon-duble-arrow"></span>
-                                        </div>
-                                    </div>
-                                    <span class="cleenhearts-btn__text mrbtn">more about us</span>
-                                </a>
-                                <div class="contact-information__phone">
-                                    <div class="contact-information__phone__icon">
-                                        <span class="icon-phone"></span>
-                                    </div>
-                                    <div class="contact-information__phone__text">
-                                        <span>Contact Us</span>
-                                        <h5><a href="tel:+912223082291">+91 86579 70797</a></h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <img src="{% static 'images/shapes/about-shape-1-2.png' %}" alt="cleenhearts" class="about-one__hand" />
-        </section>
-        
-        <section class="help-donate-one section-space-top">
-            <div class="help-donate-one__bg cleenhearts-jarallax" data-jarallax data-speed="0.3"
-                data-imgPosition="50% -100%" style="background-image: url('/static/images/backgrounds/keyprogress.jpg');">
-            </div>
-            <div class="container">
-                <div class="sec-title keyprogress">
-                    <h6 class="sec-title__tagline sec-title__tagline--center">
-                        Key Programs
-                    </h6>
-                    <p class="text-center mt-3">
-                        Treat your sick by giving Sadaqah (charity)
-                    </p>
-                </div>
 
-                <div class="row">
-                    {% for title, description in keyprogram %}
-                    <div class="col-lg-3 col-md-6">
-                        <div class="keyp-item">
-                            <span>
-                                {% if title == 'Medical' %}
-                                <img src="{% static 'images/keyprograms/icon1.png' %}" alt="{{ title }}">
-                                {% elif title == 'Dialysis' %}
-                                <img src="{% static 'images/keyprograms/icon2.png' %}" alt="{{ title }}">
-                                {% elif title == 'Education' %}
-                                <img src="{% static 'images/keyprograms/icon3.png' %}" alt="{{ title }}">
-                                {% elif title == 'Food' %}
-                                <img src="{% static 'images/keyprograms/icon4.png' %}" alt="{{ title }}">
-                                {% endif %}
+                    {% endfor %}
+                    
+                    <!-- end swiper-slide -->
+                </div>
+                <!-- end swiper-wrapper -->
+                <!-- swipper controls -->
+                <div class="swiper-pagination"></div>
+            </div>
+
+        </section>
+    
+          <!-- ABOUT SECTION START -->
+          <section class="ul-about ul-about-2 section-space ul-section-spacing wow animate__fadeInUp">
+            <img src="{% static 'images/design_icon_1.png' %}" alt="Design" class="design-img"/>
+            <div class="ul-container">
+                <div class="row row-cols-md-2 row-cols-1 align-items-center gy-4 ul-about-row">
+                    <div class="col">
+                        <div class="ul-about-imgs ul-about-2-img">
+                            <div class="img-wrapper">
+                                <img src="{% static 'images/about/LSUK7796.JPG' %}" data-aos="flip-left" alt="Image">
+                            </div>
+
+                            <!-- <div class="ul-about-2-stat">
+                                <span class="number">15+</span>
+                                <span class="txt">Years Of Experience</span>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <!-- txt -->
+                    <div class="col">
+                        <div class="ul-about-txt">
+                            <span class="ul-section-sub-title ul-section-sub-title--2" data-aos="fade-up-left">About US</span>
+                            {% if about_section %}
+                            <h2 class="ul-section-title" data-aos="fade-up-left">{{about_section.system_title}}</h2>
+                            {% endif %}
+
+                            {% if about_section %}
+                            <span data-aos="fade-down">
+                                <p class="ul-section-descr" >{{ about_section.system_value|linebreaks }}</p>
                             </span>
-                            <h4>{{ title }}</h4>
-                            <p>{{ description }}</p>
+                            {% endif %}
+
+                            <div class="img-wrapper" data-aos="fade-up-left">
+                                <img src="{% static 'images/about/about-home-page.png' %}" alt="Image">
+                            </div>
+                            
+                            <a href="{% url 'about' %}" class="ul-btn" data-aos="fade-up-left"><i
+                                    class="flaticon-fast-forward-double-right-arrows-symbol"></i> Explore More</a>
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </section>
+        <!-- ABOUT SECTION END -->
 
-        <section class="events-one section-space">
+        <section class="mission-vision">
+            <img src="{% static 'images/design_icon_1.png' %}" alt="Design" class="design-img"/>
+            <div class="mission">
+                <div class="mission-img" data-aos="fade-down-right">
+                    <img src="{% static 'images/mission.jpeg' %}" alt="Mission Image">
+                </div>
+                <div class="text-box">
+                    <h4 data-aos="fade-left">Our Mission</h4>
+                    {% if our_mission %}
+                        <h3 data-aos="fade-up-left">{{ our_mission.system_title }}</h3>
+                        <p data-aos="fade-up-left">{{ our_mission.system_value }}</p>
+                    {% endif %}
+                </div>
+            </div>
 
+            <div class="vision">
+                <div class="text-box">
+                    <h4 data-aos="fade-right">Our Vision</h4>
+                    {% if our_vision %}
+                        <h3 data-aos="fade-up-right">{{ our_vision.system_title }}</h3>
+                        <p data-aos="fade-up-right">{{ our_vision.system_value }}</p>
+                    {% endif %}
+                </div>
+                <div class="vision-img" data-aos="fade-left">
+                    <img src="{% static 'images/vision.jpeg' %}" alt="Vision Image">
+                </div>
+            </div>
+            <img src="{% static 'images/design_icon_2.png' %}" alt="Design" class="design-img2" />
+        </section>
+
+
+        <section class="count_section section-space">
+            <img src="{% static 'images/design_icon_1.png' %}" alt="Design" class=" what_we_do"/>
+
+            <div class="container title-container" style="display: flex;align-items: center;justify-content: center;">
+                <img src="{% static 'images/logo_icon_blue.png' %}" alt="bg" class="bg-watermark-img" />
+
+                <h2 class="page-header__title project_page-header__title impact_heading">Impact in Last 5 Years</h2>
+
+            </div>
+
+
+            <div class="count_in_number">
+                <div class="count_box1">
+                    <h1 class="h2_text" style="display: inline;">₹ </h1><h1 class="numbers1 h2_text" data-val="56.53Cr" style="display: inline;">56.53Cr</h1>
+                    <p>In Services</p>
+                </div>
+                <div class="count_box2">
+                    <h1 class="numbers1 h2_text " data-val="{{ beneficiary_data.total_beneficiaries }}">00</h1>
+                    <p>Beneficiaries</p>
+                </div>
+            </div>
+            
+            <div class="ben-counts">
+                
+                <div class="count-box" data-aos="fade-up" data-aos-duration="1000">
+                    <div class="icon-container">
+                        <img src="{% static 'images/MedicalW.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div class="count_text-container">
+                        <p class="numbers1" data-val="{{ beneficiary_data.medical_aid }}">000
+                        <p class="below-number">Medical Aid</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/cancer_icon_white.png' %}" alt="Icon" class="icon">
+                    </div>
+                    <div class="count_text-container">
+                        <p class="numbers1" data-val="{{ beneficiary_data.cancer }}">0000</p>
+                        <p class="below-number">Cancer</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="icon-container">
+                        <img src="{% static 'images/DialysisW.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div class="count_text-container">
+                        <p class="numbers" data-val="{{ beneficiary_data.dialysis }}">00</p>
+                        <p class="below-number">Dialysis</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/education_white.png' %}" alt="Icon" class="icon">
+                    </div>
+                    <div class="count_text-container">
+                        <p class="numbers" data-val="{{ beneficiary_data.education }}">00</p>
+                        <p class="below-number">Education</p>
+                    </div>
+                </div>
+
+                <div class="count-box" data-aos="fade-up" data-aos-duration="2500">
+                    <div class="icon-container">
+                        <img src="{% static 'images/Relief for PovertyW.svg' %}" alt="Icon" class="icon">
+                    </div>
+                    <div class="count_text-container">
+                        <p class="numbers" data-val="{{ beneficiary_data.relief_for_poverty }}">00</p>
+                        <p class="below-number">Relief for Poverty</p>
+                    </div>
+                </div>
+
+                
+
+            </div>
+
+            <!-- <img src="{% static 'images/design_icon_2.png' %}" alt="Design" class="trustee_img_bg" /> -->
+        </section>
+
+
+        
+        
+       
+        <!-- <div class="blog-one section-space">
             <div class="container">
-                <div class="sec-title">
-                    <h6 class="sec-title__tagline sec-title__tagline--center">
-                        HOW BENEFICIARIES RECEIVE OUR AID?
-                    </h6>
-                </div>
-
-                <div class="gradient-cards">
-                    {% for title, description in beneficiaryaid %}
-                    <div class="card" data-aos="fade-up" data-aos-anchor-placement="top-bottom"
-                        data-aos-duration="1500">
-                        <div class="container-card bg-green-box">
-
-                            <p class="card-title">{{title}}</p>
-                            <p class="card-description">{{description}}</p>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 col-md-9">
+                        <div class="sec-title">
+                            <h6 class="sec-title__tagline @@extraClassName">
+                                Government Scheme
+                            </h6>
                         </div>
                     </div>
-                    {% endfor %}
+                </div>
+                <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
+                    data-owl-options='{
+            "items": 3,
+            "margin": 30,
+            "smartSpeed": 700,
+            "loop":true,
+            "autoplay": false,
+            "nav":false,
+            "dots":true,
+            "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
+            "responsive":{
+                "0":{
+                    "items": 1,
+                    "margin": 20
+                },
+                "575":{
+                    "items": 1,
+                    "margin": 30
+                },
+                "768":{
+                    "items": 2,
+                    "margin": 30
+                },
+                "992":{
+                    "items": 3,
+                    "margin": 30
+                },
+                "1200":{
+                    "items": 3,
+                    "margin": 30
+                }
+            }
+            }'>
+                    {% for govtscheme in govtschemes %}
+                    <div class="item">
+                        <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
+                            <a href="{% url 'displayParticularEvent' govtscheme.id %}" class="blog-card__image">
+                                <img src="{{ govtscheme.govtscheme_img.url }}" alt="DIALYSIS CENTRE" />
+                                
+                            </a>
+                            <div class="blog-card__content" style="
+                    background-image: url('/static/images/blog/blog-bg-1-1.png');
+                  ">
+                                <h3 class="blog-card__title">
+                                    <a href="{% url 'govtScheme' govtscheme.id %}">{{ govtscheme.govtscheme_title }}</a>
+                                </h3>
+                                <p>
+                                    {{ govtscheme.govtscheme_description|slice:":230" }}{% if event_item.govtscheme_description|length > 230 %}...{% endif %}
+                                </p>
+                                <a href="{% url 'govtScheme' govtscheme.id %}" class="blog-card__link">
+                                    <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
+                                    <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read
+                                        More</span> </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
                 </div>
             </div>
-        </section>
-        <section class="testimonials-one section-space">
+        </div> -->
+
+        <!-- <div class="blog-one">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-7 col-md-9">
+                        <div class="sec-title">
+                            <h6 class="sec-title__tagline @@extraClassName">
+                                Scolarship Hub
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
+                    data-owl-options='{
+            "items": 3,
+            "margin": 30,
+            "smartSpeed": 700,
+            "loop":true,
+            "autoplay": false,
+            "nav":false,
+            "dots":true,
+            "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
+            "responsive":{
+                "0":{
+                    "items": 1,
+                    "margin": 20
+                },
+                "575":{
+                    "items": 1,
+                    "margin": 30
+                },
+                "768":{
+                    "items": 2,
+                    "margin": 30
+                },
+                "992":{
+                    "items": 3,
+                    "margin": 30
+                },
+                "1200":{
+                    "items": 3,
+                    "margin": 30
+                }
+            }
+            }'>
+                    {% for govtscheme in govtschemes %}
+                    <div class="item">
+                        <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
+                            <a href="{% url 'displayParticularEvent' govtscheme.id %}" class="blog-card__image">
+                                <img src="{{ govtscheme.govtscheme_img.url }}" alt="DIALYSIS CENTRE" />
+                                <div class="blog-card__date"><span>17</span> July 2020</div>
+                                <div class="blog-card__react"><span>{{ govtscheme.reactions }}</span> Reactions</div>
+                            </a>
+                            <div class="blog-card__content" style="
+                    background-image: url('/static/images/blog/blog-bg-1-1.png');
+                  ">
+                                <h3 class="blog-card__title">
+                                    <a href="{% url 'govtScheme' govtscheme.id %}">{{ govtscheme.govtscheme_title }}</a>
+                                </h3>
+                                <p>
+                                    {{ govtscheme.govtscheme_description|slice:":230" }}{% if event_item.govtscheme_description|length > 230 %}...{% endif %}
+                                </p>
+                                <a href="{% url 'govtScheme' govtscheme.id %}" class="blog-card__link">
+                                    <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
+                                    <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read
+                                        More</span> </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div> -->
+        
+
+        <!-- <div class="section" id="beneficiary-chart-section">
+            <h2 data-aos="fade-left">Beneficiaries & Amount Disbursed</h2>
+
+            <label for="yearSelect">Select Year:</label>
+            <select id="yearSelect">
+                {% for year, data in chart_data.items %}
+                <option value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+            </select>
+
+            <p>Total Beneficiaries: <span id="totalBeneficiaries">0</span></p>
+            <p>Total Amount Disbursed: ₹ <span id="totalAmount">0</span></p>
+        
+            <canvas id="beneficiaryChart" width="600" height="400" data-aos="fade-right"></canvas>
+          </div> -->
+
+
+          <section class="partner">
+
+            <h2 data-aos="fade-up" data-aos-anchor-placement="top-center" style="text-align: center;">Meet our Partners</h2>
+
+            <div class="blog-one section-space">
+                <div class="container ">
+                    <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
+                        data-owl-options='{
+                    "items": 6,
+                    "margin": 10,
+                    "loop": true,
+                    "autoplay": true,
+                    "autoplayTimeout": 2000,
+                    "autoplayHoverPause": false,
+                    "dots": false,
+                    "nav": true,
+                    "responsive": {
+                        "0": { "items": 2 },
+                        "576": { "items": 3 },
+                        "768": { "items": 3 },
+                        "992": { "items": 5 },
+                        "1200": { "items": 6 }
+                      }
+                  }'>
+            
+                        {% for logo in logos %}
+                        <div class="patner text-center">
+                            <div>
+                                <a href="{{ logo.website|default:'/' }}" target="_blank" title="{{ logo.name }}">
+                                    <img src="{{ logo.image.url }}" alt="{{ logo.name }}">
+                                </a>
+                                {% if logo.name%}
+                                <p style="font-size: 11px;">{{ logo.name }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+            
+                    </div>
+                </div>
+            </div>
+
+          </section>
+
+
+          <section class="testimonials-one section-space">
             <div class="testimonials-one__bg cleenhearts-jarallax" data-jarallax data-speed="0.3"
                 data-imgPosition="50% -100%" style="
             background-image: url(static/images/backgrounds/testimonial-bg-1.jpg);
@@ -356,158 +505,8 @@
                 </div>
             </div>
         </section>
-        <!-- <div class="blog-one section-space">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-7 col-md-9">
-                        <div class="sec-title">
-                            <h6 class="sec-title__tagline">
-                                Our Latest Event
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-        
-                {% if latestevent %}
-                <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
-                    data-owl-options='{
-                        "items": 3,
-                        "margin": 30,
-                        "smartSpeed": 700,
-                        "loop": true,
-                        "autoplay": false,
-                        "nav": false,
-                        "dots": true,
-                        "navText": ["<span class=\"icon-arrow-left\"></span>", "<span class=\"icon-arrow-right\"></span>"],
-                        "responsive": {
-                            "0": { "items": 1, "margin": 20 },
-                            "575": { "items": 1, "margin": 30 },
-                            "768": { "items": 2, "margin": 30 },
-                            "992": { "items": 3, "margin": 30 },
-                            "1200": { "items": 3, "margin": 30 }
-                        }
-                    }'>
-        
-                    {% for title, description in latestevent %}
-                    <div class="item">
-                        <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="200ms">
-                            {% if title == 'DIALYSIS CENTRE' %}
-                            <a class="blog-card__image">
-                                    <img src="{% static 'images/events/event-1.jpg' %}" alt="{{ title }}" />
-                                    <div class="blog-card__react"><span>2</span> Reactions</div>
-                            </a>
-                            {% elif title == 'RAMZAN AND MONTHLY RATION AID' %}
-                            <a class="blog-card__image">
-                                    <img src="{% static 'images/events/event-2.jpg' %}" alt="{{ title }}" />
-                                    <div class="blog-card__react"><span>2</span> Reactions</div>
-                            </a>
-                            {% elif title == 'WHY SHOULD ANYONE APPROACH KCT FOR HELP AND ASSISTANCE?' %}
-                            <a class="blog-card__image">
-                                    <img src="{% static 'images/events/event-3.jpg' %}" alt="{{ title }}" />
-                                    <div class="blog-card__react"><span>2</span> Reactions</div>
-                            </a>
-                            {% endif %}
-                            <div class="blog-card__content" style="background-image: url('static/images/blog/blog-bg-1-1.png');">
-                                <h3 class="blog-card__title">
-                                    <a>{{ title }}</a>
-                                </h3>
-                                <p>{{ description }}</p>
+          
 
-                                {% if title == 'DIALYSIS CENTRE' %} 
-                                <a href="{% url 'dialysis' %}" class="blog-card__link">
-                            {% elif title == 'RAMZAN AND MONTHLY RATION AID' %}
-                                <a href="{% url 'ramzan' %}" class="blog-card__link">
-                            {% elif title == 'WHY SHOULD ANYONE APPROACH KCT FOR HELP AND ASSISTANCE?' %}
-                                <a href="{% url 'help' %}" class="blog-card__link">
-                            {% endif %}
-                                <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
-                                <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read More</span>
-                            </a>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-        
-                </div>
-                {% else %}
-                <p>No latest events available.</p>
-                {% endif %}
-            </div>
-        </div> -->
-       
-        <div class="blog-one section-space">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-7 col-md-9">
-                        <div class="sec-title">
-                            <h6 class="sec-title__tagline @@extraClassName">
-                                Our latest Event
-                            </h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="blog-one__carousel cleenhearts-owl__carousel cleenhearts-owl__carousel--basic-nav owl-theme owl-carousel"
-                    data-owl-options='{
-            "items": 3,
-            "margin": 30,
-            "smartSpeed": 700,
-            "loop":true,
-            "autoplay": false,
-            "nav":false,
-            "dots":true,
-            "navText": ["<span class=\"icon-arrow-left\"></span>","<span class=\"icon-arrow-right\"></span>"],
-            "responsive":{
-                "0":{
-                    "items": 1,
-                    "margin": 20
-                },
-                "575":{
-                    "items": 1,
-                    "margin": 30
-                },
-                "768":{
-                    "items": 2,
-                    "margin": 30
-                },
-                "992":{
-                    "items": 3,
-                    "margin": 30
-                },
-                "1200":{
-                    "items": 3,
-                    "margin": 30
-                }
-            }
-            }'>
-                    {% for event_item in display_event %}
-                    <div class="item">
-                        <div class="blog-card wow fadeInUp" data-wow-duration="1500ms" data-wow-delay="000ms">
-                            <a href="{% url 'displayParticularEvent' event_item.id %}" class="blog-card__image">
-                                <img src="{{ event_item.event_img.url }}" alt="DIALYSIS CENTRE" />
-                                <!-- <div class="blog-card__date"><span>17</span> July 2020</div> -->
-                                <div class="blog-card__react"><span>{{ event_item.reactions }}</span> Reactions</div>
-                            </a>
-                            <div class="blog-card__content" style="
-                    background-image: url('/static/images/blog/blog-bg-1-1.png');
-                  ">
-                                <h3 class="blog-card__title">
-                                    <a href="{% url 'displayParticularEvent' event_item.id %}">{{ event_item.event_title }}</a>
-                                </h3>
-                                <p>
-                                    {{ event_item.event_description|slice:":230" }}{% if event_item.event_description|length > 230 %}...{% endif %}
-                                </p>
-                                <a href="{% url 'displayParticularEvent' event_item.id %}" class="blog-card__link">
-                                    <span class="blog-card__link__front"><span class="icon-duble-arrow"></span></span>
-                                    <span class="blog-card__link__back"><span class="icon-duble-arrow"></span>Read
-                                        More</span> </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                </div>
-            </div>
-        </div>
         <a href="https://wa.me/918657970797?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services."
             class="whatsapp-float" target="_blank" title="Chat with us on WhatsApp">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
@@ -676,15 +675,10 @@
         </div>
     </div>
 
-    <!-- Second Popup -->
-    <!-- <div id="qrCodePopup" class="popup-overlay">
-        <div class="popup-content">
-            <button class="close-popup" id="closeQrCodePopup">&times;</button>
-            <h2>Scan to Donate</h2>
-            <img src="images/donate-pay.png" alt="QR Code" class="qr-code">
-            <a href="https://www.upilinks.in/payment-link/upi1281220331" target="_blank" class="upi-link">UPI ID- upi1281220331</a>
-        </div>
-    </div> -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+    
+        
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const donateNowPopup = document.getElementById("donateNowPopup");
@@ -713,22 +707,26 @@
             });
         });
     </script>
-    <script>
-        let valueDisplays = document.querySelectorAll(".numbers1");
-        let interval = 4000;
+    <!-- <script>
+       let valueDisplays = document.querySelectorAll(".numbers1");
+let interval = 4000;
 
-        valueDisplays.forEach((valueDisplay) => {
-            let startValue = 0;
-            let endValue = parseInt(valueDisplay.getAttribute("data-val"));
-            let increment = 200;
-            let duration = Math.floor(interval / (endValue / increment));
+valueDisplays.forEach((valueDisplay) => {
+    let startValue = 0;
 
-            let counter = setInterval(() => {
-                startValue = Math.min(startValue + increment, endValue);
-                valueDisplay.textContent = startValue;
-                if (startValue === endValue) clearInterval(counter);
-            }, duration);
-        });
+    let dataVal = valueDisplay.getAttribute("data-val");
+    let numericPart = parseInt(dataVal); 
+    let suffix = dataVal.replace(numericPart, "");
+
+    let increment = Math.ceil(numericPart / 20); 
+    let duration = Math.floor(interval / (numericPart / increment));
+
+    let counter = setInterval(() => {
+        startValue = Math.min(startValue + increment, numericPart);
+        valueDisplay.textContent = startValue + suffix;
+        if (startValue === numericPart) clearInterval(counter);
+    }, duration);
+});
     </script>
 
     <script>
@@ -736,20 +734,78 @@
         let interval1 = 4000;
 
         valueDisplays1.forEach((valueDisplay) => {
-            let startValue = 0;
-            let endVaue = parseInt(valueDisplay.getAttribute
-                ("data-val"));
-            let duration = Math.floor(interval / endVaue);
-            let counter = setInterval(function () {
-                startValue += 1;
-                valueDisplay.textContent = startValue;
-                if (startValue == endVaue) {
-                    clearInterval(counter);
-                }
-            }, duration);
+        let startValue = 0;
+        let dataVal = valueDisplay.getAttribute("data-val");
+        let numericPart = parseInt(dataVal);
+        let suffix = dataVal.replace(numericPart, "");
+        let duration = Math.floor(interval1 / numericPart);
+
+        let counter = setInterval(function () {
+            startValue += 1;
+            valueDisplay.textContent = startValue + suffix;
+            if (startValue == numericPart) {
+                clearInterval(counter);
+            }
+        }, duration);
         });
-    </script>
+    </script> -->
+
+
     <script>
+        function animateNumbersOnce(container) {
+            const valueDisplays = container.querySelectorAll(".numbers1, .numbers");
+    
+            valueDisplays.forEach((valueDisplay) => {
+                let startValue = 0;
+                let dataVal = valueDisplay.getAttribute("data-val");
+    
+                // Extract numeric part (like 27.2 from 27.2K+)
+                let numericPart = parseFloat(dataVal);
+    
+                // Extract suffix (like K+ or CR)
+                let suffixMatch = dataVal.match(/[^\d.]+$/);
+                let suffix = suffixMatch ? suffixMatch[0] : "";
+    
+                let interval = 4000;
+                let totalSteps = 50;
+    
+                let increment = parseFloat((numericPart / totalSteps).toFixed(2));
+                let duration = Math.floor(interval / totalSteps);
+    
+                let counter = setInterval(() => {
+                    startValue = Math.min(startValue + increment, numericPart);
+                    
+                    // Format: if decimal ends with .0, remove it
+                    let formatted = startValue.toFixed(1).replace(/\.0$/, '');
+    
+                    valueDisplay.textContent = formatted + suffix;
+    
+                    if (startValue >= numericPart) {
+                        clearInterval(counter);
+                    }
+                }, duration);
+            });
+        }
+    
+        const countSection = document.querySelector('.count_section');
+    
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateNumbersOnce(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+    
+        if (countSection) {
+            observer.observe(countSection);
+        }
+    </script>
+    
+    <!-- <script>
         let calScrollValue = () => {
             let scrollProgress = document.getElementById('progressbar');
             let pos = document.documentElement.scrollTop;
@@ -776,7 +832,7 @@
         document.getElementById('progress').addEventListener('click', () => {
             // Do nothing on click, just update the percentage text
         });
-    </script>
+    </script> -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const dropdownButtons = document.querySelectorAll('.dropdown-btn');
@@ -808,18 +864,12 @@
             });
         });
     </script>
-    <!-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const dropdownButtons = document.querySelectorAll('.dropdown-btn');
+  
 
-    dropdownButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const dropdownContent = this.nextElementSibling;
-            dropdownContent.classList.toggle('open');
-        });
-    });
-});
-    </script> -->
+ 
+ 
+    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -869,6 +919,15 @@
     <script src="{% static 'js/cleenhearts.js' %}"></script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-plugin-collection.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-plugin-collection.js"></script>
+    <script src="js/script.js"></script>
 
     <script>
         AOS.init();

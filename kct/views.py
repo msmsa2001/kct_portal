@@ -3,14 +3,15 @@ from django.shortcuts import render, get_object_or_404
 
 from kct_portal import settings
 from django.views.decorators.csrf import csrf_exempt
-from .models import EventMaster, KCTEnquireMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
-from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data
+from .models import BeneficiaryData, EventMaster, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
+from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data,convert_to_k_format
 from django.contrib import messages
 from django.core.mail import send_mail
 # from django.http import JsonResponse
 from django.conf import settings
 # import razorpay
 import requests
+from collections import defaultdict
 
 def home(request):
     # Step 1: JWT Token API Call
@@ -18,65 +19,78 @@ def home(request):
     data_url = "https://api.khidmattrust.org/api/Display/GetData"
 
     try:
-        token_response = requests.get(token_url)
-        token_response.raise_for_status()  # Raise error for 4xx/5xx status
+        token_response = requests.get(token_url, timeout=5)  # timeout added
+        token_response.raise_for_status()
         token_data = token_response.json()
         jwt_token = token_data.get("Token") or token_data.get("token")
 
         if not jwt_token:
             raise ValueError("JWT Token not found in response")
 
-        # Step 2: Fetch Data Using JWT Token
         headers = {"Authorization": f"Bearer {jwt_token}"}
-        data_response = requests.get(data_url, headers=headers)
+        data_response = requests.get(data_url, headers=headers, timeout=5)
         data_response.raise_for_status()
         api_data = data_response.json()
+        api_error = False
 
-        print(api_data)
 
-    except requests.RequestException as e:
-        print(f"API Error: {e}")
+    except Exception as e:
+        print(f"[Third-Party API Error] {e}")
         api_data = {}
+        api_error = True
+    
 
-    # Existing Django Queries
-    slider_items = SystemMaster.objects.filter(system_name__startswith='Slider', is_active=True)
-    master_items = SystemMaster.objects.all()
+    total_medicine = int(api_data.get("Total_Medicine_Application", 0))
+    total_hospital = int(api_data.get("Total_Hospitalisation_Application", 0))
+    
+    raw_data = BeneficiaryCategory.objects.filter(is_active = True).all()
+
+    beneficiary_data = {}
+    total_beneficiaries = 0
+
+    for item in raw_data:
+        key = item.name.strip().replace(" ", "_").lower()
+
+        if item.name == "Medical Aid":
+            table_number = item.number
+            combined_total = table_number + total_medicine + total_hospital
+            beneficiary_data[key] = convert_to_k_format(combined_total)
+            total_beneficiaries += total_medicine + total_hospital
+        else:
+            beneficiary_data[key] = convert_to_k_format(item.number)
+        
+        total_beneficiaries += item.number
+
+# Add total beneficiaries
+    beneficiary_data["total_beneficiaries"] = convert_to_k_format(total_beneficiaries)
+    slider_items = HomeBannerMaster.objects.filter(is_active=True).order_by('order')
     about_section = SystemMaster.objects.filter(system_name='KCT').first()
-    categories = BeneficiaryCategory.objects.prefetch_related('dropdown_options').all()
-    key_program_data = get_data_dict()
-    beneficiaryaid = get_data_dict_aid()
     casestudy = get_data_dict_casestdy()
-    latestevent = get_data_dict_Event()
-    our_aim = SystemMaster.objects.filter(system_name="Our Aim").first()
     our_vision = SystemMaster.objects.filter(system_name="Our Vision").first()
     our_mission = SystemMaster.objects.filter(system_name="Our Mission").first()
     footer_data = get_footer_data()
-    display_event = EventMaster.objects.filter(is_active=True).order_by('order')
     page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
+    logos = PartnerLogo.objects.filter(is_active=True)
 
     # Final Context
     context = {
         'slider_items': slider_items,
-        'master_items': master_items,
         'about_section': about_section,
-        'categories': categories,
-        'keyprogram': key_program_data.items(),
-        'beneficiaryaid': beneficiaryaid.items(),
         'casestudy': casestudy.items(),
-        'latestevent': latestevent.items(),
-        'our_aim': our_aim,
         'our_vision': our_vision,
         'our_mission': our_mission,
         'footer_data': footer_data,
-        'display_event': display_event,
         'page_quotes': page_quotes,
-        'api_data': api_data,  # API data added to context
+        'logos':logos,
+        'beneficiary_data':beneficiary_data
+        
     }
 
     return render(request, 'kct/index.html', context)
 
 def about(request):
-    managinglist = ManagingListCategoryMaster.objects.prefetch_related('items').all()
+    # managinglist = ManagingListCategoryMaster.objects.prefetch_related('items').all()
+    managinglist = ManagingListCategoryMaster.objects.filter(is_active=True).prefetch_related('items')
     categories = ListItemCategory.objects.all()  
     about_section_page = get_data_about_page()
     our_aim = SystemMaster.objects.filter(system_name="Our Aim").first()
@@ -87,6 +101,8 @@ def about(request):
     page_quotes = SystemMaster.objects.filter(system_name='quotes', is_active=True)
     afillat = get_data_afillat()
     footer_data = get_footer_data()
+    casestudy = get_data_dict_casestdy()
+    awards = GalleryItem.objects.filter(is_active=True,category='award_section')
      
 
     context = {
@@ -99,6 +115,8 @@ def about(request):
         'affiliated_trusts': afillat,
         'footer_data': footer_data,
         'page_quotes': page_quotes,
+        'casestudy':casestudy.items(),
+        'awards':awards
         
     }
     return render(request, 'kct/about.html', context)
@@ -381,3 +399,68 @@ def displayParticularEvent(request, eventId):
         
         }
     return render(request, 'kct/event-dialysis-centre.html', context)
+
+def govtScheme(request, schemeId):
+    govtscheme = GovtSchemeMaster.objects.filter(id=schemeId, is_active=True).order_by('order')
+    govtschemes = GovtSchemeMaster.objects.exclude(id=schemeId)
+    
+    footer_data = get_footer_data()
+
+    context = {
+        'govtscheme': govtscheme,
+        'govtschemes': govtschemes,
+        'footer_data': footer_data
+        
+        }
+    return render(request, 'kct/govt-scheme.html', context)
+
+
+def projectDetail(request, projectId):
+    project_detail = ProjectMaster.objects.filter(id=projectId, is_active=True).order_by('order')
+    project_details = ProjectMaster.objects.exclude(id=projectId)
+    project_imgs = ProjectImage.objects.filter(project__id=projectId, is_active=True)
+    print(project_imgs)
+    
+    footer_data = get_footer_data()
+
+    context = {
+        'project_detail': project_detail,
+        'project_details': project_details,
+        'footer_data': footer_data,
+        'project_imgs':project_imgs
+        
+        }
+    return render(request, 'kct/project-details.html', context)
+
+def news(request):
+     footer_data = get_footer_data()
+     kct_news = GalleryItem.objects.filter(is_active=True,category='news_section')
+     context = {
+        'footer_data': footer_data,
+        'kct_news':kct_news
+        }
+     return render(request, "kct/news.html",context)
+
+
+def anual_report(request):
+     footer_data = get_footer_data()
+     context = {
+        'footer_data': footer_data
+        }
+     return render(request, "kct/anual_report.html",context)
+
+def gallery(request):
+    gallery_items = GalleryItem.objects.filter(is_active=True,category='gallery_page')
+    footer_data = get_footer_data()
+    context = {
+        'footer_data': footer_data,
+        'gallery_items': gallery_items
+        }
+    return render(request, "kct/gallery.html",context)
+
+def success_story(request):
+    footer_data = get_footer_data()
+    context = {
+        'footer_data': footer_data
+        }
+    return render(request, "kct/success_story.html",context)

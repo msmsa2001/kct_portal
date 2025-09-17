@@ -12,9 +12,25 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+env = environ.Env(DEBUG=(bool, False))
+
+# if env("ENV_NAME") == "production":
+
+if os.getenv('ENV', 'dev') == "prod":
+    DEBUG = False
+    ALLOWED_HOSTS = [
+    'khidmattrust.org',
+    'www.khidmattrust.org'
+    ]
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = ['*']
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,11 +39,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-!)^349*n=1g-7vfigbm-w)l#)t8kq$whbe&26t*(y$kdsssbc5"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://khidmattrust.org',
+    'https://www.khidmattrust.org',
+]
 
 # Application definition
 
@@ -39,11 +54,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'kct',
-    'import_export'
+    'import_export',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -65,6 +82,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "kct.context_processors.project_list_processor",
             ],
         },
     },
@@ -76,22 +94,45 @@ WSGI_APPLICATION = "kct_portal.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "kct_portal",
+#         "USER": "kct",
+#         "PASSWORD": "kct123",
+#         "HOST": "13.233.98.14",  # Change if using a remote server
+#         "PORT": "5432",
+#     }
+# }
+
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "kct_portal",
-        "USER": "kct",
-        "PASSWORD": "kct123",
-        "HOST": "localhost",  # Change if using a remote server
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'kct_portal'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'root'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "kct_local",
+#         "USER": "postgres",
+#         "PASSWORD": "root",
+#         "HOST": "localhost",  # Change if using a remote server
+#         "PORT": "5433",
+#     }
+# }
 
 
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'sfiles')]
 
 
 MEDIA_URL = '/media/'
@@ -122,8 +163,34 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'shaziya.pyzon@gmail.com'  
-EMAIL_HOST_PASSWORD = 'uiif lowk pqva qxmg'  
+EMAIL_HOST_USER = 'sadique.leewayzon@gmail.com'  
+EMAIL_HOST_PASSWORD = 'thhs mnxp zvmw mmzn'
+
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'basicstyles', 'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph', 'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert', 'items': ['Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'code', 'items': ['CodeSnippet']},
+        ],
+        'extraPlugins': 'codesnippet,templates',
+        'codeSnippet_theme': 'monokai_sublime',
+        'allowedContent': True,
+        'extraAllowedContent': 'details summary[*]{*}(*)',
+        'templates_files': ['/static/js/custom_templates.js'],
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

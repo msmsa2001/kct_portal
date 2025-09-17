@@ -328,8 +328,8 @@
         dropdownAnchor.each(function() {
             let self = $(this);
             let toggleBtn = document.createElement("BUTTON");
-            toggleBtn.setAttribute("aria-label", "dropdown toggler");
-            toggleBtn.innerHTML = "<i class='fa fa-angle-down'></i>";
+            // toggleBtn.setAttribute("aria-label", "dropdown toggler");
+            // toggleBtn.innerHTML = "<i class='fa fa-angle-down'></i>";
             self.append(function() {
                 return toggleBtn;
             });

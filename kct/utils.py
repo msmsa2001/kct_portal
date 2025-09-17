@@ -206,3 +206,10 @@ def get_footer_data():
     except Exception as e:
         print(f"An error occurred: {e}")
         return {}
+
+
+
+def convert_to_k_format(number):
+    if number >= 1000:
+        return f"{round(number / 1000, 1)}K+"
+    return str(number)
