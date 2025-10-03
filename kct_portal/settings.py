@@ -26,7 +26,8 @@ if os.getenv('ENV', 'dev') == "prod":
     DEBUG = False
     ALLOWED_HOSTS = [
     'khidmattrust.org',
-    'www.khidmattrust.org'
+    'www.khidmattrust.org',
+    '65.0.185.226'
     ]
 else:
     DEBUG = True
