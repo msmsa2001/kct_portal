@@ -23,7 +23,7 @@ env = environ.Env(DEBUG=(bool, False))
 # if env("ENV_NAME") == "production":
 
 if os.getenv('ENV', 'dev') == "prod":
-    DEBUG = True
+    DEBUG = False
     ALLOWED_HOSTS = [
     'khidmattrust.org',
     'www.khidmattrust.org',
