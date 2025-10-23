@@ -21,5 +21,6 @@ urlpatterns = [
     path('anual_report', anual_report, name='anual_report'),
     path('gallery', gallery, name='gallery'),
     path('sucess_story', success_story, name='success_story'),
+    path('donation-terms/', donation_terms, name='donation_terms')
 
 ]

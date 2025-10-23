@@ -213,3 +213,24 @@ def convert_to_k_format(number):
     if number >= 1000:
         return f"{round(number / 1000, 1)}K+"
     return str(number)
+
+
+def get_data_dict_term_and_condition():
+    try:
+        term_and_condition = SystemMaster.objects.get(system_name="term_and_condition")
+        # Split the system titles and values
+        titles = [title.strip() for title in term_and_condition.system_title.split("^")]
+        descriptions = [desc.strip() for desc in term_and_condition.system_value.split("\n") if desc.strip()]
+        
+        # Map each title to its corresponding description
+        data_dict = {title: description for title, description in zip(titles, descriptions)}
+        
+        return data_dict
+    
+    except SystemMaster.DoesNotExist:
+        print("Term and Condition record does not exist.")
+        return {}
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return {}
+    
