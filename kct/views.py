@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from kct_portal import settings
 from django.views.decorators.csrf import csrf_exempt
 from .models import BeneficiaryData, EventMaster, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
-from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data,convert_to_k_format
+from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_data_dict_term_and_condition, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data,convert_to_k_format
 from django.contrib import messages
 from django.core.mail import send_mail
 # from django.http import JsonResponse
@@ -464,3 +464,16 @@ def success_story(request):
         'footer_data': footer_data
         }
     return render(request, "kct/success_story.html",context)
+
+
+def donation_terms(request):
+    """Donation Terms & Conditions page"""
+    footer_data = get_footer_data()
+    term_and_condition= get_data_dict_term_and_condition()
+    
+    context = {
+        'footer_data': footer_data,
+        'term_and_condition':term_and_condition.items()
+ 
+    }
+    return render(request, 'kct/donation_terms.html', context)
