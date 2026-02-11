@@ -28443,7 +28443,6 @@ body.boxed-wrapper .main-header__cart {
 
 /* Form Container */
 #donationForm {
-    background-color: #e6eaf5;
     padding: 1.5rem;
     border-radius: 8px;
     margin-top: 1.5rem;
@@ -28453,47 +28452,7 @@ body.boxed-wrapper .main-header__cart {
     margin-right: auto;
 }
 
-/* Form Group */
-.form-group {
-    margin-bottom: 1rem;
-}
-
-/* Labels */
-.form-group label {
-    display: block;
-    margin-bottom: 0.4rem;
-    font-size: 1rem;
-}
-
-/* Input & Select */
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid var(--cleenhearts-gray);
-    border-radius: 5px;
-    background-color: #fafafa;
-    font-size: 0.95rem;
-}
-
-.form-group input::placeholder,
-.form-group select::placeholder {
-    color: grey;
-}
-
-/* Form Row - Flexible Grid */
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-}
-
-/* Flex for Larger Screens */
-.form-group {
-    flex: 1;
-    min-width: 250px;
-}
-
+/* 
 /* Submit Button */
 .submit-button {
     background-color: #204a8f !important;

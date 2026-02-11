@@ -1,0 +1,167 @@
+
+
+<style>
+  :root {
+    --cleenhearts-font: "DM Sans", sans-serif;
+    --cleenhearts-heading-font: "Quicksand", sans-serif;
+    --cleenhearts-special-font: "Schoolbell", cursive;
+    --cleenhearts-text: #757277;
+    --cleenhearts-text-gray: #AA96B4;
+    --cleenhearts-base: #2e2e2e;
+    --cleenhearts-secondary: #c62b23;
+    --cleenhearts-white: #fff;
+    --cleenhearts-white2: #EFECE7;
+    --cleenhearts-purple: #204a8f;
+    --cleenhearts-green: #59C36A;
+    --cleenhearts-yellow: #FCB720;
+    --cleenhearts-orange: #E76100;
+    --cleenhearts-border-color: #D7D3CB;
+  }
+
+  body {
+    font-family: var(--cleenhearts-font);
+    background-color: var(--cleenhearts-white2);
+    color: var(--cleenhearts-text);
+    margin: 0;
+  }
+
+  .kct-success-wrapper {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 15px;
+    background: var(--cleenhearts-white2);
+  }
+
+  .kct-success-card {
+    background: var(--cleenhearts-white);
+    padding: 50px 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    /* Soft shadow like donation form */
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Green top border similar to impact table header style */
+  .kct-success-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: var(--cleenhearts-purple);
+  }
+
+  span{
+    color: var(--cleenhearts-purple);
+  }
+
+  .kct-success-icon {
+    width: 80px;
+    height: 80px;
+    background: #e8f5e9;
+    /* Light green bg */
+    color: var(--cleenhearts-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .kct-success-icon svg {
+    width: 40px;
+    height: 40px;
+    fill: currentColor;
+  }
+
+  .kct-success-title {
+    font-family: var(--cleenhearts-heading-font);
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--cleenhearts-base);
+    margin-bottom: 20px;
+  }
+
+  .kct-success-message {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--cleenhearts-text);
+    margin-bottom: 35px;
+  }
+
+  .kct-btn-home {
+    display: inline-block;
+    padding: 14px 35px;
+    background: var(--cleenhearts-secondary);
+    /* Brand Red */
+    color: var(--cleenhearts-white);
+    font-family: var(--cleenhearts-heading-font);
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 50px;
+    /* Pill shape */
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(198, 43, 35, 0.3);
+  }
+
+  .kct-btn-home:hover {
+    background: var(--cleenhearts-base);
+    /* Dark gray on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(46, 46, 46, 0.2);
+  }
+
+  @keyframes popIn {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 576px) {
+    .kct-success-card {
+      padding: 40px 25px;
+    }
+
+    .kct-success-title {
+      font-size: 26px;
+    }
+  }
+</style>
+
+<div class="kct-success-wrapper">
+  <div class="kct-container"> <!-- Use container if available in base, otherwise wrapper handles it -->
+    <div class="kct-success-card">
+      <div class="kct-success-icon">
+        <!-- Checkmark SVG -->
+        <svg viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+        </svg>
+      </div>
+
+      <h1 class="kct-success-title">Thank You/Jazakallah</h1>
+
+      <p class="kct-success-message">
+        Thank you for your generous support. Your kindness helps bring hope, healing, and support to those in need. A
+        donation receipt has been sent to your <span>{{donation.email}}</span> address.
+      </p>
+
+      <a href="/" class="kct-btn-home">Back to Home</a>
+    </div>
+  </div>
+</div>

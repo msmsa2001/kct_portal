@@ -21,6 +21,9 @@ urlpatterns = [
     path('anual_report', anual_report, name='anual_report'),
     path('gallery', gallery, name='gallery'),
     path('sucess_story', success_story, name='success_story'),
-    path('donation-terms/', donation_terms, name='donation_terms')
+    path('donation-terms/', donation_terms, name='donation_terms'),
+    path("create-order/", create_cashfree_order, name="create_cashfree_order"),
+    path("cashfree/webhook/", cashfree_webhook, name="cashfree_webhook"),
+    path("payment-success/", payment_success, name="payment_success"),
 
 ]

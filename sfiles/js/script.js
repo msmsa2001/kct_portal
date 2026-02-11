@@ -131,37 +131,67 @@
             prevEl: '.swiper-button-prev',
         },
 
-        on: {
-            progress: function() {
-                var swiper = this;
-                for (var i = 0; i < swiper.slides.length; i++) {
-                    var slideProgress = swiper.slides[i].progress;
-                    var innerOffset = swiper.width * interleaveOffset;
-                    var innerTranslate = slideProgress * innerOffset;
-                    swiper.slides[i].querySelector(".slide-inner").style.transform =
-                        "translate3d(" + innerTranslate + "px, 0, 0)";
-                }
-            },
+       on: {
+    init: function () {
+        // ✅ apply background again to cloned slides
+        $(".hero-slider .slide-bg-image").each(function () {
+            var bg = $(this).attr("data-background");
+            if (bg) $(this).css("background-image", "url('" + bg + "')");
+        });
 
-            touchStart: function() {
-                var swiper = this;
-                for (var i = 0; i < swiper.slides.length; i++) {
-                    swiper.slides[i].style.transition = "";
-                }
-            },
+        // ✅ AOS refresh
+        if (typeof AOS !== "undefined") AOS.refresh();
+    },
 
-            setTransition: function(speed) {
-                var swiper = this;
-                for (var i = 0; i < swiper.slides.length; i++) {
-                    swiper.slides[i].style.transition = speed + "ms";
-                    swiper.slides[i].querySelector(".slide-inner").style.transition =
-                        speed + "ms";
-                }
+    slideChangeTransitionEnd: function () {
+        // ✅ fix: when loop comes back to first slide text disappears
+        if (typeof AOS !== "undefined") AOS.refreshHard();
+
+        // ✅ force animation restart
+        $(".hero-slider .slide-title h2").each(function () {
+            $(this).removeClass("aos-animate");
+            void this.offsetWidth;
+            $(this).addClass("aos-animate");
+        });
+    },
+
+    progress: function() {
+        var swiper = this;
+        for (var i = 0; i < swiper.slides.length; i++) {
+            var slideProgress = swiper.slides[i].progress;
+            var innerOffset = swiper.width * interleaveOffset;
+            var innerTranslate = slideProgress * innerOffset;
+
+            var inner = swiper.slides[i].querySelector(".slide-inner");
+            if(inner){
+                inner.style.transform =
+                    "translate3d(" + innerTranslate + "px, 0, 0)";
             }
         }
+    },
+
+    touchStart: function() {
+        var swiper = this;
+        for (var i = 0; i < swiper.slides.length; i++) {
+            swiper.slides[i].style.transition = "";
+        }
+    },
+
+    setTransition: function(speed) {
+        var swiper = this;
+        for (var i = 0; i < swiper.slides.length; i++) {
+            swiper.slides[i].style.transition = speed + "ms";
+
+            var inner = swiper.slides[i].querySelector(".slide-inner");
+            if(inner){
+                inner.style.transition = speed + "ms";
+            }
+        }
+    }
+}
     };
 
-    var swiper = new Swiper(".swiper-container", swiperOptions);
+   var swiper = new Swiper(".hero-slider .swiper-container", swiperOptions);
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".slide-bg-image");

@@ -1,8 +1,9 @@
 from django.contrib import admin
 from import_export import resources 
-from .models import  GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster, BeneficiaryData
+from .models import  Donation, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster, BeneficiaryData
 from import_export.admin import ImportExportModelAdmin
-
+from django.utils import timezone
+from django.utils.html import format_html
 
 
 admin.site.site_header = "Khidmat Charitable Trust Admin Panel"
@@ -119,3 +120,167 @@ class BeneficiaryCategoryAdmin(ImportExportModelAdmin):
     search_fields = ['id','name']
 
 admin.site.register(BeneficiaryCategory,BeneficiaryCategoryAdmin)
+
+
+
+
+class Donationresources(resources.ModelResource):
+    class Meta:
+        model = Donation
+        import_id_fields = ['id']
+        fields = (
+            'id',
+            'receipt_number',
+            'order_id',
+            'name',
+            'email',
+            'mobile',
+            'amount',
+            'donation_type',
+            'payment_method',
+            'payment_status',
+            'transaction_id',
+            'paid_at',
+            'pan_number',
+            "address",
+                "city",
+                "state",
+                "pincode",
+                "country",
+            'receipt_sent',
+            'created_at',
+        )
+
+
+# -------------------------
+# ADMIN PANEL
+# -------------------------
+
+class DonationAdmin(ImportExportModelAdmin):
+    resource_class = Donationresources
+
+    list_display = (
+        'receipt_number',
+        'order_id',
+        'name',
+        'email',
+        'mobile',
+        'formatted_amount',
+        'donation_type',
+        'colored_payment_status',
+        'payment_method',
+        'transaction_id',
+        'paid_at_display',
+        'receipt_sent',
+        'created_at_display',
+    )
+
+    search_fields = (
+        'receipt_number',
+        'order_id',
+        'name',
+        'email',
+        'mobile',
+        'transaction_id',
+        'pan_number',
+    )
+
+    list_filter = (
+        'payment_status',
+        'donation_type',
+        'payment_method',
+        'receipt_sent',
+        'created_at',
+    )
+
+    ordering = ('-created_at',)
+
+    list_per_page = 25
+
+    readonly_fields = (
+        'paid_at',
+        'created_at',
+    )
+
+    # -------------------------
+    # FIELD GROUPING
+    # -------------------------
+
+    fieldsets = (
+        ("Donor Information", {
+            "fields": (
+                "name",
+                "email",
+                "mobile",
+                "pan_number",
+                "address",
+                "city",
+                "state",
+                "pincode",
+                "country",
+            )
+        }),
+
+        ("Donation Details", {
+            "fields": (
+                "amount",
+                "donation_type",
+                "message",
+            )
+        }),
+
+        ("Payment Details", {
+            "fields": (
+                "order_id",
+                "payment_session_id",
+                "payment_method",
+                "payment_status",
+                "transaction_id",
+                "paid_at",
+            )
+        }),
+
+        ("Receipt Details", {
+            "fields": (
+                "receipt_number",
+                "receipt_sent",
+                "created_at",
+            )
+        }),
+    )
+
+    # -------------------------
+    # CUSTOM DISPLAY METHODS
+    # -------------------------
+
+    def formatted_amount(self, obj):
+        return f"₹ {obj.amount:,.2f}"
+    formatted_amount.short_description = "Amount"
+
+    def colored_payment_status(self, obj):
+        if obj.payment_status == "SUCCESS":
+            color = "green"
+        elif obj.payment_status == "FAILED":
+            color = "red"
+        else:
+            color = "orange"
+
+        return format_html(
+            '<strong style="color:{};">{}</strong>',
+            color,
+            obj.get_payment_status_display()
+        )
+    colored_payment_status.short_description = "Payment Status"
+
+    def paid_at_display(self, obj):
+        if obj.paid_at:
+            return timezone.localtime(obj.paid_at).strftime("%d %b %Y, %I:%M %p")
+        return "-"
+    paid_at_display.short_description = "Paid At"
+
+    def created_at_display(self, obj):
+        return timezone.localtime(obj.created_at).strftime("%d %b %Y, %I:%M %p")
+    created_at_display.short_description = "Created At"
+
+
+admin.site.register(Donation, DonationAdmin)

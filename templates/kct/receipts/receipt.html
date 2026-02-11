@@ -1,0 +1,536 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Receipt - Khidmat Charitable Trust</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #fff;
+            /* White background for PDF */
+            font-size: 12px;
+            /* Slightly smaller base font */
+            color: #222;
+        }
+
+        .receipt {
+            width: 100%;
+            max-width: 210mm;
+            /* A4 width */
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        /* Header */
+        .receipt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px 30px;
+            /* Reduced padding */
+            border-bottom: 2px solid #c62b23;
+        }
+
+        .receipt-header__left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .receipt-header__logo {
+            height: 50px;
+            /* Smaller logo */
+        }
+
+        .receipt-header__org h1 {
+            font-size: 18px;
+            /* Smaller title */
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 2px;
+        }
+
+        .receipt-header__org p {
+            font-size: 10px;
+            color: #666;
+        }
+
+        .receipt-header__right {
+            text-align: right;
+        }
+
+        .receipt-header__title {
+            font-size: 20px;
+            /* Smaller title */
+            font-weight: 700;
+            color: #c62b23;
+            margin-bottom: 5px;
+        }
+
+        .receipt-header__meta {
+            font-size: 10px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        .receipt-header__meta strong {
+            color: #222;
+        }
+
+        /* Body */
+        .receipt-body {
+            padding: 20px 30px;
+            /* Reduced padding */
+        }
+
+        /* Row */
+        .receipt-row {
+            display: flex;
+            border: 1px solid #e0e0e0;
+            margin-bottom: -1px;
+            page-break-inside: avoid;
+            /* Prevent row breaking */
+        }
+
+        .receipt-row:first-child {
+            border-radius: 6px 6px 0 0;
+        }
+
+        .receipt-row:last-child {
+            border-radius: 0 0 6px 6px;
+            margin-bottom: 20px;
+            /* Reduced margin */
+        }
+
+        .receipt-label {
+            width: 150px;
+            /* Narrower label */
+            padding: 10px 15px;
+            /* Reduced padding */
+            background: #f8f8f8;
+            font-size: 11px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+        }
+
+        .receipt-value {
+            flex: 1;
+            padding: 10px 15px;
+            /* Reduced padding */
+            font-size: 13px;
+            color: #222;
+            display: flex;
+            align-items: center;
+        }
+
+        .receipt-value--name {
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .receipt-value--amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #c62b23;
+        }
+
+        .receipt-value--success {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        /* Amount Section */
+        .amount-section {
+            background: #fff8e6;
+            /* Fallback for gradient */
+            border: 2px solid #f0d88a;
+            border-radius: 8px;
+            padding: 15px 20px;
+            /* Reduced padding */
+            margin-bottom: 20px;
+            /* Reduced margin */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            page-break-inside: avoid;
+        }
+
+        .amount-section__left h4 {
+            font-size: 10px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .amount-section__value {
+            font-size: 28px;
+            /* Smaller amount */
+            font-weight: 700;
+            color: #c62b23;
+        }
+
+        .amount-section__words {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .amount-section__purpose {
+            background: #c62b23;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: #c62b23;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            /* Reduced margin */
+            margin-top: 5px;
+        }
+
+        /* Tax Box */
+        .tax-box {
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-left: 4px solid #28a745;
+            border-radius: 6px;
+            padding: 12px 18px;
+            /* Reduced padding */
+            margin-bottom: 15px;
+            /* Reduced margin */
+            page-break-inside: avoid;
+        }
+
+        .tax-box h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tax-box p {
+            font-size: 10px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* QR Section */
+        .qr-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 12px 18px;
+            /* Reduced padding */
+            margin-bottom: 15px;
+            page-break-inside: avoid;
+        }
+
+        .qr-section__left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .qr-section__code {
+            width: 120px;
+            /* 20% lar`ger QR */
+            height: 120px;
+            background: #fff;
+            padding: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .qr-section__code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .qr-section__text h4 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 2px;
+        }
+
+        .qr-section__text p {
+            font-size: 10px;
+            color: #888;
+        }
+
+        .qr-section__text a {
+            color: #c62b23;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        /* Hide sharing buttons in PDF */
+        .qr-section__right {
+            display: none;
+        }
+
+        /* Impact */
+        .impact-box {
+            background: #fff5f5;
+            border-left: 4px solid #c62b23;
+            padding: 12px 18px;
+            /* Reduced padding */
+            margin-bottom: 15px;
+            /* Reduced margin */
+            page-break-inside: avoid;
+        }
+
+        .impact-box p {
+            font-size: 11px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .receipt-footer {
+            background: #2e2e2e;
+            padding: 15px 30px;
+            /* Reduced padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            page-break-inside: avoid;
+            position: absolute;
+            /* Fix footer to bottom if needed, but flex flow is safer for single page variable height */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* If content overflows, footer might overlap, but for single page goal, we want it at bottom of that page. 
+           However, absolute positioning can supply issues if content is too long. 
+           Let's just keep it in flow but ensure it doesn't break. */
+        .receipt-footer {
+            position: static;
+            margin-top: auto;
+        }
+
+        .receipt-footer__left p {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2px;
+        }
+
+        .receipt-footer__right p {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 2px;
+        }
+
+        .receipt-footer__website {
+            font-size: 11px;
+            font-weight: 700;
+            color: #f4d03f;
+        }
+
+        /* WeasyPrint Specifics */
+        @media print {
+            .qr-section__right {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="receipt">
+
+        <!-- Header -->
+        <div class="receipt-header">
+            <div class="receipt-header__left">
+                <img src="https://khidmattrust.org/static/images/khidmat-logo.png" alt="Khidmat Trust"
+                    class="receipt-header__logo">
+                <div class="receipt-header__org">
+                    <h1>Khidmat Charitable Trust</h1>
+                    <p>Reg. No: E-19852 (Mumbai) | PAN: AAATK1234C</p>
+                </div>
+            </div>
+            <div class="receipt-header__right">
+                <h2 class="receipt-header__title">DONATION RECEIPT</h2>
+                <div class="receipt-header__meta">
+                    <strong>Receipt No:</strong> {{donation.receipt_number}}<br>
+                    <strong>Date:</strong> {{ donation.paid_at|date:"d F Y" }}
+                </div>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="receipt-body">
+
+            <!-- Amount Section -->
+            <div class="amount-section">
+                <div class="amount-section__left">
+                    <h4>Amount Received</h4>
+                    <div class="amount-section__value">₹{{ donation.amount|floatformat:2|intcomma }}</div>
+                    <p class="amount-section__words">{{ donation.amount_in_words }}</p>
+                </div>
+                <div class="amount-section__right">
+                    <span class="amount-section__purpose">
+                        <i class="fas fa-heartbeat"></i> {{ donation.donation_type }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Donor Details -->
+            <p class="section-title">Donor Details</p>
+            <div class="receipt-row">
+                <div class="receipt-label">Donor Name</div>
+                <div class="receipt-value receipt-value--name">{{ donation.name }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Email</div>
+                <div class="receipt-value">{{ donation.email }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Mobile</div>
+                <div class="receipt-value">+91 {{ donation.mobile }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">PAN Number</div>
+                <div class="receipt-value">{{ donation.pan_number }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Address</div>
+                <div class="receipt-value">{{ donation.address }},  {{ donation.city }}, {{ donation.state }} - {{ donation.pincode }}, {{ donation.country }}</div>
+            </div>
+
+            <!-- Transaction Details -->
+            <p class="section-title">Transaction Details</p>
+            <div class="receipt-row">
+                <div class="receipt-label">Transaction ID</div>
+                <div class="receipt-value">{{ donation.transaction_id }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Payment Mode</div>
+                <div class="receipt-value">{{ donation.payment_method }}</div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Date & Time</div>
+                <div class="receipt-value">
+                {% if donation.paid_at %}
+                    {{ donation.paid_at|date:"d F Y, g:i A" }}
+                {% else %}
+                    Not Paid Yet
+                {% endif %}
+                </div>
+            </div>
+            <div class="receipt-row">
+                <div class="receipt-label">Status</div>
+                    {% if donation.payment_status == "SUCCESS" %}
+                        <div class="receipt-value receipt-value--success">
+                            ✓ Payment Successful
+                        </div>
+                    {% endif %}
+                </div>
+
+            <br>
+
+            <!-- Tax Info -->
+            <div class="tax-box">
+                <h4><i class="fas fa-file-invoice-dollar"></i> 80G Tax Exemption</h4>
+                <p>
+                    This donation is eligible for 50% tax exemption under <strong>Section 80G</strong> of the Income Tax
+                    Act, 1961.<br>
+                    <strong>80G Registration:</strong> E-19852 | <strong>PAN:</strong> AAATK1234C |
+                    <strong>Validity:</strong> Perpetual
+                </p>
+            </div>
+
+            <!-- Impact -->
+            <div class="impact-box">
+                <p>
+                    <strong>Your Impact:</strong> {{ donation.impact_message }}
+                </p>
+            </div>
+
+            <!-- QR Section -->
+            <div class="qr-section">
+                <div class="qr-section__left">
+                    <div class="qr-section__code">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://khidmattrust.org/donate"
+                            alt="QR Code">
+                    </div>
+                    <div class="qr-section__text">
+                        <h4>Inspire Others</h4>
+                        <p>Scan to donate</p>
+                        <a href="https://khidmattrust.org/donate">khidmattrust.org/donate</a>
+                    </div>
+                </div>
+                <div class="qr-section__right">
+                    <button class="share-btn share-btn--wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
+                    <button class="share-btn share-btn--fb" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+                    <button class="share-btn share-btn--tw" title="Twitter"><i class="fab fa-x-twitter"></i></button>
+                    <button class="share-btn share-btn--dl" title="Download"><i class="fas fa-download"></i></button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="receipt-footer">
+            <div class="receipt-footer__left">
+                <p><strong>Khidmat Charitable Trust</strong></p>
+                <p>P.T Mane Udyan, Mirza Galib Marg, Nagpada, Mumbai - 400008</p>
+                <p>Phone: +91 86579 70797 | Email: info@khidmattrust.org</p>
+            </div>
+            <div class="receipt-footer__right">
+                <p>This is a computer-generated receipt.</p>
+                <p>No signature required.</p>
+                <span class="receipt-footer__website">www.khidmattrust.org</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

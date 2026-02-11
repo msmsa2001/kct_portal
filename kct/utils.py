@@ -1,5 +1,12 @@
-from kct.models import SystemMaster
-
+from kct.models import Donation, SystemMaster
+import os
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.conf import settings
+from django.core.mail import EmailMessage
+from django.utils.timezone import now
+from django.db.models import Max
+from io import BytesIO
  
 def get_data_dict():
     try:
@@ -234,3 +241,65 @@ def get_data_dict_term_and_condition():
         print(f"An error occurred: {e}")
         return {}
     
+
+def send_receipt_email(donation):
+    # Render HTML template
+    html = render_to_string(
+        "kct/receipts/receipt.html",
+        {"donation": donation}
+    )
+
+    # Generate PDF in memory
+    pdf_buffer = BytesIO()
+    HTML(string=html).write_pdf(pdf_buffer)
+    pdf_buffer.seek(0)
+
+    subject = "Donation Receipt – Khidmat Charitable Trust"
+
+    body = f"""
+Dear {donation.name},
+
+Thank you for your generous donation of ₹{donation.amount}.
+
+Please find your receipt attached.
+This receipt is valid for 80G tax exemption.
+
+Order ID: {donation.order_id}
+
+Regards,
+Khidmat Charitable Trust
+"""
+
+    email = EmailMessage(
+        subject,
+        body,
+        settings.DEFAULT_FROM_EMAIL,
+        [donation.email],
+    )
+
+    # Attach PDF directly (no file path)
+    email.attach(
+        f"receipt_{donation.order_id}.pdf",
+        pdf_buffer.read(),
+        "application/pdf"
+    )
+
+    email.send()
+
+
+def generate_receipt_number():
+    year = now().year
+
+    last_receipt = Donation.objects.filter(
+        receipt_number__startswith=f"KCT-{year}-"
+    ).aggregate(Max("receipt_number"))
+
+    if last_receipt["receipt_number__max"]:
+        last_number = int(
+            last_receipt["receipt_number__max"].split("-")[-1]
+        )
+        new_number = last_number + 1
+    else:
+        new_number = 1
+
+    return f"KCT-{year}-{str(new_number).zfill(4)}"

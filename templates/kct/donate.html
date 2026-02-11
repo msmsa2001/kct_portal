@@ -5,333 +5,1638 @@
 {% block content %}
 
 <style>
-    .donation-form {
-        max-width: 800px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    :root {
+        --cleenhearts-font: "DM Sans", sans-serif;
+        --cleenhearts-heading-font: "Quicksand", sans-serif;
+        --cleenhearts-special-font: "Schoolbell", cursive;
+        --cleenhearts-text: #757277;
+        --cleenhearts-text-gray: #AA96B4;
+        --cleenhearts-base: #2e2e2e;
+        --cleenhearts-secondary: #c62b23;
+        --cleenhearts-white: #fff;
+        --cleenhearts-white2: #EFECE7;
+        --cleenhearts-purple: #204a8f;
+        --cleenhearts-green: #59C36A;
+        --cleenhearts-yellow: #FCB720;
+        --cleenhearts-orange: #E76100;
+        --cleenhearts-border-color: #D7D3CB;
+        --cleenhearts-letter-space: -0.72px;
+        --cleenhearts-letter-space-xl: -1.5px;
     }
 
-    .form-group {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--cleenhearts-font);
+        color: var(--cleenhearts-text);
+        background: var(--cleenhearts-white);
+        line-height: 1.7;
+    }
+
+    .kct-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+    }
+
+    /* Header */
+
+    /* Hero */
+    .kct-donate-hero {
+        background: linear-gradient(135deg, var(--cleenhearts-base), #414141);
+        padding: 80px 0;
+        text-align: center;
+    }
+
+    .kct-donate-hero__tagline {
+        font-family: var(--cleenhearts-special-font);
+        font-size: 20px;
+        color: var(--cleenhearts-yellow);
+        margin-bottom: 15px;
+    }
+
+    .kct-donate-hero__title {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--cleenhearts-white);
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+    .kct-donate-hero__text {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.8);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Main Section */
+    .kct-donate-section {
+        padding: 80px 0;
+        background: var(--cleenhearts-white2);
+    }
+
+    .kct-donate-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 50px;
+        align-items: start;
+    }
+
+    /* Impact Section */
+    /* Sticky Fix: Ensure scrolling works on body - RELAXED */
+    html,
+    body {
+        overflow: visible !important;
+    }
+
+    /* Sticky Fix: Remove potential overflow traps */
+    .kct-donate-section,
+    .kct-container,
+    .kct-donate-wrapper,
+    .page-wrapper {
+        overflow: visible !important;
+        transform: none !important;
+        /* Ensure no transforms create new stacking contexts */
+    }
+
+    /* Impact Section */
+    .kct-donate-impact {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 80px;
+        align-self: start;
+        height: fit-content;
+        z-index: 99;
+    }
+
+    .kct-donate-impact__title {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--cleenhearts-base);
+        margin-bottom: 8px;
+    }
+
+    .kct-donate-impact__subtitle {
+        font-size: 16px;
+        color: var(--cleenhearts-text-gray);
+        margin-bottom: 25px;
+    }
+
+    /* Impact Table */
+    .kct-impact-table {
+        background: var(--cleenhearts-white);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+        margin-bottom: 25px;
+    }
+
+    .kct-impact-table__header {
+        background: var(--cleenhearts-purple);
+        display: grid;
+        grid-template-columns: 1.7fr 1fr;
+        padding: 16px 20px;
+    }
+
+    .kct-impact-table__header span {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--cleenhearts-white);
+        text-transform: uppercase;
+    }
+
+    .kct-impact-table__row {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        padding: 18px 20px;
+        border-bottom: 1px solid #f0f0f0;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .kct-impact-table__row:last-child {
+        border-bottom: none;
+    }
+
+    .kct-impact-table__row:hover {
+        background: rgba(32, 74, 143, 0.03);
+    }
+
+    .kct-impact-table__project {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .kct-impact-table__icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .kct-impact-table__icon--medical {
+        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        color: var(--cleenhearts-green);
+    }
+
+    .kct-impact-table__icon--dialysis {
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        color: var(--cleenhearts-purple);
+    }
+
+    .kct-impact-table__icon--cancer {
+        background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+        color: var(--cleenhearts-secondary);
+    }
+
+    .kct-impact-table__icon--education {
+        background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+        color: var(--cleenhearts-orange);
+    }
+
+    .kct-impact-table__icon--poverty {
+        background: linear-gradient(135deg, #fff9c4, #fff59d);
+        color: #fbc02d;
+    }
+
+    .kct-impact-table__icon i {
+        font-size: 18px;
+    }
+
+    .kct-impact-table__name {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--cleenhearts-base);
+    }
+
+    .kct-impact-table__cost {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--cleenhearts-secondary);
+    }
+
+    .kct-impact-table__cost span {
+        display: block;
+        font-size: 11px;
+        font-weight: 500;
+        color: var(--cleenhearts-text-gray);
+        margin-top: 2px;
+    }
+
+    .kct-impact-table__details {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--cleenhearts-text);
+        line-height: 1.5;
+    }
+
+    /* Trust Section */
+    .kct-donate-trust {
+        background: var(--cleenhearts-white);
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    .kct-donate-trust__title {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--cleenhearts-base);
         margin-bottom: 20px;
     }
 
-    .form-group label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
+    .kct-donate-trust__badges {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
 
-    .form-group input,
-    .form-group select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-    }
-
-    .form-row {
+    .kct-trust-badge {
         display: flex;
-        gap: 20px;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 15px;
+        background: var(--cleenhearts-white2);
+        border-radius: 10px;
+        transition: all 0.3s ease;
     }
 
-    .form-row .form-group {
+    .kct-trust-badge:hover {
+        background: rgba(198, 43, 35, 0.08);
+    }
+
+    .kct-trust-badge i {
+        color: var(--cleenhearts-secondary);
+        font-size: 18px;
+    }
+
+    .kct-trust-badge span {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--cleenhearts-base);
+    }
+
+    /* Stats */
+    .kct-donate-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        background: linear-gradient(135deg, var(--cleenhearts-purple), var(--cleenhearts-secondary));
+        padding: 30px 25px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .kct-donate-stats__item {
+        position: relative;
+    }
+
+    .kct-donate-stats__item:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        right: -7px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .kct-donate-stats__number {
+        display: block;
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--cleenhearts-white);
+    }
+
+    .kct-donate-stats__label {
+        display: block;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.85);
+        margin-top: 5px;
+    }
+
+    /* Form Card */
+    .kct-donate-form-card {
+        background: var(--cleenhearts-white);
+        border-radius: 20px;
+        box-shadow: 0 10px 50px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .kct-donate-form-card__header {
+        background: linear-gradient(135deg, var(--cleenhearts-secondary), #e74c3c);
+        padding: 35px 30px;
+        text-align: center;
+    }
+
+    .kct-donate-form-card__header h2 {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--cleenhearts-white);
+        margin-bottom: 8px;
+    }
+
+    .kct-donate-form-card__header p {
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .kct-donate-form {
+        padding: 35px 30px;
+    }
+
+    /* Amount Section */
+    .kct-amount-section {
+        margin-bottom: 28px;
+    }
+
+    .kct-amount-input-wrapper {
+        display: flex;
+        align-items: center;
+        background: var(--cleenhearts-white);
+        border: 2px solid var(--cleenhearts-border-color);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .kct-amount-input-wrapper:focus-within {
+        border-color: var(--cleenhearts-purple);
+        box-shadow: 0 0 0 4px rgba(32, 74, 143, 0.12);
+    }
+
+    .kct-amount-currency {
+        padding: 20px;
+        background: var(--cleenhearts-white2);
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--cleenhearts-base);
+        border-right: 2px solid var(--cleenhearts-border-color);
+    }
+
+    .kct-amount-input {
         flex: 1;
-    }
-
-    .required {
-        color: red;
-    }
-
-    .submit-button {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
+        padding: 20px;
         border: none;
-        border-radius: 4px;
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--cleenhearts-base);
+        background: transparent;
+        outline: none;
+    }
+
+    .kct-amount-input::placeholder {
+        color: var(--cleenhearts-text-gray);
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .kct-amount-helper {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--cleenhearts-text-gray);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .kct-amount-helper i {
+        color: var(--cleenhearts-green);
+    }
+
+    /* Gateway Breakdown */
+    .kct-gateway-breakdown {
+        margin-top: 20px;
+        background: #f8f9fa;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 20px;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .kct-gateway-breakdown__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px dashed #ddd;
+    }
+
+    .kct-gateway-breakdown__row:last-of-type {
+        border-bottom: none;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+
+    .kct-gateway-breakdown__label {
+        font-size: 14px;
+        color: var(--cleenhearts-base);
+        font-weight: 500;
+    }
+
+    .kct-gateway-breakdown__value {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--cleenhearts-base);
+    }
+
+    .kct-gateway-breakdown__value--charges {
+        color: var(--cleenhearts-orange);
+    }
+
+    .kct-gateway-breakdown__message {
+        background: #fff3cd;
+        border-left: 4px solid var(--cleenhearts-yellow);
+        padding: 15px;
+        border-radius: 8px;
+        display: flex;
+        gap: 12px;
+        margin-bottom: 15px;
+    }
+
+    .kct-gateway-breakdown__message i {
+        color: var(--cleenhearts-yellow);
+        font-size: 20px;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .kct-gateway-breakdown__message p {
+        font-size: 13px;
+        color: #856404;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .kct-gateway-breakdown__add-btn {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, var(--cleenhearts-green), #2ecc71);
+        border: none;
+        border-radius: 10px;
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--cleenhearts-white);
         cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .kct-gateway-breakdown__add-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(89, 195, 106, 0.3);
+    }
+
+    .kct-gateway-breakdown__add-btn i {
         font-size: 16px;
     }
 
-    .submit-button:hover {
-        background-color: #0056b3;
+    /* Form Elements */
+    .kct-form-group {
+        margin-bottom: 22px;
+    }
+
+    .kct-form-label {
+        display: block;
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--cleenhearts-base);
+        margin-bottom: 10px;
+    }
+
+    .kct-form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+
+    .kct-form-input,
+    .kct-form-select,
+    .kct-form-textarea {
+        width: 100%;
+        padding: 15px 18px;
+        border: 2px solid var(--cleenhearts-border-color);
+        border-radius: 12px;
+        font-family: var(--cleenhearts-font);
+        font-size: 15px;
+        color: var(--cleenhearts-base);
+        background: var(--cleenhearts-white);
+        transition: all 0.3s ease;
+    }
+
+    .kct-form-input:focus,
+    .kct-form-select:focus,
+    .kct-form-textarea:focus {
+        border-color: var(--cleenhearts-purple);
+        box-shadow: 0 0 0 4px rgba(32, 74, 143, 0.12);
+    }
+
+    .kct-form-input::placeholder,
+    .kct-form-textarea::placeholder {
+        color: var(--cleenhearts-text-gray);
+    }
+
+    .kct-form-input[readonly] {
+        background: var(--cleenhearts-white2);
+        cursor: not-allowed;
+    }
+
+    .kct-form-textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    /* Phone Input */
+    .kct-phone-input {
+        display: flex;
+        border: 2px solid var(--cleenhearts-border-color);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .kct-phone-input:focus-within {
+        border-color: var(--cleenhearts-purple);
+        box-shadow: 0 0 0 4px rgba(32, 74, 143, 0.12);
+    }
+
+    .kct-country-code {
+        padding: 15px;
+        background: var(--cleenhearts-white2);
+        font-family: var(--cleenhearts-heading-font);
+        font-weight: 600;
+        color: var(--cleenhearts-base);
+        border-right: 2px solid var(--cleenhearts-border-color);
+        display: flex;
+        align-items: center;
+    }
+
+    .kct-phone-input .kct-form-input {
+        border: none !important;
+        border-radius: 0;
+        box-shadow: none !important;
+    }
+
+    .kct-phone-input .kct-form-input:focus {
+        box-shadow: none !important;
+    }
+
+    .kct-helper-text {
+        display: block;
+        font-size: 12px;
+        color: var(--cleenhearts-text-gray);
+        margin-top: 6px;
+    }
+
+    .kct-error-message {
+        display: block;
+        font-size: 12px;
+        color: var(--cleenhearts-secondary);
+        margin-top: 6px;
+    }
+
+    /* Checkbox */
+    .kct-checkbox-group {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .kct-checkbox-group input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        accent-color: var(--cleenhearts-secondary);
+        cursor: pointer;
+        margin-top: 2px;
+    }
+
+    .kct-checkbox-group label {
+        font-size: 14px;
+        color: var(--cleenhearts-text);
+        cursor: pointer;
+        line-height: 1.5;
+    }
+
+    .kct-checkbox-group label a {
+        color: var(--cleenhearts-secondary);
+        font-weight: 600;
+    }
+
+    /* Submit Button */
+    .kct-submit-btn {
+        width: 100%;
+        padding: 18px;
+        background: linear-gradient(135deg, var(--cleenhearts-secondary), #e74c3c);
+        border: none;
+        border-radius: 12px;
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--cleenhearts-white);
+        cursor: pointer;
+        transition: all 0.4s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .kct-submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--cleenhearts-purple), #3498db);
+        transition: all 0.4s ease;
+        z-index: 0;
+    }
+
+    .kct-submit-btn:hover::before {
+        left: 0;
+    }
+
+    .kct-submit-btn span {
+        position: relative;
+        z-index: 1;
+    }
+
+    .kct-submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(198, 43, 35, 0.3);
+    }
+
+    .kct-security-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 20px;
+        font-size: 13px;
+        color: var(--cleenhearts-text-gray);
+    }
+
+    .kct-security-note i {
+        color: var(--cleenhearts-green);
+    }
+
+    /* Footer */
+    .footer {
+        background: var(--cleenhearts-base);
+        color: var(--cleenhearts-white);
+        padding: 60px 0 25px;
+    }
+
+    .footer__content {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 50px;
+        padding-bottom: 40px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 25px;
+    }
+
+    .footer__logo {
+        height: 55px;
+        margin-bottom: 20px;
+    }
+
+    .footer__about p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.8;
+        margin-bottom: 10px;
+    }
+
+    .footer__title {
+        font-family: var(--cleenhearts-heading-font);
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .footer__contact p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 15px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .footer__contact i {
+        color: var(--cleenhearts-secondary);
+        margin-top: 4px;
+        width: 16px;
+    }
+
+    .footer__social {
+        display: flex;
+        gap: 12px;
+        margin-top: 15px;
+    }
+
+    .footer__social a {
+        width: 42px;
+        height: 42px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .footer__social a:hover {
+        background: var(--cleenhearts-secondary);
+        transform: translateY(-3px);
+    }
+
+    .footer__bottom {
+        text-align: center;
+    }
+
+    .footer__bottom p {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .kct-donate-wrapper {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .kct-donate-impact {
+            position: static;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .kct-container {
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header__nav {
+            display: none;
+        }
+
+        .header__phone {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        .header__logo img {
+            height: 45px;
+        }
+
+        /* Hero */
+        .kct-donate-hero {
+            padding: 50px 0;
+        }
+
+        .kct-donate-hero__tagline {
+            font-size: 16px;
+        }
+
+        .kct-donate-hero__title {
+            font-size: 32px;
+            line-height: 1.3;
+        }
+
+        .kct-donate-hero__text {
+            font-size: 16px;
+            padding: 0 10px;
+        }
+
+        /* Main Section */
+        .kct-donate-section {
+            padding: 50px 0;
+        }
+
+        /* Impact Section */
+        .kct-donate-impact__title {
+            font-size: 26px;
+        }
+
+        .kct-donate-impact__subtitle {
+            font-size: 14px;
+        }
+
+        /* Impact Table */
+        .kct-impact-table__header {
+            display: none;
+        }
+
+        .kct-impact-table__row {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            padding: 18px 16px;
+        }
+
+        .kct-impact-table__project {
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #eee;
+            margin-bottom: 8px;
+        }
+
+        .kct-impact-table__cost {
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+            margin-bottom: 8px;
+        }
+
+        .kct-impact-table__details {
+            font-size: 12px;
+        }
+
+        /* Trust & Stats */
+        .kct-donate-trust {
+            padding: 20px;
+        }
+
+        .kct-donate-trust__badges {
+            grid-template-columns: 1fr;
+        }
+
+        .kct-trust-badge {
+            padding: 12px;
+        }
+
+        .kct-donate-stats {
+            padding: 25px 20px;
+            gap: 10px;
+        }
+
+        .kct-donate-stats__item:not(:last-child)::after {
+            display: none;
+        }
+
+        .kct-donate-stats__number {
+            font-size: 28px;
+        }
+
+        .kct-donate-stats__label {
+            font-size: 12px;
+        }
+
+        /* Form Card */
+        .kct-donate-form-card__header {
+            padding: 25px 20px;
+        }
+
+        .kct-donate-form-card__header h2 {
+            font-size: 24px;
+        }
+
+        .kct-donate-form-card__header p {
+            font-size: 14px;
+        }
+
+        /* Form */
+        .kct-donate-form {
+            padding: 25px 20px;
+        }
+
+        .kct-form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .kct-form-input,
+        .kct-form-select,
+        .kct-form-textarea {
+            padding: 14px 16px;
+            font-size: 14px;
+        }
+
+        /* Amount Input */
+        .kct-amount-currency {
+            padding: 16px;
+            font-size: 20px;
+        }
+
+        .kct-amount-input {
+            padding: 16px;
+            font-size: 22px;
+        }
+
+        .kct-amount-input::placeholder {
+            font-size: 16px;
+        }
+
+        /* Gateway Breakdown */
+        .kct-gateway-breakdown {
+            padding: 16px;
+        }
+
+        .kct-gateway-breakdown__row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+            padding: 12px 0;
+        }
+
+        .kct-gateway-breakdown__label {
+            font-size: 12px;
+        }
+
+        .kct-gateway-breakdown__value {
+            font-size: 18px;
+        }
+
+        .kct-gateway-breakdown__message {
+            padding: 12px;
+            font-size: 12px;
+        }
+
+        .kct-gateway-breakdown__message i {
+            font-size: 18px;
+        }
+
+        .kct-gateway-breakdown__add-btn {
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        /* Submit Button */
+        .kct-submit-btn {
+            padding: 16px;
+            font-size: 16px;
+        }
+
+
+    }
+
+    @media (max-width: 480px) {
+        .kct-container {
+            padding: 0 15px;
+        }
+
+        /* Hero */
+        .kct-donate-hero {
+            padding: 40px 0;
+        }
+
+        .kct-donate-hero__title {
+            font-size: 26px;
+        }
+
+        .kct-donate-hero__text {
+            font-size: 14px;
+        }
+
+        /* Impact */
+        .kct-donate-impact__title {
+            font-size: 22px;
+        }
+
+        /* Form */
+        .kct-donate-form {
+            padding: 20px 15px;
+        }
+
+        .kct-donate-form-card__header {
+            padding: 20px 15px;
+        }
+
+        .kct-donate-form-card__header h2 {
+            font-size: 22px;
+        }
+
+        /* Amount Input */
+        .kct-amount-currency {
+            padding: 14px;
+            font-size: 18px;
+        }
+
+        .kct-amount-input {
+            padding: 14px;
+            font-size: 20px;
+        }
+
+        /* Gateway Breakdown */
+        .kct-gateway-breakdown {
+            padding: 14px;
+        }
+
+        .kct-gateway-breakdown__value {
+            font-size: 16px;
+        }
+
+        /* Phone Input */
+        .kct-country-code {
+            padding: 14px 12px;
+            font-size: 14px;
+        }
+
+        /* Submit */
+        .kct-submit-btn {
+            font-size: 15px;
+        }
+
+        /* Stats */
+        .kct-donate-stats {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
     }
 </style>
 
 <body class="custom-cursor">
 
-    <div class="page-wrapper">
-
-        <section class="page-header @@extraClassName">
-            <div class="page-header__bg" style="background-image: url('/static/images/backgrounds/donate3-bg.png');">
-            </div>
-            <div class="container">
-                <ul class="cleenhearts-breadcrumb list-unstyled">
-                    <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
-                    <li><span>Donate Now</span></li>
-                </ul>
-            </div>
-        </section>
-
-
-        <div class="container title-container" style="display: flex;align-items: center;justify-content: center; margin-top: 30px;">
-            <img src="{% static 'images/logo_icon_blue.png' %}" alt="bg" class="bg-watermark-img" />
-
-            <h2 class="page-header__title project_page-header__title">How You Can Help</h2>
-
+    <section class="page-header @@extraClassName">
+        <div class="page-header__bg" style="background-image: url('/static/images/backgrounds/donate3-bg.png');">
         </div>
-        
-        <section class="container donate-section">
-            <img src="{% static 'images/design_icon_1.png' %}" alt="Design" class="design-img"/>
-            <div class="donate-box">
-              <!-- Left Column -->
-              <div class="col-lg-6 col-md-12 mb-5">
-                <p class="donate-description">
-                    Let Your Giving Become Someone’s Lifeline.
-                </p>
-                <div class="bank-details">
-                  <h4>Bank Details</h4>
-                  <p><strong> Khidmat Charitable Trust</strong></p>
-                  <p>Bank Name: Union Bank Of India</p>
-                  <p>A/c: 318702010036490</p>
-                  <p>IFS Code: UBIN0531871</p>
-                  <p>Branch: Null Bazar Mumbai</p>
-                </div>
-              </div>
-        
-              <!-- Right Column with QR + Button -->
-              <div class="col-lg-6 col-md-12 text-center donation_right_box">
-                <img src="{{ donate_data.system_img.url }}" alt="QR Code for Donation" class="qr-img">
-                <p class="mt-2">Scan the QR code to donate</p>
-        
-                <p class="mt-3">Or use this UPI ID:</p>
-                <!-- <h5><code>missionawareness@oksbi</code></h5> -->
-                <!-- <button  onclick="payWithUPI()" class="btn btn-success mt-3" target="_blank">
-                  Pay with UPI
-                </button> -->
-
-                <a href="upi://pay?pa=upi://pay?pa=33384601@ubin&pn=Khidmat%20Charitable%20Trust&am=1&cu=INR" target="_blank">
-                     <button class="btn btn-success mt-3">
-                  Pay with UPI
-                </button>
-                </a>
-              </div>
-            </div>
-            <img src="{% static 'images/design_icon_2.png' %}" alt="Design" class="design-img2" />
-          </section>
-
-          <div class="container title-container" style="display: flex;align-items: center;justify-content: center; margin-top: 30px;">
-            <img src="{% static 'images/logo_icon_blue.png' %}" alt="bg" class="bg-watermark-img" />
-
-            <h2 class="page-header__title project_page-header__title">Foreign Donations</h2>
+        <div class="container">
+            <h2 class="page-header__title">Be a reason someone Smile</h2>
+            <ul class="cleenhearts-breadcrumb list-unstyled">
+                <li><i class="icon-home"></i> <a href="{% url 'home' %}">Home</a></li>
+                <li><span>Donate Now</span></li>
+            </ul>
         </div>
+    </section>
 
-          <section class="container donate-section Foreign_donation">
+    <section class="kct-donate-section">
+        <div class="kct-container">
+            <div class="kct-donate-wrapper">
 
-                
-                <div class="bank-details Foreign_donation_details">
-                  <h4 style="text-align: center;">Bank Details</h4>
-                  <p><strong> Khidmat Charitable Trust</strong></p>
-                  <p>Bank Name: SBI Bank</p>
-                  <p>A/c: 40258295876 (FCRA SAVING ACCOUNT)</p>
-                  <p>Branch code:00691</p>
-                  <p>IFS Code: SBIN0000691</p>
-                  <p>SWIFT Code: SBININBB104</p>
-                </div>
+                <!-- Impact Section -->
+                <div class="kct-donate-impact">
+                    <h2 class="kct-donate-impact__title">Lifes Impacted</h2>
+                    <p class="kct-donate-impact__subtitle">See how your donation helps our projects</p>
 
-          </section>
+                    <div class="kct-impact-table">
+                        <div class="kct-impact-table__header">
+                            <span>Project</span>
+                            <span>Beneficiaries</span>
+                        </div>
 
+                        <div class="kct-impact-table__row">
+                            <div class="kct-impact-table__project">
+                                <div class="kct-impact-table__icon kct-impact-table__icon--medical">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <span class="kct-impact-table__name">Medical Aid</span>
+                            </div>
+                            <!-- Cost Removed -->
+                            <div class="kct-impact-table__details">
+                                {{beneficiary_data.medical_aid}}
+                            </div>
+                        </div>
 
-       
-        <!-- <script>
-            function toggleFormSections() {
-                const payingFrom = document.getElementById('id_paying_from').value;
-                const personalAccountForm = document.getElementById('personal-account-form');
-                const officialAccountForm = document.getElementById('official-account-form');
-        
-                personalAccountForm.style.display = 'none';
-                officialAccountForm.style.display = 'none';
-        
-                if (payingFrom === 'personal-account') {
-                    personalAccountForm.style.display = 'block';
-                } else if (payingFrom === 'official-account') {
-                    officialAccountForm.style.display = 'block';
-                }
-            }
-        
-            document.addEventListener('DOMContentLoaded', function () {
-                toggleFormSections(); 
-            });
-        
-            document.getElementById('id_paying_from').addEventListener('change', function () {
-                toggleFormSections();
-            });
-        
-            document.getElementById('donationForm').addEventListener('submit', function (e) {
-                e.preventDefault(); 
-        
-                const formData = new FormData(document.getElementById('donationForm')); 
-        
-                fetch("{% url 'donate' %}", {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': '{{ csrf_token }}', 
-                    },
-                    body: formData, 
-                })
-                .then(response => response.json()) 
-                .then(data => {
-                    const options = {
-                        key: 'rzp_test_xiMcTjBlVV2j8h', 
-                        amount: data.amount, 
-                        currency: 'INR',
-                        order_id: data.id, 
-                        name: 'Khidmat Trust',
-                        description: 'Donation',
-                        handler: function (response) {
-                            console.log("Payment successful! Response:", response);  
-                        
-                            const paymentData = {
-                                razorpay_payment_id: response.razorpay_payment_id,
-                                razorpay_order_id: response.razorpay_order_id,
-                                razorpay_signature: response.razorpay_signature,
-                            };
-                        
-                             {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRFToken': '{{ csrf_token }}',
-                                },
-                                body: JSON.stringify(paymentData),  
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.status === 'success') {
-                                    alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
-                                    window.location.href = "{% url 'donate' %}";  
-                                } else {
-                                    alert('Payment verification failed. Please contact support.');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                alert('An error occurred. Please try again.');
-                            });
-                        },
-                        prefill: {
-                            name: document.getElementById('id_fullname').value,
-                            email: document.getElementById('id_email').value,
-                            contact: document.getElementById('id_phone').value,
-                        },
-                        theme: {
-                            color: '#F37254',
-                        },
-                    };
-        
-                    const rzp = new Razorpay(options);
-        
-                    rzp.on('payment.failed', function (response) {
-                        fetch("", {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': '{{ csrf_token }}',
-                            },
-                            body: JSON.stringify(response), 
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert('Payment failed. Please try again.');
-                        });
-                    });
-        
-                    rzp.open(); 
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-            });
-        </script>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script> -->
-        <section class="subscribe">
-            <div class="subscribe__bg"></div>
-            <div class="container">
-                <div class="row1">
-                    <div class="col-lg-5 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
-                        <div class="subscribe__content">
-                            <h2 class="subscribe__title">{{ donate_data.page_quotes|safe }}</h2>
+                        <div class="kct-impact-table__row">
+                            <div class="kct-impact-table__project">
+                                <div class="kct-impact-table__icon kct-impact-table__icon--dialysis">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <span class="kct-impact-table__name">Dialysis</span>
+                            </div>
+                            <!-- Cost Removed -->
+                            <div class="kct-impact-table__details">
+                                {{ beneficiary_data.dialysis }}
+                            </div>
+                        </div>
+
+                        <div class="kct-impact-table__row">
+                            <div class="kct-impact-table__project">
+                                <div class="kct-impact-table__icon kct-impact-table__icon--cancer">
+                                    <i class="fas fa-ribbon"></i>
+                                </div>
+                                <span class="kct-impact-table__name">Cancer Care</span>
+                            </div>
+                            <!-- Cost Removed -->
+                            <div class="kct-impact-table__details">
+                                {{ beneficiary_data.cancer }}
+                            </div>
+                        </div>
+
+                        <div class="kct-impact-table__row">
+                            <div class="kct-impact-table__project">
+                                <div class="kct-impact-table__icon kct-impact-table__icon--education">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <span class="kct-impact-table__name">Education</span>
+                            </div>
+                            <!-- Cost Removed -->
+                            <div class="kct-impact-table__details">
+                                {{ beneficiary_data.education }}
+                            </div>
+                        </div>
+
+                        <div class="kct-impact-table__row">
+                            <div class="kct-impact-table__project">
+                                <div class="kct-impact-table__icon kct-impact-table__icon--poverty">
+                                    <i class="fas fa-hands-helping"></i>
+                                </div>
+                                <span class="kct-impact-table__name">Relief for Poverty</span>
+                            </div>
+                            <!-- Cost Removed -->
+                            <div class="kct-impact-table__details">
+                                {{ beneficiary_data.relief_for_poverty }}
+                            </div>
                         </div>
                     </div>
 
-                    <div class="subscribe__shape">
-                        <div class="subscribe__shape__one"></div>
-                        <div class="subscribe__shape__two"></div>
+                    <div class="kct-donate-trust">
+                        <h3 class="kct-donate-trust__title">Why Donate to Us?</h3>
+                        <div class="kct-donate-trust__badges">
+                            <div class="kct-trust-badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>80G Tax Exemption</span>
+                            </div>
+                            <div class="kct-trust-badge">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Registered NGO</span>
+                            </div>
+                            <div class="kct-trust-badge">
+                                <i class="fas fa-lock"></i>
+                                <span>100% Secure</span>
+                            </div>
+                            <div class="kct-trust-badge">
+                                <i class="fas fa-file-invoice"></i>
+                                <span>Instant Receipt</span>
+                            </div>
+                        </div>
                     </div>
-        </section>
 
-    </div>
-    <div class="mobile-nav__wrapper">
-        <div class="mobile-nav__overlay mobile-nav__toggler"></div>
-        <div class="mobile-nav__content">
-            <span class="mobile-nav__close mobile-nav__toggler"><i class="fa fa-times"></i></span>
-            <div class="logo-box">
-                <a href="{% url 'home' %}" aria-label="logo image"><img src="{% static 'images/logo-light.png' %}"
-                        width="155" alt="" /></a>
-            </div>
-            <div class="mobile-nav__container"></div>
-            <ul class="mobile-nav__contact list-unstyled">
-                <li>
-                    <i class="fa fa-envelope"></i>
-                    <a href="mailto:info@khidmattrust.org">info@khidmattrust.org</a> <br>
-                </li>
-                <li>
-                    <i class="fa fa-phone-alt"></i>
-                    <a href="tel:+91 86579 70797 ">+91 86579 70797 </a>
-                </li>
-            </ul>
-            <div class="mobile-nav__social">
-                <a href="https://facebook.com">
-                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                    <span class="sr-only">Facebook</span>
-                </a>
-                <a href="https://x.com/i/flow/login?redirect_after_login=%2Ftrust_khidmat">
-                    <img src="{% static 'images/X_logo white.svg' %}" alt="X Logo" class="x-logo" />
-                    <span class="sr-only">Twitter</span>
-                </a>
-                <a href="https://www.instagram.com/khidmat_trust/?igsh=MXU0eHg3NXNva245cw%3D%3D" aria-hidden="true">
-                    <i class="fab fa-instagram" aria-hidden="true"></i>
-                    <span class="sr-only">Instagram</span>
-                </a>
-                <a href="https://youtube.com" aria-hidden="true">
-                    <i class="fab fa-youtube"></i>
-                    <span class="sr-only">Youtube</span>
-                </a>
+                    <div class="kct-donate-stats">
+                        <div class="kct-donate-stats__item">
+                            <span class="kct-donate-stats__number">{{ beneficiary_data.total_beneficiaries }}</span>
+                            <span class="kct-donate-stats__label">Lives Impacted</span>
+                        </div>
+                        <div class="kct-donate-stats__item">
+                            <span class="kct-donate-stats__number">5+</span>
+                            <span class="kct-donate-stats__label">Years of Service</span>
+                        </div>
+                        <div class="kct-donate-stats__item">
+                            <span class="kct-donate-stats__number">8+</span>
+                            <span class="kct-donate-stats__label">Partner Hospitals</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="kct-donate-form-wrapper">
+                    <div class="kct-donate-form-card">
+                        <div class="kct-donate-form-card__header">
+                            <h2>Donate Now</h2>
+                            <p>Every contribution makes a difference</p>
+                        </div>
+
+                        <form id="kct-donationForm" class="kct-donate-form">
+
+                            <!-- Amount Section -->
+                            <div class="kct-amount-section">
+                                <label class="kct-form-label">Enter Donation Amount</label>
+                                <div class="kct-amount-input-wrapper">
+                                    <span class="kct-amount-currency">₹</span>
+                                    <input type="number" id="kct-amount" name="amount" class="kct-amount-input"
+                                        placeholder="Enter amount" min="1" step="0.01" required>
+                                </div>
+                                <p class="kct-amount-helper">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Enter any amount you wish to donate</span>
+                                </p>
+
+                                <!-- Gateway Charges Breakdown -->
+                                <div class="kct-gateway-breakdown" id="kct-gatewayBreakdown" style="display: none;">
+                                    <div class="kct-gateway-breakdown__row">
+                                        <span class="kct-gateway-breakdown__label">Donation Amount:</span>
+                                        <span class="kct-gateway-breakdown__value" id="kct-donationAmount">₹0</span>
+                                    </div>
+                                    <div class="kct-gateway-breakdown__row">
+                                        <span class="kct-gateway-breakdown__label">Payment Gateway Charges
+                                            (2.30%):</span>
+                                        <span class="kct-gateway-breakdown__value kct-gateway-breakdown__value--charges"
+                                            id="kct-gatewayCharges">₹0</span>
+                                    </div>
+                                    <div class="kct-gateway-breakdown__message">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <p>from your donation amount khidmat borne a deduction of 2.30% as payment
+                                            gateway charges, if you don't want us to bear that cost please add that
+                                            amount in your donation</p>
+                                    </div>
+                                    <button type="button" class="kct-gateway-breakdown__add-btn" id="kct-addChargesBtn">
+                                        <i class="fas fa-plus-circle"></i>
+                                        Add Gateway Charges (₹<span id="kct-chargesToAdd">0</span>)
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Personal Details -->
+                            <div class="kct-form-group">
+                                <label class="kct-form-label" for="kct-type">Type *</label>
+                                <select id="kct-type" name="type" class="kct-form-select" required>
+                                    <option value="">Select</option>
+                                    <option value="ZAKAT">Zakat</option>
+                                    <option value="SADAQAH">Sadaqah</option>
+                                    <option value="FI_SABILILLAH">Fi Sabilillah</option>
+                                    <option value="INTEREST">Interest</option>
+                                    <option value="OTHERS">Others</option>
+                                </select>
+                            </div>
+
+                            <div class="kct-form-row">
+                                <div class="kct-form-group">
+                                    <label class="kct-form-label" for="kct-firstName">First Name *</label>
+                                    <input type="text" id="kct-firstName" name="first_name" class="kct-form-input"
+                                        placeholder="First Name" required>
+                                </div>
+                                <div class="kct-form-group">
+                                    <label class="kct-form-label" for="kct-lastName">Last Name *</label>
+                                    <input type="text" id="kct-lastName" name="last_name" class="kct-form-input"
+                                        placeholder="Last Name" required>
+                                </div>
+                            </div>
+
+                            <div class="kct-form-group">
+                                <label class="kct-form-label" for="kct-email">Email Address *</label>
+                                <input type="email" id="kct-email" name="email" class="kct-form-input"
+                                    placeholder="your@email.com" required>
+                            </div>
+
+                            <div class="kct-form-group">
+                                <label class="kct-form-label" for="kct-mobile">Mobile Number *</label>
+                                <div class="kct-phone-input">
+                                    <span class="kct-country-code">+91</span>
+                                    <input type="tel" id="kct-mobile" name="mobile" class="kct-form-input"
+                                        placeholder="10-digit mobile number" maxlength="10" required>
+                                </div>
+                            </div>
+
+                            <div class="kct-form-group">
+                                <label class="kct-form-label" for="kct-pan">PAN Number (for 80G receipt) *</label>
+                                <input type="text" id="kct-pan" name="pan" class="kct-form-input"
+                                    placeholder="ABCDE1234F" maxlength="10" required>
+                                <span class="kct-helper-text">Required for tax exemption receipt</span>
+                            </div>
+
+                            <div class="kct-form-group">
+                                <label class="kct-form-label" for="kct-address">Full Address *</label>
+                                <textarea id="kct-address" name="address" class="kct-form-textarea"
+                                    placeholder="Enter your complete address" rows="2" required></textarea>
+                            </div>
+
+                            <div class="kct-form-row">
+                                <div class="kct-form-group">
+                                    <label class="kct-form-label" for="kct-city">City *</label>
+                                    <input type="text" id="kct-city" name="city" class="kct-form-input"
+                                        placeholder="City" required>
+                                </div>
+                                <div class="kct-form-group">
+                                    <label class="kct-form-label" for="kct-state">State *</label>
+                                    <input type="text" id="kct-state" name="state" class="kct-form-input"
+                                        placeholder="State" required>
+                                </div>
+                            </div>
+
+                            <div class="kct-form-row">
+                                <div class="kct-form-group">
+                                    <label class="kct-form-label" for="kct-pincode">Pincode *</label>
+                                    <input type="text" id="kct-pincode" name="pincode" class="kct-form-input"
+                                        placeholder="6-digit pincode" maxlength="6" required>
+                                </div>
+                                <div class="kct-form-group">
+                                    <label class="kct-form-label" for="kct-country">Country</label>
+                                    <input type="text" id="kct-country" name="country" class="kct-form-input"
+                                        value="India" readonly>
+                                </div>
+                            </div>
+
+                            <div class="kct-form-group">
+                                <label class="kct-form-label" for="kct-message">Message (Optional)</label>
+                                <textarea id="kct-message" name="message" class="kct-form-textarea"
+                                    placeholder="Any special instructions or dedication" rows="2"></textarea>
+                            </div>
+
+                            <div class="kct-form-group kct-checkbox-group">
+                                <input type="checkbox" id="kct-terms" name="terms" required>
+                                <label for="kct-terms">I agree to the <a href="/donation-terms/">Terms & Conditions</a>
+                                    and
+                                    <a href="/privacy/">Privacy Policy</a></label>
+                            </div>
+
+                            <button type="submit" class="kct-submit-btn" id="kct-submitBtn">
+                                <span>Proceed to Pay</span>
+                            </button>
+
+                            <div class="kct-security-note">
+                                <i class="fas fa-lock"></i>
+                                <span>Your payment is secured by Cashfree</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="search-popup @@extraClassName">
-        <div class="search-popup__overlay search-toggler"></div>
-        <div class="search-popup__content">
-            <form role="search" method="get" class="search-popup__form" action="#">
-                <input type="text" id="search" placeholder="Search Here..." />
-                <button type="submit" aria-label="search submit" class="khidmat-btn">
-                    <span><i class="icon-search"></i></span>
-                </button>
-            </form>
-        </div>
-    </div>
+    <script>
+        // Sticky Position Fail-Safe: Force all ancestors to have visible overflow
+        document.addEventListener('DOMContentLoaded', function () {
+            const stickyEl = document.querySelector('.kct-donate-impact');
+            if (stickyEl) {
+                let parent = stickyEl.parentElement;
+                while (parent && parent !== document.body) {
+                    const style = window.getComputedStyle(parent);
+                    if (style.overflow !== 'visible' || style.overflowY !== 'visible' || style.transform !== 'none') {
+                        // console.log('Fixing sticky parent:', parent);
+                        parent.style.setProperty('overflow', 'visible', 'important');
+                        parent.style.setProperty('transform', 'none', 'important');
+                    }
+                    parent = parent.parentElement;
+                }
+                // Also ensure body/html are friendly
+                document.body.style.setProperty('overflow', 'visible', 'important');
+                document.documentElement.style.setProperty('overflow', 'visible', 'important');
+            }
+        });
+    </script>
+    <script>
+        // ─── Live Validation Logic ───────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', function () {
 
-    <a href="#" data-target="html" class="scroll-to-target scroll-to-top">
-        <span class="scroll-to-top__text">back top</span>
-        <span class="scroll-to-top__wrapper"><span class="scroll-to-top__inner"></span></span>
-    </a>
+            // ── Core helpers ──────────────────────────────────────────────────────
+            function setError(input) {
+                const target = (input.id === 'kct-mobile')
+                    ? input.closest('.kct-phone-input') || input
+                    : input;
+                target.style.borderColor = '#dc3545';
+                target.style.boxShadow = '0 0 0 4px rgba(220,53,69,0.15)';
+                input.classList.add('is-invalid');
+                input.setCustomValidity('invalid');
+            }
 
+            function clearError(input) {
+                const target = (input.id === 'kct-mobile')
+                    ? input.closest('.kct-phone-input') || input
+                    : input;
+                target.style.borderColor = '';
+                target.style.boxShadow = '';
+                input.classList.remove('is-invalid', 'error');
+                input.setCustomValidity('');
+            }
+
+            // ── Regex rules ───────────────────────────────────────────────────────
+            const rules = {
+                'kct-mobile': /^\d{10}$/,
+                'kct-pan': /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+                'kct-email': /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                'kct-pincode': /^\d{6}$/
+            };
+
+            // ── Formatters (keep value clean while typing) ────────────────────────
+            const formatters = {
+                'kct-mobile': v => v.replace(/\D/g, '').slice(0, 10),
+                'kct-pan': v => v.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 10),
+                'kct-pincode': v => v.replace(/\D/g, '').slice(0, 6),
+                'kct-email': v => v   // no formatting needed
+            };
+
+            // ── Attach live listeners to specially-validated fields ────────────────
+            Object.keys(rules).forEach(id => {
+                const input = document.getElementById(id);
+                if (!input) return;
+
+                // Format + clear error on every keystroke
+                input.addEventListener('input', function () {
+                    if (formatters[id]) this.value = formatters[id](this.value);
+                    clearError(this);   // ← red border gone IMMEDIATELY
+                });
+
+                // Validate only when the user leaves the field
+                input.addEventListener('blur', function () {
+                    if (this.value && !rules[id].test(this.value)) {
+                        setError(this);
+                    } else {
+                        clearError(this);
+                    }
+                });
+            });
+
+            // ── All other required fields ─────────────────────────────────────────
+            document.querySelectorAll('input, select, textarea').forEach(input => {
+                // Skip fields already handled above
+                if (rules[input.id]) return;
+
+                // Clear error the moment the user interacts
+                ['input', 'keydown', 'focus', 'click'].forEach(evt =>
+                    input.addEventListener(evt, () => clearError(input))
+                );
+
+                // For selects & checkboxes also clear on change
+                input.addEventListener('change', function () {
+                    if ((this.type === 'checkbox' && this.checked) || this.value.trim()) {
+                        clearError(this);
+                    }
+                });
+
+                // Validate on blur (required fields only)
+                input.addEventListener('blur', function () {
+                    if (!this.hasAttribute('required')) return;
+                    const empty = this.type === 'checkbox' ? !this.checked : !this.value.trim();
+                    if (empty) setError(this); else clearError(this);
+                });
+            });
+        });
+    </script>
+    <script>
+        const GATEWAY_CHARGE_PERCENT = 2.30;
+
+        const amountInput = document.getElementById('kct-amount');
+        const gatewayBreakdown = document.getElementById('kct-gatewayBreakdown');
+        const donationAmountSpan = document.getElementById('kct-donationAmount');
+        const gatewayChargesSpan = document.getElementById('kct-gatewayCharges');
+        const chargesToAddSpan = document.getElementById('kct-chargesToAdd');
+        const addChargesBtn = document.getElementById('kct-addChargesBtn');
+        const gatewayMessage = document.querySelector('.kct-gateway-breakdown__message');
+
+        let chargesAdded = false;
+        let originalAmount = 0;
+
+        // Calculate and display breakdown
+        amountInput.addEventListener('input', function () {
+            const amount = parseFloat(this.value) || 0;
+
+            if (amount > 0) {
+                const charges = (amount * GATEWAY_CHARGE_PERCENT / 100).toFixed(2);
+
+                if (chargesAdded) {
+                    // Show final breakdown after charges added
+                    donationAmountSpan.parentElement.querySelector('.kct-gateway-breakdown__label').textContent = 'Total Amount to Pay:';
+                    donationAmountSpan.textContent = `₹${amount.toLocaleString('en-IN')}`;
+                    gatewayChargesSpan.textContent = `₹${parseFloat(charges).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+                    // Update third row to show amount to KCT
+                    const payToKCT = originalAmount.toFixed(2);
+                    if (!document.getElementById('kct-payToKCTRow')) {
+                        const payToKCTRow = document.createElement('div');
+                        payToKCTRow.className = 'kct-gateway-breakdown__row';
+                        payToKCTRow.id = 'kct-payToKCTRow';
+                        payToKCTRow.innerHTML = `
+                            <span class="kct-gateway-breakdown__label">Amount Payable to KCT:</span>
+                            <span class="kct-gateway-breakdown__value" style="color: var(--cleenhearts-green);" id="kct-payToKCT">₹${parseFloat(payToKCT).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        `;
+                        gatewayChargesSpan.parentElement.parentElement.after(payToKCTRow);
+                    } else {
+                        document.getElementById('kct-payToKCT').textContent = `₹${parseFloat(payToKCT).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    }
+                } else {
+                    // Show initial breakdown
+                    donationAmountSpan.parentElement.querySelector('.kct-gateway-breakdown__label').textContent = 'Donation Amount:';
+                    donationAmountSpan.textContent = `₹${amount.toLocaleString('en-IN')}`;
+                    gatewayChargesSpan.textContent = `₹${parseFloat(charges).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    chargesToAddSpan.textContent = parseFloat(charges).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                    // Show KCT amount (after deduction) below donation amount
+                    const kctReceives = (amount - parseFloat(charges)).toFixed(2);
+                    if (!document.getElementById('kct-payToKCTRow')) {
+                        const payToKCTRow = document.createElement('div');
+                        payToKCTRow.className = 'kct-gateway-breakdown__row';
+                        payToKCTRow.id = 'kct-payToKCTRow';
+                        payToKCTRow.innerHTML = `
+            <span class="kct-gateway-breakdown__label">Amount Payable to KCT:</span>
+            <span class="kct-gateway-breakdown__value" style="color: var(--cleenhearts-green);" id="kct-payToKCT">₹${parseFloat(kctReceives).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+        `;
+                        gatewayChargesSpan.parentElement.after(payToKCTRow);
+                    } else {
+                        document.getElementById('kct-payToKCT').textContent = `₹${parseFloat(kctReceives).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    }
+                }
+
+                gatewayBreakdown.style.display = 'block';
+            } else {
+                gatewayBreakdown.style.display = 'none';
+                chargesAdded = false;
+                if (document.getElementById('kct-payToKCTRow')) {
+                    document.getElementById('kct-payToKCTRow').remove();
+                }
+                if (gatewayMessage) {
+                    gatewayMessage.style.display = 'flex';
+                }
+                if (addChargesBtn) {
+                    addChargesBtn.style.display = 'flex';
+                }
+            }
+        });
+
+        // Add charges button
+        addChargesBtn.addEventListener('click', function () {
+            const currentAmount = parseFloat(amountInput.value) || 0;
+            if (currentAmount > 0) {
+                originalAmount = currentAmount;
+                const charges = (currentAmount * GATEWAY_CHARGE_PERCENT / 100);
+                // Ensure strictly 2 decimal places for step mismatch avoidance
+                const newAmount = (currentAmount + charges).toFixed(2);
+
+                chargesAdded = true;
+                amountInput.value = newAmount;
+
+                // Explicitly clear any custom validity state before event
+                amountInput.setCustomValidity('');
+
+                // Hide message and button
+                gatewayMessage.style.display = 'none';
+                addChargesBtn.style.display = 'none';
+
+                // Trigger input event to recalculate & clear visual errors
+                amountInput.dispatchEvent(new Event('input'));
+            }
+        });
+
+
+
+        // Amount - select all on focus
+        amountInput.addEventListener('focus', function () {
+            this.select();
+        });
+    </script>
+
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+    <script>
+        const cashfree = Cashfree({ mode: "sandbox" });
+
+        document.getElementById("kct-donationForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch("/create-order/", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    cashfree.checkout({
+                        paymentSessionId: data.payment_session_id
+                    });
+                })
+                .catch(err => {
+                    alert("Payment initiation failed");
+                    console.error(err);
+                });
+        });
+    </script>
 
     <script>
         let calScrollValue = () => {
@@ -360,10 +1665,10 @@
     </script>
 
     <script>
-    function payWithUPI() {
-        window.location.href = "upi://pay?pa=33384601@ubin&cu=INR";
-    }
-</script>
+        function payWithUPI() {
+            window.location.href = "upi://pay?pa=33384601@ubin&cu=INR";
+        }
+    </script>
 
     <script src="{% static 'js/jquery-3.7.0.min.js' %}"></script>
 

@@ -1,9 +1,12 @@
 import json
+import uuid
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
 
 from kct_portal import settings
 from django.views.decorators.csrf import csrf_exempt
-from .models import BeneficiaryData, EventMaster, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
+from .models import BeneficiaryData, Donation, EventMaster, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
 from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_data_dict_term_and_condition, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data,convert_to_k_format
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -12,6 +15,178 @@ from django.conf import settings
 # import razorpay
 import requests
 from collections import defaultdict
+from .utils import send_receipt_email
+from .utils import generate_receipt_number
+from django.utils.timezone import now
+
+
+
+@csrf_exempt
+def create_cashfree_order(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request"}, status=400)
+
+    data = request.POST
+    amount = float(data.get("amount", 0))
+
+    if amount <= 0:
+        return JsonResponse({"error": "Invalid amount"}, status=400)
+
+    order_id = f"ORD-{uuid.uuid4().hex[:12]}"
+
+    donation = Donation.objects.create(
+        name=f"{data.get('first_name')} {data.get('last_name')}",
+        email=data.get("email"),
+        mobile=data.get("mobile"),
+        amount=amount,
+        message = data.get("message"),
+        donation_type=data.get("type"),
+
+        address=data.get("address"),
+        city=data.get("city"),
+        state=data.get("state"),
+        pincode=data.get("pincode"),
+        country=data.get("country"),
+
+        pan_number=data.get("pan"),
+
+        order_id=order_id,
+    )
+
+    url = "https://sandbox.cashfree.com/pg/orders"
+
+    headers = {
+        "Content-Type": "application/json",
+        "x-client-id": settings.CASHFREE_APP_ID,
+        "x-client-secret": settings.CASHFREE_SECRET_KEY,
+        "x-api-version": "2023-08-01",
+    }
+
+    payload = {
+        "order_id": order_id,
+        "order_amount": amount,
+        "order_currency": "INR",
+        "customer_details": {
+            "customer_id": f"cust_{donation.id}",  # ✅ IMPORTANT
+            "customer_name": donation.name,
+            "customer_email": donation.email,
+            "customer_phone": donation.mobile,
+        },
+        "order_meta": {
+            "return_url": f"http://localhost/payment-success/?order_id={order_id}"
+        }
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    result = response.json()
+
+    if response.status_code != 200:
+        print("Cashfree Error:", result)
+        return JsonResponse(result, status=response.status_code)
+
+    donation.payment_session_id = result["payment_session_id"]
+    donation.save()
+
+    return JsonResponse({
+        "payment_session_id": result["payment_session_id"]
+    })
+
+
+@csrf_exempt
+def cashfree_webhook(request):
+    payload = json.loads(request.body)
+
+    order = payload.get("data", {}).get("order", {})
+    payment = payload.get("data", {}).get("payment", {})
+
+    order_id = order.get("order_id")
+    status = payment.get("payment_status")
+    transaction_id = payment.get("cf_payment_id")
+    payment_method_data = payment.get("payment_method", {})
+
+    if not order_id:
+        return JsonResponse({"status": "ignored"})
+
+    donation = Donation.objects.filter(order_id=order_id).first()
+    if not donation:
+        return JsonResponse({"status": "not found"})
+
+    # 🔒 Idempotency check
+    if donation.payment_status == "SUCCESS":
+        return JsonResponse({"status": "already processed"})
+
+    if status == "SUCCESS":
+        donation.payment_status = "SUCCESS"
+        donation.transaction_id = transaction_id
+
+        if isinstance(payment_method_data, dict) and payment_method_data:
+            method = list(payment_method_data.keys())[0]
+            donation.payment_method = method.upper()
+
+        if not donation.receipt_number:
+            donation.receipt_number = generate_receipt_number()
+
+        donation.paid_at = timezone.now()
+        donation.save()
+
+        if not donation.receipt_sent:
+            send_receipt_email(donation)
+
+            donation.receipt_sent = True
+            donation.save()
+
+    elif status == "FAILED":
+        donation.payment_status = "FAILED"
+        donation.save()
+
+    return JsonResponse({"status": "ok"})
+
+
+def get_beneficiary_data():
+    token_url = "https://api.khidmattrust.org/api/Account/ValidateKey?Key=KhidmatAPILive"
+    data_url = "https://api.khidmattrust.org/api/Display/GetData"
+
+    try:
+        token_response = requests.get(token_url, timeout=5)
+        token_response.raise_for_status()
+        token_data = token_response.json()
+        jwt_token = token_data.get("Token") or token_data.get("token")
+
+        if not jwt_token:
+            raise ValueError("JWT Token not found in response")
+
+        headers = {"Authorization": f"Bearer {jwt_token}"}
+        data_response = requests.get(data_url, headers=headers, timeout=5)
+        data_response.raise_for_status()
+        api_data = data_response.json()
+
+    except Exception as e:
+        print(f"[Third-Party API Error] {e}")
+        api_data = {}
+
+    total_medicine = int(api_data.get("Total_Medicine_Application", 0))
+    total_hospital = int(api_data.get("Total_Hospitalisation_Application", 0))
+
+    raw_data = BeneficiaryCategory.objects.filter(is_active=True)
+
+    beneficiary_data = {}
+    total_beneficiaries = 0
+
+    for item in raw_data:
+        key = item.name.strip().replace(" ", "_").lower()
+
+        if item.name == "Medical Aid":
+            combined_total = item.number + total_medicine + total_hospital
+            beneficiary_data[key] = convert_to_k_format(combined_total)
+            total_beneficiaries += total_medicine + total_hospital
+        else:
+            beneficiary_data[key] = convert_to_k_format(item.number)
+
+        total_beneficiaries += item.number
+
+    beneficiary_data["total_beneficiaries"] = convert_to_k_format(total_beneficiaries)
+
+    return beneficiary_data
 
 def home(request):
     # Step 1: JWT Token API Call
@@ -259,52 +434,14 @@ def contact(request):
 def donate(request):
     donate_data = SystemMaster.objects.get(system_name="Donate Section")
     footer_data = get_footer_data()
+    beneficiary_data = get_beneficiary_data()
+    
 
-    # if request.method == 'POST':
-    #     try:
-    #         amount = int(float(request.POST.get('amount'))) * 100  # Amount in paise
-    #         currency = 'INR'
-    #         receipt = 'order_rcptid_11'
-
-    #         print(f"Creating Razorpay order for amount: {amount}, currency: {currency}")  # Debugging statement
-
-    #         # Create a Razorpay order
-    #         order = client.order.create({'amount': amount, 'currency': currency, 'receipt': receipt})
-    #         print(f"Razorpay order created: {order}")  # Debugging statement
-
-    #         # Save the donation data to the database
-    #         donation = Donation.objects.create(
-    #             whypay=request.POST.get('whypay'),
-    #             paying_from=request.POST.get('paying_from'),
-    #             amount=request.POST.get('amount'),
-    #             fullname=request.POST.get('fullname'),
-    #             phone=request.POST.get('phone'),
-    #             email=request.POST.get('email'),
-    #             pan=request.POST.get('pan'),
-    #             aadhar=request.POST.get('aadhar'),
-    #             address=request.POST.get('address'),
-    #             company_name=request.POST.get('company_name'),
-    #             company_phone=request.POST.get('company_phone'),
-    #             company_address=request.POST.get('company_address'),
-    #             company_email=request.POST.get('company_email'),
-    #             company_pan=request.POST.get('company_pan'),
-    #             contact_person_name=request.POST.get('contact_person_name'),
-    #             contact_person_phone=request.POST.get('contact_person_phone'),
-    #             razorpay_order_id=order['id']
-    #         )
-    #         print(f"Donation record created: {donation}")  # Debugging statement
-
-    #         return JsonResponse(order)
-    #     except Exception as e:
-    #         print(f"Error creating Razorpay order: {e}")  # Debugging statement
-    #         return JsonResponse({'error': str(e)}, status=400)
-
-    # else:
-    #     form = DonationForm()
 
     context = {
         'donate_data': donate_data,
         'footer_data': footer_data,
+        'beneficiary_data': beneficiary_data,
         # 'form': form,
     }
     return render(request, 'kct/donate.html', context)
@@ -477,3 +614,8 @@ def donation_terms(request):
  
     }
     return render(request, 'kct/donation_terms.html', context)
+
+def payment_success(request):
+    order_id = request.GET.get("order_id")
+    donation = Donation.objects.filter(order_id=order_id).first()
+    return render(request, "kct/payment_success.html", {"donation": donation})
