@@ -53,7 +53,10 @@ def create_cashfree_order(request):
         order_id=order_id,
     )
 
-    url = "https://sandbox.cashfree.com/pg/orders"
+    if settings.CASHFREE_ENV == "PROD":
+        url = "https://api.cashfree.com/pg/orders"
+    else:
+        url = "https://sandbox.cashfree.com/pg/orders"
 
     headers = {
         "Content-Type": "application/json",
@@ -73,7 +76,7 @@ def create_cashfree_order(request):
             "customer_phone": donation.mobile,
         },
         "order_meta": {
-            "return_url": f"http://localhost/payment-success/?order_id={order_id}"
+            "return_url": f"https://khidmattrust.org/payment-success/?order_id={order_id}"
         }
     }
 
