@@ -15,8 +15,6 @@ services:
       - ./nginx.prod.conf:/etc/nginx/nginx.conf
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - /var/www/certbot:/var/www/certbot
-      - ./static:/static
-      - ./media:/app/media
     ports:
       - "80:80"
       - "443:443"
