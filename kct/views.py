@@ -53,10 +53,9 @@ def create_cashfree_order(request):
         order_id=order_id,
     )
 
-    if settings.CASHFREE_ENV == "PROD":
-        url = "https://api.cashfree.com/pg/orders"
-    else:
-        url = "https://sandbox.cashfree.com/pg/orders"
+   
+    url = "https://api.cashfree.com/pg/orders"
+   
 
     headers = {
         "Content-Type": "application/json",
