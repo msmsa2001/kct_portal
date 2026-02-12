@@ -168,7 +168,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
-DEFAULT_FROM_EMAIL = "Khidmat Trust <sadique.leewayzon@gmail.com>"
+DEFAULT_FROM_EMAIL = "Khidmat Trust <info@khidmattrust.org>"
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
