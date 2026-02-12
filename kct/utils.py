@@ -288,10 +288,22 @@ Khidmat Charitable Trust
 
 
 def generate_receipt_number():
-    year = now().year
+    today = now()
+    year = today.year
+    month = today.month
+
+    # Financial Year Logic (April to March)
+    if month >= 4:  # April to December
+        start_year = year
+        end_year = year + 1
+    else:  # January to March
+        start_year = year - 1
+        end_year = year
+
+    fy = f"{start_year}-{str(end_year)[-2:]}"  # Example: 2025-26
 
     last_receipt = Donation.objects.filter(
-        receipt_number__startswith=f"KCT-{year}-"
+        receipt_number__startswith=f"KCT-{fy}-"
     ).aggregate(Max("receipt_number"))
 
     if last_receipt["receipt_number__max"]:
@@ -302,4 +314,4 @@ def generate_receipt_number():
     else:
         new_number = 1
 
-    return f"KCT-{year}-{str(new_number).zfill(4)}"
+    return f"KCT-{fy}-{str(new_number).zfill(4)}"

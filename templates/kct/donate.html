@@ -54,6 +54,21 @@
         transition: all 0.3s ease;
     }
 
+    /* Responsive Utilities */
+    .kct-mobile-only {
+        display: none;
+    }
+
+    @media (max-width: 1024px) {
+        .kct-desktop-only {
+            display: none !important;
+        }
+
+        .kct-mobile-only {
+            display: block !important;
+        }
+    }
+
     /* Header */
 
     /* Hero */
@@ -883,26 +898,31 @@
         }
 
         .kct-impact-table__row {
-            grid-template-columns: 1fr;
-            gap: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
             padding: 18px 16px;
         }
 
         .kct-impact-table__project {
-            padding-bottom: 12px;
-            border-bottom: 1px dashed #eee;
-            margin-bottom: 8px;
+            padding-bottom: 0;
+            border-bottom: none;
+            margin-bottom: 0;
         }
 
         .kct-impact-table__cost {
             font-size: 18px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #eee;
-            margin-bottom: 8px;
+            padding-bottom: 0;
+            border-bottom: none;
+            margin-bottom: 0;
         }
 
         .kct-impact-table__details {
-            font-size: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            text-align: right;
+            
         }
 
         /* Trust & Stats */
@@ -1192,7 +1212,7 @@
                         </div>
                     </div>
 
-                    <div class="kct-donate-trust">
+                    <div class="kct-donate-trust kct-desktop-only">
                         <h3 class="kct-donate-trust__title">Why Donate to Us?</h3>
                         <div class="kct-donate-trust__badges">
                             <div class="kct-trust-badge">
@@ -1214,7 +1234,7 @@
                         </div>
                     </div>
 
-                    <div class="kct-donate-stats">
+                    <div class="kct-donate-stats kct-desktop-only">
                         <div class="kct-donate-stats__item">
                             <span class="kct-donate-stats__number">{{ beneficiary_data.total_beneficiaries }}</span>
                             <span class="kct-donate-stats__label">Lives Impacted</span>
@@ -1267,9 +1287,9 @@
                                     </div>
                                     <div class="kct-gateway-breakdown__message">
                                         <i class="fas fa-lightbulb"></i>
-                                        <p>from your donation amount khidmat borne a deduction of 2.30% as payment
+                                        <p>From your Donation amount Khidmat borne a deduction of 2.30% as payment
                                             gateway charges, if you don't want us to bear that cost please add that
-                                            amount in your donation</p>
+                                            amount in your Donation</p>
                                     </div>
                                     <button type="button" class="kct-gateway-breakdown__add-btn" id="kct-addChargesBtn">
                                         <i class="fas fa-plus-circle"></i>
@@ -1361,14 +1381,13 @@
                             <div class="kct-form-group">
                                 <label class="kct-form-label" for="kct-message">Message (Optional)</label>
                                 <textarea id="kct-message" name="message" class="kct-form-textarea"
-                                    placeholder="Any special instructions or dedication" rows="2"></textarea>
+                                    placeholder="Enter Message" rows="2"></textarea>
                             </div>
 
                             <div class="kct-form-group kct-checkbox-group">
                                 <input type="checkbox" id="kct-terms" name="terms" required>
                                 <label for="kct-terms">I agree to the <a href="/donation-terms/">Terms & Conditions</a>
-                                    and
-                                    <a href="/privacy/">Privacy Policy</a></label>
+                                    
                             </div>
 
                             <button type="submit" class="kct-submit-btn" id="kct-submitBtn">
@@ -1380,6 +1399,45 @@
                                 <span>Your payment is secured by Cashfree</span>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+                <!-- Trust Section (Mobile Only/Moved below form) -->
+                <div class="kct-donate-trust kct-mobile-only">
+                    <h3 class="kct-donate-trust__title">Why Donate to Us?</h3>
+                    <div class="kct-donate-trust__badges">
+                        <div class="kct-trust-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>80G Tax Exemption</span>
+                        </div>
+                        <div class="kct-trust-badge">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Registered NGO</span>
+                        </div>
+                        <div class="kct-trust-badge">
+                            <i class="fas fa-lock"></i>
+                            <span>100% Secure</span>
+                        </div>
+                        <div class="kct-trust-badge">
+                            <i class="fas fa-file-invoice"></i>
+                            <span>Instant Receipt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Section (Mobile Only/Moved below form) -->
+                <div class="kct-donate-stats kct-mobile-only">
+                    <div class="kct-donate-stats__item">
+                        <span class="kct-donate-stats__number">{{ beneficiary_data.total_beneficiaries }}</span>
+                        <span class="kct-donate-stats__label">Lives Impacted</span>
+                    </div>
+                    <div class="kct-donate-stats__item">
+                        <span class="kct-donate-stats__number">5+</span>
+                        <span class="kct-donate-stats__label">Years of Service</span>
+                    </div>
+                    <div class="kct-donate-stats__item">
+                        <span class="kct-donate-stats__number">8+</span>
+                        <span class="kct-donate-stats__label">Partner Hospitals</span>
                     </div>
                 </div>
 
@@ -1530,7 +1588,7 @@
                         payToKCTRow.className = 'kct-gateway-breakdown__row';
                         payToKCTRow.id = 'kct-payToKCTRow';
                         payToKCTRow.innerHTML = `
-                            <span class="kct-gateway-breakdown__label">Amount Payable to KCT:</span>
+                            <span class="kct-gateway-breakdown__label">Net Donation Amount (After Gateway Charges):</span>
                             <span class="kct-gateway-breakdown__value" style="color: var(--cleenhearts-green);" id="kct-payToKCT">₹${parseFloat(payToKCT).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                         `;
                         gatewayChargesSpan.parentElement.parentElement.after(payToKCTRow);
@@ -1551,7 +1609,7 @@
                         payToKCTRow.className = 'kct-gateway-breakdown__row';
                         payToKCTRow.id = 'kct-payToKCTRow';
                         payToKCTRow.innerHTML = `
-            <span class="kct-gateway-breakdown__label">Amount Payable to KCT:</span>
+            <span class="kct-gateway-breakdown__label">Net Donation Amount (After Gateway Charges):</span>
             <span class="kct-gateway-breakdown__value" style="color: var(--cleenhearts-green);" id="kct-payToKCT">₹${parseFloat(kctReceives).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         `;
                         gatewayChargesSpan.parentElement.after(payToKCTRow);
