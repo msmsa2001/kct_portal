@@ -360,27 +360,7 @@ def contact(request):
             try:
                 new_record = KCTEnquireMaster(name=Name, email=Email, phone=Phone, message=Message)
                 new_record.save()
-                subject = "Thank You for Contacting Us"
-                message_body = f"""
-                Dear {Name},
-
-                Thank you for reaching out to us. We have received your enquiry and will get back to you soon.
-
-                Your Details:
-                Name: {Name}
-                Email: {Email}
-                Phone: {Phone}
-                Message: {Message}
-
-                Best Regards,
-                Your Company Name
-                """
-
-                print("Waiting")
-                form_email = settings.EMAIL_HOST_USER
-                recipient_list = ["sadique.leewayzon@gmail.com"]
-                send_mail(subject, message_body, form_email, recipient_list)
-                messages.success(request, "Your enquiry has been submitted successfully.")
+                
 
             except Exception as e:
                 print(e)
