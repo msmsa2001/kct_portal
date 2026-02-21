@@ -111,87 +111,25 @@
     jQuery('.swiper-slide').each(function(index) {
         menu.push(jQuery(this).find('.slide-inner').attr("data-text"));
     });
-    var interleaveOffset = 0.5;
     var swiperOptions = {
-        loop: true,
-        speed: 1000,
-        parallax: true,
-        autoplay: {
-            delay: 6500,
-            disableOnInteraction: false,
-        },
-        watchSlidesProgress: true,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-
-       on: {
-    init: function () {
-        // ✅ apply background again to cloned slides
-        $(".hero-slider .slide-bg-image").each(function () {
-            var bg = $(this).attr("data-background");
-            if (bg) $(this).css("background-image", "url('" + bg + "')");
-        });
-
-        // ✅ AOS refresh
-        if (typeof AOS !== "undefined") AOS.refresh();
+    loop: true,
+    speed: 1000,
+    autoplay: {
+        delay: 6500,
+        disableOnInteraction: false,
     },
-
-    slideChangeTransitionEnd: function () {
-        // ✅ fix: when loop comes back to first slide text disappears
-        if (typeof AOS !== "undefined") AOS.refreshHard();
-
-        // ✅ force animation restart
-        $(".hero-slider .slide-title h2").each(function () {
-            $(this).removeClass("aos-animate");
-            void this.offsetWidth;
-            $(this).addClass("aos-animate");
-        });
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
     },
-
-    progress: function() {
-        var swiper = this;
-        for (var i = 0; i < swiper.slides.length; i++) {
-            var slideProgress = swiper.slides[i].progress;
-            var innerOffset = swiper.width * interleaveOffset;
-            var innerTranslate = slideProgress * innerOffset;
-
-            var inner = swiper.slides[i].querySelector(".slide-inner");
-            if(inner){
-                inner.style.transform =
-                    "translate3d(" + innerTranslate + "px, 0, 0)";
-            }
-        }
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
     },
+};
 
-    touchStart: function() {
-        var swiper = this;
-        for (var i = 0; i < swiper.slides.length; i++) {
-            swiper.slides[i].style.transition = "";
-        }
-    },
-
-    setTransition: function(speed) {
-        var swiper = this;
-        for (var i = 0; i < swiper.slides.length; i++) {
-            swiper.slides[i].style.transition = speed + "ms";
-
-            var inner = swiper.slides[i].querySelector(".slide-inner");
-            if(inner){
-                inner.style.transition = speed + "ms";
-            }
-        }
-    }
-}
-    };
-
-   var swiper = new Swiper(".hero-slider .swiper-container", swiperOptions);
+//    var swiper = new Swiper(".hero-slider .swiper-container", swiperOptions);
+   var swiper = new Swiper("#heroSwiper", swiperOptions);
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".slide-bg-image");
