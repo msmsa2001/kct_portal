@@ -111,8 +111,11 @@
     jQuery('.swiper-slide').each(function(index) {
         menu.push(jQuery(this).find('.slide-inner').attr("data-text"));
     });
-    var swiperOptions = {
+   var swiperOptions = {
     loop: true,
+    loopedSlides: 10,        // 👈 IMPORTANT (set equal to total slides)
+    slidesPerView: 1,
+    spaceBetween: 0,
     speed: 1000,
     autoplay: {
         delay: 6500,
@@ -130,6 +133,7 @@
 
 //    var swiper = new Swiper(".hero-slider .swiper-container", swiperOptions);
    var swiper = new Swiper("#heroSwiper", swiperOptions);
+   swiper.update();
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".slide-bg-image");
