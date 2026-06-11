@@ -200,6 +200,36 @@
           </section>
 
 
+          {% if staff_members %}
+          <section class="kct-staff-section">
+            <div class="kct-staff-container">
+              <div class="kct-staff-heading">
+                <span class="kct-staff-eyebrow">Meet The Team</span>
+                <h2 class="kct-staff-title">Our Staff</h2>
+              </div>
+
+              <div class="kct-staff-grid">
+                {% for staff in staff_members %}
+                <div class="kct-staff-card">
+                  <div class="kct-staff-photo">
+                    <img src="{{ staff.photo.url }}" alt="{{ staff.name }}" />
+                  </div>
+                  <div class="kct-staff-info">
+                    <div class="kct-staff-name">{{ staff.name }}</div>
+                    {% if staff.designation %}
+                    <div class="kct-staff-designation">{{ staff.designation }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <img src="{% static 'images/design_icon_2.png' %}" alt="Design" class="trustee_img_bg" />
+          </section>
+          {% endif %}
+
+
 
 
           

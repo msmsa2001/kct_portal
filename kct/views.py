@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from kct_portal import settings
 from django.views.decorators.csrf import csrf_exempt
-from .models import BeneficiaryData, Donation, EventMaster, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory
+from .models import BeneficiaryData, Donation, EventMaster, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster,SystemMasterCategory, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, BeneficiaryCategory, StaffMember
 from .utils import get_data_afillat, get_data_dict, get_data_dict_aid, get_data_dict_casestdy, get_data_dict_Event, get_data_dict_term_and_condition, get_gallery_images, get_data_about_page, get_data_activies,get_data_benefits, get_data_career, get_footer_data,convert_to_k_format
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -280,12 +280,13 @@ def about(request):
     footer_data = get_footer_data()
     casestudy = get_data_dict_casestdy()
     awards = GalleryItem.objects.filter(is_active=True,category='award_section')
-     
+    staff_members = StaffMember.objects.filter(is_active=True)
+
 
     context = {
         'managinglist': managinglist,
         'categories': categories,
-        'about_section_page':about_section_page,  
+        'about_section_page':about_section_page,
         'our_aim': our_aim,
         'our_vision': our_vision,
         'our_mission': our_mission,
@@ -293,8 +294,9 @@ def about(request):
         'footer_data': footer_data,
         'page_quotes': page_quotes,
         'casestudy':casestudy.items(),
-        'awards':awards
-        
+        'awards':awards,
+        'staff_members': staff_members,
+
     }
     return render(request, 'kct/about.html', context)
 
