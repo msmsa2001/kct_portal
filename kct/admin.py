@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export import resources 
-from .models import  Donation, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster, BeneficiaryData
+from .models import  Donation, GalleryItem, GovtSchemeMaster, HomeBannerMaster, KCTEnquireMaster, PartnerLogo, ProjectImage, ProjectMaster, SystemMaster, BeneficiaryCategory, ManagingListCategoryMaster, ListItemCategory, DropdownOption, EventMaster, BeneficiaryData, StaffMember
 from import_export.admin import ImportExportModelAdmin
 from django.utils import timezone
 from django.utils.html import format_html
@@ -107,6 +107,20 @@ class GalleryItemAdmin(ImportExportModelAdmin):
     search_fields = ['id',]
 
 admin.site.register(GalleryItem,GalleryItemAdmin)
+
+
+class StaffMemberresources(resources.ModelResource):
+    class Meta:
+        model = StaffMember
+        import_id_fields = ['id']
+class StaffMemberAdmin(ImportExportModelAdmin):
+    resource_class = StaffMemberresources
+    list_display = ('id', 'name', 'designation', 'photo', 'order', 'is_active')
+    list_editable = ('designation', 'order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ['id', 'name', 'designation']
+
+admin.site.register(StaffMember, StaffMemberAdmin)
 
 
 class BeneficiaryCategoryresources(resources.ModelResource):

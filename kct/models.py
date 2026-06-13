@@ -273,6 +273,25 @@ class GalleryItem(models.Model):
     is_active = models.BooleanField(default=True)
 
 
+class StaffMember(models.Model):
+    name = models.CharField(max_length=150)
+    designation = models.CharField(max_length=150, blank=True)
+    photo = models.FileField(
+        upload_to='staff/',
+        validators=[FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png', 'webp'])],
+    )
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.name
+
+
 class Donation(models.Model):
     PAYMENT_STATUS = (
         ("PENDING", "Pending"),

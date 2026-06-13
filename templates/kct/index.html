@@ -14,46 +14,410 @@
     </div>
     <!-- /.preloader -->
     <div class="page-wrapper">
-        <section class="hero-slider hero-style-1">
-            <div class="swiper-container" id="heroSwiper">
-                <div class="swiper-wrapper">
+        <!-- ============================================================
+             KCT CUSTOM HERO CAROUSEL  (pure CSS + vanilla JS, no new libs)
+             ============================================================ -->
+        <style>
+            .kct-hero {
+                position: relative;
+                width: 100%;
+                height: 92vh;
+                min-height: 560px;
+                max-height: 920px;
+                overflow: hidden;
+                background: #1B3A6B;
+                z-index: 0;
+                touch-action: pan-y;
+            }
 
-                    {% for item in slider_items %}
-                    <div class="swiper-slide">
-                        <div class="slide-inner slide-bg-image" data-background="{{ item.slide_img.url }}">
-                            
-                            <!-- ✅ Dark Overlay for better text readability -->
-                            <div class="overlay"></div>
-                    
-                            <div class="container">
-                                <div class="slide-title">
-                                    <h2 >{{ item.slide_title }}</h2>
-                                </div>
-                                <!-- <div data-swiper-parallax="400" class="slide-text">
-                                    <p>{{ item.slide_description }}</p>
-                                </div> -->
-                                <div class="clearfix"></div>
-                                <!-- <div data-swiper-parallax="500" class="slide-btns">
-                                    <a href="#" class="theme-btn">More info >></a>
-                                </div> -->
-                            </div>
-                    
-                            <div class="slide-shape">
-                                <img src="{% static 'images/shapes/shape.png' %}" alt="Not Found">
-                            </div>
-                        </div>
+            .kct-hero__track { position: absolute; inset: 0; }
+
+            .kct-hero__slide {
+                position: absolute;
+                inset: 0;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 1s ease;
+                z-index: 1;
+            }
+            .kct-hero__slide.is-active {
+                opacity: 1;
+                visibility: visible;
+                z-index: 2;
+            }
+
+            /* Background image layer + Ken Burns */
+            .kct-hero__bg {
+                position: absolute;
+                inset: 0;
+                background-size: cover;
+                background-position: center;
+                transform: scale(1);
+                will-change: transform;
+            }
+            .kct-hero__slide.is-active .kct-hero__bg {
+                animation: kctKenBurns 8s ease-out forwards;
+            }
+            @keyframes kctKenBurns {
+                0%   { transform: scale(1) translateX(0); }
+                100% { transform: scale(1.08) translateX(-1%); }
+            }
+
+            /* Gradient overlay for readability */
+            .kct-hero__overlay {
+                position: absolute;
+                inset: 0;
+                /* Neutral dark gradient, weighted to the bottom where the text
+                   sits — keeps the image's true colours (no blue cast) while
+                   still keeping the headline readable. */
+                background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 80%);
+                z-index: 1;
+            }
+
+            /* Text content */
+            .kct-hero__content {
+                position: relative;
+                z-index: 2;
+                height: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 60px 90px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                align-items: flex-start;
+                color: #fff;
+            }
+
+            .kct-hero__eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 12px;
+                font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+                font-weight: 700;
+                letter-spacing: 2.5px;
+                text-transform: uppercase;
+                color: #eabf3d;
+                margin-bottom: 18px;
+            }
+            .kct-hero__eyebrow::before {
+                content: "";
+                width: 34px;
+                height: 2px;
+                background: #eabf3d;
+                display: inline-block;
+            }
+
+            .kct-hero__title {
+                font-size: clamp(1.8rem, 5vw, 3.6rem);
+                line-height: 1.12;
+                font-weight: 700;
+                color: #fff;
+                margin: 0 0 18px;
+                max-width: 24ch;
+                text-shadow: 0 2px 14px rgba(0,0,0,0.25);
+            }
+
+            .kct-hero__subtitle {
+                font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+                line-height: 1.6;
+                color: rgba(255,255,255,0.9);
+                max-width: 620px;
+                margin: 0 0 30px;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            .kct-hero__cta {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                background: #204a8f;
+                color: #fff;
+                font-size: 1.05rem;
+                font-weight: 600;
+                padding: 14px 34px;
+                border-radius: 40px;
+                text-decoration: none;
+                box-shadow: 0 10px 26px rgba(32,74,143,0.40);
+                transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+            }
+            .kct-hero__cta:hover {
+                background: #1B3A6B;
+                transform: translateY(-2px);
+                box-shadow: 0 14px 30px rgba(27,58,107,0.50);
+                color: #fff;
+            }
+            .kct-hero__cta svg { width: 18px; height: 18px; }
+
+            /* Entry animations on the active slide */
+            .kct-hero__eyebrow,
+            .kct-hero__title,
+            .kct-hero__cta { opacity: 0; }
+
+            .kct-hero__slide.is-active .kct-hero__eyebrow  { animation: kctFadeUp .8s ease forwards .2s; }
+            .kct-hero__slide.is-active .kct-hero__title    { animation: kctFadeUp .9s ease forwards .5s; }
+            .kct-hero__slide.is-active .kct-hero__cta      { animation: kctScaleIn .7s ease forwards .85s; }
+
+            @keyframes kctFadeUp {
+                from { opacity: 0; transform: translateY(40px); }
+                to   { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes kctScaleIn {
+                from { opacity: 0; transform: scale(.8); }
+                to   { opacity: 1; transform: scale(1); }
+            }
+
+            /* Arrow controls */
+            .kct-hero__arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: 5;
+                width: 56px;
+                height: 56px;
+                border: none;
+                border-radius: 50%;
+                background: rgba(255,255,255,0.18);
+                backdrop-filter: blur(2px);
+                color: #fff;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background .3s ease, transform .3s ease;
+            }
+            .kct-hero__arrow:hover { background: rgba(255,255,255,0.32); }
+            .kct-hero__arrow:active { transform: translateY(-50%) scale(.94); }
+            .kct-hero__arrow svg { width: 24px; height: 24px; }
+            .kct-hero__arrow--prev { left: 26px; }
+            .kct-hero__arrow--next { right: 26px; }
+
+            /* Dot indicators */
+            .kct-hero__dots {
+                position: absolute;
+                bottom: 28px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 5;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .kct-hero__dot {
+                width: 8px;
+                height: 8px;
+                padding: 0;
+                border: none;
+                border-radius: 50px;
+                background: rgba(255,255,255,0.45);
+                cursor: pointer;
+                transition: width .35s ease, background .35s ease;
+            }
+            .kct-hero__dot.is-active {
+                width: 24px;
+                background: #fff;
+            }
+
+            /* Decorative floating shape (bottom-right) */
+            .kct-hero__shape {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                z-index: 3;
+                pointer-events: none;
+                opacity: 0.5;
+            }
+            .kct-hero__shape svg { display: block; width: 260px; height: auto; }
+
+            /* ---------- Tablet / mobile ---------- */
+            @media (max-width: 768px) {
+                /* Banner matches the images' native 3:2 ratio so the image
+                   fills it exactly (no blue bars). Ken Burns zoom inherited
+                   from the base rule and runs here too. */
+                .kct-hero {
+                    height: auto;
+                    aspect-ratio: 3 / 2;
+                    min-height: 0;
+                    max-height: none;
+                }
+                .kct-hero__content {
+                    padding: 0 20px 46px;
+                    justify-content: flex-end;
+                }
+                .kct-hero__title { max-width: 100%; }
+                /* Donate button isn't needed in the mobile hero. */
+                .kct-hero__cta { display: none; }
+                /* Hide side arrows on mobile so they don't overlap the centred
+                   headline; navigation is via swipe + dot indicators. */
+                .kct-hero__arrow { display: none; }
+                .kct-hero__shape svg { width: 150px; }
+                .kct-hero__shape { opacity: 0.35; }
+            }
+
+            @media (max-width: 480px) {
+                .kct-hero__title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+                .kct-hero__cta {
+                    width: 100%;
+                    justify-content: center;
+                    min-height: 48px;
+                }
+                .kct-hero__dots { bottom: 18px; gap: 8px; }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .kct-hero__slide.is-active .kct-hero__bg,
+                .kct-hero__slide.is-active .kct-hero__eyebrow,
+                .kct-hero__slide.is-active .kct-hero__title,
+                .kct-hero__slide.is-active .kct-hero__subtitle,
+                .kct-hero__slide.is-active .kct-hero__cta {
+                    animation: none;
+                }
+                .kct-hero__eyebrow,
+                .kct-hero__title,
+                .kct-hero__subtitle,
+                .kct-hero__cta { opacity: 1; }
+            }
+        </style>
+
+        <section class="kct-hero" id="kctHero" aria-label="Highlights" aria-roledescription="carousel">
+            <div class="kct-hero__track">
+                {% for item in slider_items %}
+                <div class="kct-hero__slide{% if forloop.first %} is-active{% endif %}" aria-roledescription="slide">
+                    <div class="kct-hero__bg" style="background-image: url('{{ item.slide_img.url }}');"></div>
+                    <div class="kct-hero__overlay"></div>
+                    <div class="kct-hero__content">
+                        <h2 class="kct-hero__title">{{ item.slide_title }}</h2>
+                        <a href="{% url 'donate' %}" class="kct-hero__cta">
+                            Donate Now
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
                     </div>
-
-                    {% endfor %}
-                    
-                    <!-- end swiper-slide -->
                 </div>
-                <!-- end swiper-wrapper -->
-                <!-- swipper controls -->
-               
+                {% endfor %}
             </div>
 
+            <!-- Arrow navigation -->
+            <button class="kct-hero__arrow kct-hero__arrow--prev" type="button" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button class="kct-hero__arrow kct-hero__arrow--next" type="button" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <!-- Dot indicators (populated by JS) -->
+            <div class="kct-hero__dots" role="tablist" aria-label="Slide navigation"></div>
+
+            <!-- Decorative floating shape -->
+            <div class="kct-hero__shape" aria-hidden="true">
+                <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M-10 160 Q 80 90 160 140 T 320 120" stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none"/>
+                    <path d="M-10 190 Q 90 120 170 170 T 320 150" stroke="rgba(76,175,80,0.5)" stroke-width="2" fill="none"/>
+                    <circle cx="250" cy="70" r="40" stroke="rgba(255,255,255,0.25)" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
         </section>
+
+        <script>
+            (function () {
+                function initKctHero() {
+                    var hero = document.getElementById('kctHero');
+                    if (!hero) return;
+
+                    var slides = Array.prototype.slice.call(hero.querySelectorAll('.kct-hero__slide'));
+                    if (!slides.length) return;
+
+                    var dotsWrap = hero.querySelector('.kct-hero__dots');
+                    var prevBtn = hero.querySelector('.kct-hero__arrow--prev');
+                    var nextBtn = hero.querySelector('.kct-hero__arrow--next');
+                    var current = 0;
+                    var timer = null;
+                    var DELAY = 6000;
+
+                    // Build dot indicators
+                    var dots = slides.map(function (_, i) {
+                        var dot = document.createElement('button');
+                        dot.type = 'button';
+                        dot.className = 'kct-hero__dot' + (i === 0 ? ' is-active' : '');
+                        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+                        dot.addEventListener('click', function () { goTo(i, true); });
+                        dotsWrap.appendChild(dot);
+                        return dot;
+                    });
+
+                    function goTo(index, fromUser) {
+                        index = (index + slides.length) % slides.length;
+                        if (index === current) {
+                            if (fromUser) restart();
+                            return;
+                        }
+                        slides[current].classList.remove('is-active');
+                        dots[current].classList.remove('is-active');
+                        current = index;
+                        slides[current].classList.add('is-active');
+                        dots[current].classList.add('is-active');
+                        if (fromUser) restart();
+                    }
+
+                    function next() { goTo(current + 1); }
+                    function prev() { goTo(current - 1); }
+
+                    function start() {
+                        if (slides.length < 2) return;
+                        stop();
+                        timer = setInterval(next, DELAY);
+                    }
+                    function stop() {
+                        if (timer) { clearInterval(timer); timer = null; }
+                    }
+                    function restart() { stop(); start(); }
+
+                    // Arrow controls
+                    if (nextBtn) nextBtn.addEventListener('click', function () { next(); restart(); });
+                    if (prevBtn) prevBtn.addEventListener('click', function () { prev(); restart(); });
+
+                    // Swipe support (mobile) + pause during touch
+                    var touchStartX = 0;
+                    var touchStartY = 0;
+                    hero.addEventListener('touchstart', function (e) {
+                        stop();
+                        touchStartX = e.changedTouches[0].screenX;
+                        touchStartY = e.changedTouches[0].screenY;
+                    }, { passive: true });
+                    hero.addEventListener('touchend', function (e) {
+                        var dx = e.changedTouches[0].screenX - touchStartX;
+                        var dy = e.changedTouches[0].screenY - touchStartY;
+                        // Horizontal swipe only (ignore vertical scrolls)
+                        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+                            if (dx < 0) { next(); } else { prev(); }
+                        }
+                        start();
+                    }, { passive: true });
+
+                    // Pause when tab is hidden
+                    document.addEventListener('visibilitychange', function () {
+                        if (document.hidden) { stop(); } else { start(); }
+                    });
+
+                    start();
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initKctHero);
+                } else {
+                    initKctHero();
+                }
+            })();
+        </script>
+        <!-- ===================== END KCT CUSTOM HERO ===================== -->
     
           <!-- ABOUT SECTION START -->
           <section class="ul-about ul-about-2 section-space ul-section-spacing wow animate__fadeInUp">

@@ -132,8 +132,13 @@
 };
 
 //    var swiper = new Swiper(".hero-slider .swiper-container", swiperOptions);
-   var swiper = new Swiper("#heroSwiper", swiperOptions);
-   swiper.update();
+   // Guard: the homepage hero now uses a custom carousel (.kct-hero) instead of
+   // Swiper. Only initialise Swiper when a #heroSwiper container is actually present
+   // so other pages keep working and we avoid console errors on the homepage.
+   if (document.querySelector("#heroSwiper")) {
+       var swiper = new Swiper("#heroSwiper", swiperOptions);
+       swiper.update();
+   }
 
     // DATA BACKGROUND IMAGE
     var sliderBgSetting = $(".slide-bg-image");
