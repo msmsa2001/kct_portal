@@ -64,6 +64,12 @@ def create_cashfree_order(request):
         "x-api-version": "2023-08-01",
     }
 
+    donor_address_parts = [
+        donation.address, donation.city, donation.state, donation.pincode, donation.country,
+    ]
+    donor_address = ", ".join(part for part in donor_address_parts if part) or "NA"
+    donor_address = donor_address[:200]
+
     payload = {
         "order_id": order_id,
         "order_amount": amount,
@@ -76,7 +82,14 @@ def create_cashfree_order(request):
         },
         "order_meta": {
             "return_url": f"https://khidmattrust.org/payment-success/?order_id={order_id}"
-        }
+        },
+        # Surfaced in Cashfree's Settlement Reconciliation Report (Key_1/2/3, Value_1/2/3)
+        # for Form 10BD compliance — order is fixed so the report columns stay consistent.
+        "order_tags": {
+            "donor_pan": donation.pan_number or "NA",
+            "donor_address": donor_address,
+            "compliance_type": "Form_10BD",
+        },
     }
 
     response = requests.post(url, json=payload, headers=headers)
