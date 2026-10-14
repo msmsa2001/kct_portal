@@ -7721,6 +7721,44 @@ body.megamenu-popup-active .mobile-nav__content {
     color: black;
 }
 
+/* mobile submenu: in-flow full-width list so long titles wrap cleanly */
+.mobile-nav__content .main-menu__list .dropdown-menu {
+    position: static;
+    float: none;
+    width: 100%;
+    min-width: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+    margin: 4px 0 12px;
+    padding: 4px 0;
+    background-color: var(--cleenhearts-white, #fff);
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+    transform: none;
+}
+
+.mobile-nav__content .main-menu__list .dropdown-menu li:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.mobile-nav__content .main-menu__list .dropdown-menu li > a {
+    height: auto;
+    min-height: 44px;
+    padding: 10px 16px;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cleenhearts-dark2, #200C2A);
+}
+
+.mobile-nav__content .main-menu__list .dropdown-menu li > a:hover,
+.mobile-nav__content .main-menu__list .dropdown-menu li > a:active {
+    color: var(--cleenhearts-secondary, #c62b23);
+}
+
 .fa-chevron-down{
     font-size: 10px;
     margin-left: 5px;
