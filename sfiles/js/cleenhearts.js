@@ -333,16 +333,18 @@
             self.append(function() {
                 return toggleBtn;
             });
-            self.find("button").on("click", function(e) {
+            // toggle on the whole row (title, chevron or button), not just the hidden button
+            self.on("click", function(e) {
                 e.preventDefault();
-                let self = $(this);
-                // close any other open dropdown so the absolutely positioned menus don't overlap
-                let otherDropdowns = self.closest(".main-menu__list").find(".dropdown").not(self.closest(".dropdown"));
+                let anchor = $(this);
+                let dropdown = anchor.parent();
+                // close any other open dropdown so only one submenu is open at a time
+                let otherDropdowns = anchor.closest(".main-menu__list").find(".dropdown").not(dropdown);
                 otherDropdowns.find("> a, > a > button").removeClass("expanded");
                 otherDropdowns.children("ul").stop(true, true).slideUp();
-                self.toggleClass("expanded");
-                self.parent().toggleClass("expanded");
-                self.parent().parent().children("ul").slideToggle();
+                anchor.toggleClass("expanded");
+                anchor.children("button").toggleClass("expanded");
+                dropdown.children("ul").stop(true, true).slideToggle();
             });
         });
     }
