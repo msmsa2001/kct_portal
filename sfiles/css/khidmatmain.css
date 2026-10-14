@@ -7791,6 +7791,12 @@ body.megamenu-popup-active .mobile-nav__content {
 }
 
 /* the whole dropdown row toggles now; hide the oversized button so it can't block submenu taps */
+/* full-width rows: overrides the generic `.dropdown { display: inline-block }` widget rule */
+.mobile-nav__content .main-menu__list > li.dropdown {
+    display: block;
+    width: 100%;
+}
+
 .mobile-nav__content .main-menu__list .dropdown > a {
     justify-content: flex-start;
     cursor: pointer;
