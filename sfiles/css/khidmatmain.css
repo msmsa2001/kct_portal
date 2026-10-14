@@ -7790,6 +7790,24 @@ body.megamenu-popup-active .mobile-nav__content {
     color: var(--cleenhearts-white, #fff);
 }
 
+/* the whole dropdown row toggles now; hide the oversized button so it can't block submenu taps */
+.mobile-nav__content .main-menu__list .dropdown > a {
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+.mobile-nav__content .main-menu__list .dropdown > a > button {
+    display: none;
+}
+
+.mobile-nav__content .main-menu__list .dropdown > a .fa-chevron-down {
+    transition: transform 300ms ease;
+}
+
+.mobile-nav__content .main-menu__list .dropdown > a.expanded .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
 .mobile-nav__social {
     display: flex;
     align-items: center;
