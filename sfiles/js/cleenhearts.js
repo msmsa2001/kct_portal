@@ -336,6 +336,10 @@
             self.find("button").on("click", function(e) {
                 e.preventDefault();
                 let self = $(this);
+                // close any other open dropdown so the absolutely positioned menus don't overlap
+                let otherDropdowns = self.closest(".main-menu__list").find(".dropdown").not(self.closest(".dropdown"));
+                otherDropdowns.find("> a, > a > button").removeClass("expanded");
+                otherDropdowns.children("ul").stop(true, true).slideUp();
                 self.toggleClass("expanded");
                 self.parent().toggleClass("expanded");
                 self.parent().parent().children("ul").slideToggle();
