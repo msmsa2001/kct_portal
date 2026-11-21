@@ -286,7 +286,11 @@
             <div class="kct-hero__track">
                 {% for item in slider_items %}
                 <div class="kct-hero__slide{% if forloop.first %} is-active{% endif %}" aria-roledescription="slide">
+                    {% if forloop.first %}
                     <div class="kct-hero__bg" style="background-image: url('{{ item.slide_img.url }}');"></div>
+                    {% else %}
+                    <div class="kct-hero__bg" data-kct-bg="{{ item.slide_img.url }}"></div>
+                    {% endif %}
                     <div class="kct-hero__overlay"></div>
                     <div class="kct-hero__content">
                         <h2 class="kct-hero__title">{{ item.slide_title }}</h2>
@@ -417,6 +421,35 @@
                 }
             })();
         </script>
+        <script>
+            // Performance: only the first banner image loads with the page.
+            // The second is fetched as soon as the page is parsed and the rest
+            // once everything else has loaded (or on first interaction).
+            (function () {
+                function load(limit) {
+                    var pending = document.querySelectorAll('#kctHero [data-kct-bg]');
+                    for (var i = 0; i < pending.length && i < limit; i++) {
+                        pending[i].style.backgroundImage =
+                            "url('" + pending[i].getAttribute('data-kct-bg') + "')";
+                        pending[i].removeAttribute('data-kct-bg');
+                    }
+                }
+                function loadAll() { load(Infinity); }
+
+                load(1);
+                if (document.readyState === 'complete') {
+                    loadAll();
+                } else {
+                    window.addEventListener('load', loadAll);
+                }
+                var hero = document.getElementById('kctHero');
+                if (hero) {
+                    ['pointerdown', 'touchstart', 'keydown'].forEach(function (type) {
+                        hero.addEventListener(type, loadAll, { once: true, passive: true });
+                    });
+                }
+            })();
+        </script>
         <!-- ===================== END KCT CUSTOM HERO ===================== -->
     
           <!-- ABOUT SECTION START -->
@@ -427,7 +460,7 @@
                     <div class="col">
                         <div class="ul-about-imgs ul-about-2-img">
                             <div class="img-wrapper">
-                                <img src="{% static 'images/about/LSUK7796.JPG' %}" data-aos="flip-left" alt="Image">
+                                <img src="{% static 'images/about/about-home-main.jpg' %}" data-aos="flip-left" alt="Image" loading="lazy" decoding="async">
                             </div>
 
                             <!-- <div class="ul-about-2-stat">
@@ -452,7 +485,7 @@
                             {% endif %}
 
                             <div class="img-wrapper" data-aos="fade-up-left">
-                                <img src="{% static 'images/about/about-home-page.png' %}" alt="Image">
+                                <img src="{% static 'images/about/about-home-page.png' %}" alt="Image" loading="lazy" decoding="async">
                             </div>
                             
                             <a href="{% url 'about' %}" class="ul-btn" data-aos="fade-up-left"><i
@@ -468,7 +501,7 @@
             <img src="{% static 'images/design_icon_1.png' %}" alt="Design" class="design-img"/>
             <div class="mission">
                 <div class="mission-img" data-aos="fade-down-right">
-                    <img src="{% static 'images/mission.jpeg' %}" alt="Mission Image">
+                    <img src="{% static 'images/mission.jpeg' %}" alt="Mission Image" loading="lazy" decoding="async">
                 </div>
                 <div class="text-box">
                     <h4 data-aos="fade-left">Our Mission</h4>
@@ -488,7 +521,7 @@
                     {% endif %}
                 </div>
                 <div class="vision-img" data-aos="fade-left">
-                    <img src="{% static 'images/vision.jpeg' %}" alt="Vision Image">
+                    <img src="{% static 'images/vision.jpeg' %}" alt="Vision Image" loading="lazy" decoding="async">
                 </div>
             </div>
             <img src="{% static 'images/design_icon_2.png' %}" alt="Design" class="design-img2" />
@@ -768,7 +801,7 @@
                         <div class="patner text-center">
                             <div>
                                 <a href="{{ logo.website|default:'/' }}" target="_blank" title="{{ logo.name }}">
-                                    <img src="{{ logo.image.url }}" alt="{{ logo.name }}">
+                                    <img src="{{ logo.image.url }}" alt="{{ logo.name }}" loading="lazy" decoding="async">
                                 </a>
                                 {% if logo.name%}
                                 <p style="font-size: 11px;">{{ logo.name }}</p>
@@ -1277,16 +1310,8 @@ valueDisplays.forEach((valueDisplay) => {
 
     <script src="{% static 'js/cleenhearts.js' %}"></script>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/jquery-plugin-collection.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
-
-
-    <script>
-        AOS.init();
-    </script>
 </body>
 {% endblock content%}

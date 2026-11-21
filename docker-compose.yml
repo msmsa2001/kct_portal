@@ -14,6 +14,7 @@ services:
     volumes:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf
       - ./static:/static
+      - ./media:/media
     ports:
       - "80:80"
 
@@ -39,7 +40,7 @@ services:
     restart: always
     shm_size: 1gb
     volumes:
-      - kct_pg_data:/kct_pg_data/
+      - kct_pg_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     env_file:
